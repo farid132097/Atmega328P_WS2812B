@@ -1,0 +1,65 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	main
+  18               	main:
+  19               	.LFB6:
+  20               	.LM1:
+  21 0000 CF93      		push r28
+  22 0002 DF93      		push r29
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	.LM2:
+  26 0004 0E94 0000 		call WS2812B_Init
+  27               	.LBB12:
+  28               	.LBB13:
+  29               	.LBB14:
+  30               	.LBB15:
+  31               	.LM3:
+  32 0008 C8EC      		ldi r28,lo8(-20536)
+  33 000a DFEA      		ldi r29,hi8(-20536)
+  34               	.L2:
+  35               	.LBE15:
+  36               	.LBE14:
+  37               	.LBE13:
+  38               	.LBE12:
+  39               	.LM4:
+  40 000c 0E94 0000 		call WS2812B_Rotate_All_Color
+  41               	.LBB19:
+  42               	.LBB18:
+  43               	.LBB17:
+  44               	.LBB16:
+  45               	.LM5:
+  46 0010 CE01      		movw r24,r28
+  47               	.LVL0:
+  48               	/* #APP */
+  49               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+  50 0012 0197      		1: sbiw r24,1
+  51 0014 01F4      		brne 1b
+  52               	 ;  0 "" 2
+  53               	/* #NOAPP */
+  54 0016 00C0      		rjmp .L2
+  55               	.LBE16:
+  56               	.LBE17:
+  57               	.LBE18:
+  58               	.LBE19:
+  59               	.LFE6:
+  85               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:2      *ABS*:0000003f __SREG__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:3      *ABS*:0000003e __SP_H__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:4      *ABS*:0000003d __SP_L__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:5      *ABS*:00000034 __CCP__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:18     .text:00000000 main
+
+UNDEFINED SYMBOLS
+WS2812B_Init
+WS2812B_Rotate_All_Color
