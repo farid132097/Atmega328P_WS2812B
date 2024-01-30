@@ -16,50 +16,62 @@
   24               	/* frame size = 0 */
   25               	.LM2:
   26 0004 0E94 0000 		call WS2812B_Init
-  27               	.LBB12:
-  28               	.LBB13:
-  29               	.LBB14:
-  30               	.LBB15:
-  31               	.LM3:
-  32 0008 C8EC      		ldi r28,lo8(-20536)
-  33 000a DFEA      		ldi r29,hi8(-20536)
-  34               	.L2:
-  35               	.LBE15:
-  36               	.LBE14:
-  37               	.LBE13:
-  38               	.LBE12:
-  39               	.LM4:
-  40 000c 0E94 0000 		call WS2812B_Rotate_All_Color
-  41               	.LBB19:
-  42               	.LBB18:
-  43               	.LBB17:
-  44               	.LBB16:
-  45               	.LM5:
-  46 0010 CE01      		movw r24,r28
-  47               	.LVL0:
-  48               	/* #APP */
-  49               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
-  50 0012 0197      		1: sbiw r24,1
-  51 0014 01F4      		brne 1b
-  52               	 ;  0 "" 2
-  53               	/* #NOAPP */
-  54 0016 00C0      		rjmp .L2
-  55               	.LBE16:
-  56               	.LBE17:
-  57               	.LBE18:
-  58               	.LBE19:
-  59               	.LFE6:
-  85               	.Letext0:
+  27               	.LM3:
+  28 0008 0E94 0000 		call RGB_Animation_Init
+  29               	.LBB12:
+  30               	.LBB13:
+  31               	.LBB14:
+  32               	.LBB15:
+  33               	.LM4:
+  34 000c C8EB      		ldi r28,lo8(3000)
+  35 000e DBE0      		ldi r29,hi8(3000)
+  36               	.L2:
+  37               	.LBE15:
+  38               	.LBE14:
+  39               	.LBE13:
+  40               	.LBE12:
+  41               	.LM5:
+  42 0010 80E0      		ldi r24,lo8(0)
+  43 0012 64E6      		ldi r22,lo8(100)
+  44 0014 48EC      		ldi r20,lo8(-56)
+  45 0016 0E94 0000 		call RGB_Animation_Slide_Fill
+  46               	.LM6:
+  47 001a 80E0      		ldi r24,lo8(0)
+  48 001c 64E6      		ldi r22,lo8(100)
+  49 001e 48EC      		ldi r20,lo8(-56)
+  50 0020 0E94 0000 		call RGB_Animation_Slide_Unfill
+  51               	.LBB19:
+  52               	.LBB18:
+  53               	.LBB17:
+  54               	.LBB16:
+  55               	.LM7:
+  56 0024 CE01      		movw r24,r28
+  57               	.LVL0:
+  58               	/* #APP */
+  59               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+  60 0026 0197      		1: sbiw r24,1
+  61 0028 01F4      		brne 1b
+  62               	 ;  0 "" 2
+  63               	/* #NOAPP */
+  64 002a 00C0      		rjmp .L2
+  65               	.LBE16:
+  66               	.LBE17:
+  67               	.LBE18:
+  68               	.LBE19:
+  69               	.LFE6:
+  95               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:2      *ABS*:0000003f __SREG__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:3      *ABS*:0000003e __SP_H__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:4      *ABS*:0000003d __SP_L__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:5      *ABS*:00000034 __CCP__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/cc7PUYRU.s:18     .text:00000000 main
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:2      *ABS*:0000003f __SREG__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:3      *ABS*:0000003e __SP_H__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:4      *ABS*:0000003d __SP_L__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:5      *ABS*:00000034 __CCP__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc2ObjS6.s:18     .text:00000000 main
 
 UNDEFINED SYMBOLS
 WS2812B_Init
-WS2812B_Rotate_All_Color
+RGB_Animation_Init
+RGB_Animation_Slide_Fill
+RGB_Animation_Slide_Unfill

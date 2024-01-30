@@ -759,292 +759,37 @@
  773               	.LM183:
  774 01a8 0895      		ret
  775               	.LFE9:
- 777               	.global	WS2812_Clear_All_Pixels
- 779               	WS2812_Clear_All_Pixels:
+ 777               	.global	WS2812B_Init
+ 779               	WS2812B_Init:
  780               	.LFB10:
  781               	.LM184:
- 782 01aa 1F93      		push r17
- 783               	/* prologue: function */
- 784               	/* frame size = 0 */
- 785               	.LM185:
- 786 01ac 10E0      		ldi r17,lo8(0)
- 787               	.LVL7:
- 788               	.L28:
- 789               	.LBB5:
- 790               	.LM186:
- 791 01ae 80E0      		ldi r24,lo8(0)
- 792 01b0 60E0      		ldi r22,lo8(0)
- 793 01b2 40E0      		ldi r20,lo8(0)
- 794 01b4 0E94 0000 		call WS2812B_Send_Pixel
- 795               	.LM187:
- 796 01b8 1F5F      		subi r17,lo8(-(1))
- 797 01ba 1A30      		cpi r17,lo8(10)
- 798 01bc 01F4      		brne .L28
- 799               	/* epilogue start */
- 800               	.LBE5:
- 801               	.LM188:
- 802 01be 1F91      		pop r17
- 803               	.LVL8:
- 804 01c0 0895      		ret
- 805               	.LFE10:
- 807               	.global	WS2812B_Init
- 809               	WS2812B_Init:
- 810               	.LFB11:
- 811               	.LM189:
- 812               	/* prologue: function */
- 813               	/* frame size = 0 */
- 814               	.LBB6:
- 815               	.LBB7:
- 816               	.LM190:
- 817 01c2 559A      		sbi 42-32,5
- 818               	.LM191:
- 819 01c4 5D98      		cbi 43-32,5
- 820               	.LBE7:
- 821               	.LBE6:
- 822               	.LM192:
- 823 01c6 0E94 0000 		call WS2812_Clear_All_Pixels
- 824               	.LM193:
- 825 01ca 8FEF      		ldi r24,lo8(-1)
- 826 01cc 8093 0000 		sts red,r24
- 827               	.LM194:
- 828 01d0 82E0      		ldi r24,lo8(2)
- 829 01d2 8093 0000 		sts red_dir,r24
- 830               	.LM195:
- 831 01d6 8093 0000 		sts green_dir,r24
- 832               	.LM196:
- 833 01da 8093 0000 		sts blue_dir,r24
- 834               	/* epilogue start */
- 835               	.LM197:
- 836 01de 0895      		ret
- 837               	.LFE11:
- 839               	.global	WS2812B_Rotate_All_Color
- 841               	WS2812B_Rotate_All_Color:
- 842               	.LFB12:
- 843               	.LM198:
- 844 01e0 1F93      		push r17
- 845               	/* prologue: function */
- 846               	/* frame size = 0 */
- 847               	.LM199:
- 848 01e2 10E0      		ldi r17,lo8(0)
- 849               	.LVL9:
- 850               	.L34:
- 851               	.LBB8:
- 852               	.LM200:
- 853 01e4 8091 0000 		lds r24,red
- 854 01e8 6091 0000 		lds r22,green
- 855 01ec 4091 0000 		lds r20,blue
- 856 01f0 0E94 0000 		call WS2812B_Send_Pixel
- 857               	.LM201:
- 858 01f4 1F5F      		subi r17,lo8(-(1))
- 859 01f6 1A30      		cpi r17,lo8(10)
- 860 01f8 01F4      		brne .L34
- 861               	.LBE8:
- 862               	.LM202:
- 863 01fa 8091 0000 		lds r24,red_dir
- 864 01fe 8823      		tst r24
- 865 0200 01F4      		brne .L35
- 866               	.LM203:
- 867 0202 8091 0000 		lds r24,red
- 868 0206 8F3F      		cpi r24,lo8(-1)
- 869 0208 01F0      		breq .L36
- 870               	.LM204:
- 871 020a 8F5F      		subi r24,lo8(-(1))
- 872 020c 00C0      		rjmp .L49
- 873               	.L35:
- 874               	.LM205:
- 875 020e 8130      		cpi r24,lo8(1)
- 876 0210 01F4      		brne .L36
- 877               	.LM206:
- 878 0212 8091 0000 		lds r24,red
- 879 0216 8823      		tst r24
- 880 0218 01F0      		breq .L36
- 881               	.LM207:
- 882 021a 8150      		subi r24,lo8(-(-1))
- 883               	.L49:
- 884 021c 8093 0000 		sts red,r24
- 885               	.L36:
- 886               	.LM208:
- 887 0220 8091 0000 		lds r24,green_dir
- 888 0224 8823      		tst r24
- 889 0226 01F4      		brne .L37
- 890               	.LM209:
- 891 0228 8091 0000 		lds r24,green
- 892 022c 8F3F      		cpi r24,lo8(-1)
- 893 022e 01F0      		breq .L38
- 894               	.LM210:
- 895 0230 8F5F      		subi r24,lo8(-(1))
- 896 0232 00C0      		rjmp .L50
- 897               	.L37:
- 898               	.LM211:
- 899 0234 8130      		cpi r24,lo8(1)
- 900 0236 01F4      		brne .L38
- 901               	.LM212:
- 902 0238 8091 0000 		lds r24,green
- 903 023c 8823      		tst r24
- 904 023e 01F0      		breq .L38
- 905               	.LM213:
- 906 0240 8150      		subi r24,lo8(-(-1))
- 907               	.L50:
- 908 0242 8093 0000 		sts green,r24
- 909               	.L38:
- 910               	.LM214:
- 911 0246 8091 0000 		lds r24,blue_dir
- 912 024a 8823      		tst r24
- 913 024c 01F4      		brne .L39
- 914               	.LM215:
- 915 024e 8091 0000 		lds r24,blue
- 916 0252 8F3F      		cpi r24,lo8(-1)
- 917 0254 01F0      		breq .L40
- 918               	.LM216:
- 919 0256 8F5F      		subi r24,lo8(-(1))
- 920 0258 00C0      		rjmp .L51
- 921               	.L39:
- 922               	.LM217:
- 923 025a 8130      		cpi r24,lo8(1)
- 924 025c 01F4      		brne .L40
- 925               	.LM218:
- 926 025e 8091 0000 		lds r24,blue
- 927 0262 8823      		tst r24
- 928 0264 01F0      		breq .L40
- 929               	.LM219:
- 930 0266 8150      		subi r24,lo8(-(-1))
- 931               	.L51:
- 932 0268 8093 0000 		sts blue,r24
- 933               	.L40:
- 934               	.LM220:
- 935 026c 8091 0000 		lds r24,red
- 936 0270 8F3F      		cpi r24,lo8(-1)
- 937 0272 01F4      		brne .L41
- 938 0274 8091 0000 		lds r24,green
- 939 0278 8823      		tst r24
- 940 027a 01F4      		brne .L42
- 941 027c 8091 0000 		lds r24,blue
- 942 0280 8823      		tst r24
- 943 0282 01F4      		brne .L44
- 944               	.LM221:
- 945 0284 82E0      		ldi r24,lo8(2)
- 946 0286 8093 0000 		sts red_dir,r24
- 947               	.LM222:
- 948 028a 1092 0000 		sts green_dir,__zero_reg__
- 949 028e 00C0      		rjmp .L52
- 950               	.L42:
- 951               	.LM223:
- 952 0290 8F3F      		cpi r24,lo8(-1)
- 953 0292 01F4      		brne .L44
- 954 0294 8091 0000 		lds r24,blue
- 955 0298 8823      		tst r24
- 956 029a 01F4      		brne .L44
- 957               	.LM224:
- 958 029c 81E0      		ldi r24,lo8(1)
- 959 029e 8093 0000 		sts red_dir,r24
- 960               	.LM225:
- 961 02a2 82E0      		ldi r24,lo8(2)
- 962 02a4 8093 0000 		sts green_dir,r24
- 963 02a8 00C0      		rjmp .L52
- 964               	.L41:
- 965               	.LM226:
- 966 02aa 8823      		tst r24
- 967 02ac 01F4      		brne .L45
- 968 02ae 8091 0000 		lds r24,green
- 969 02b2 8F3F      		cpi r24,lo8(-1)
- 970 02b4 01F4      		brne .L47
- 971 02b6 8091 0000 		lds r24,blue
- 972 02ba 8823      		tst r24
- 973 02bc 01F4      		brne .L46
- 974               	.LM227:
- 975 02be 82E0      		ldi r24,lo8(2)
- 976 02c0 8093 0000 		sts red_dir,r24
- 977               	.LM228:
- 978 02c4 8093 0000 		sts green_dir,r24
- 979               	.LM229:
- 980 02c8 1092 0000 		sts blue_dir,__zero_reg__
- 981 02cc 00C0      		rjmp .L47
- 982               	.L46:
- 983               	.LM230:
- 984 02ce 8F3F      		cpi r24,lo8(-1)
- 985 02d0 01F4      		brne .L47
- 986               	.LM231:
- 987 02d2 1092 0000 		sts red_dir,__zero_reg__
- 988               	.LM232:
- 989 02d6 81E0      		ldi r24,lo8(1)
- 990 02d8 8093 0000 		sts green_dir,r24
- 991               	.LM233:
- 992 02dc 82E0      		ldi r24,lo8(2)
- 993 02de 00C0      		rjmp .L52
- 994               	.L45:
- 995               	.LM234:
- 996 02e0 8F3F      		cpi r24,lo8(-1)
- 997 02e2 01F4      		brne .L47
- 998               	.L44:
- 999 02e4 8091 0000 		lds r24,green
- 1000 02e8 8823      		tst r24
- 1001 02ea 01F4      		brne .L47
- 1002 02ec 8091 0000 		lds r24,blue
- 1003 02f0 8F3F      		cpi r24,lo8(-1)
- 1004 02f2 01F4      		brne .L47
- 1005               	.LM235:
- 1006 02f4 82E0      		ldi r24,lo8(2)
- 1007 02f6 8093 0000 		sts red_dir,r24
- 1008               	.LM236:
- 1009 02fa 8093 0000 		sts green_dir,r24
- 1010               	.LM237:
- 1011 02fe 81E0      		ldi r24,lo8(1)
- 1012               	.L52:
- 1013 0300 8093 0000 		sts blue_dir,r24
- 1014               	.L47:
- 1015               	/* epilogue start */
- 1016               	.LM238:
- 1017 0304 1F91      		pop r17
- 1018               	.LVL10:
- 1019 0306 0895      		ret
- 1020               	.LFE12:
- 1022               	.global	red
- 1023               	.global	red
- 1024               		.section .bss
- 1027               	red:
- 1028 0000 00        		.skip 1,0
- 1029               	.global	green
- 1030               	.global	green
- 1033               	green:
- 1034 0001 00        		.skip 1,0
- 1035               	.global	blue
- 1036               	.global	blue
- 1039               	blue:
- 1040 0002 00        		.skip 1,0
- 1041               	.global	red_dir
- 1042               	.global	red_dir
- 1045               	red_dir:
- 1046 0003 00        		.skip 1,0
- 1047               	.global	green_dir
- 1048               	.global	green_dir
- 1051               	green_dir:
- 1052 0004 00        		.skip 1,0
- 1053               	.global	blue_dir
- 1054               	.global	blue_dir
- 1057               	blue_dir:
- 1058 0005 00        		.skip 1,0
- 1131               	.Letext0:
+ 782               	/* prologue: function */
+ 783               	/* frame size = 0 */
+ 784               	.LBB5:
+ 785               	.LBB6:
+ 786               	.LM185:
+ 787 01aa 559A      		sbi 42-32,5
+ 788               	.LM186:
+ 789 01ac 5D98      		cbi 43-32,5
+ 790               	/* epilogue start */
+ 791               	.LBE6:
+ 792               	.LBE5:
+ 793               	.LM187:
+ 794 01ae 0895      		ret
+ 795               	.LFE10:
+ 853               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 ws2812b.c
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:2      *ABS*:0000003f __SREG__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:3      *ABS*:0000003e __SP_H__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:4      *ABS*:0000003d __SP_L__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:5      *ABS*:00000034 __CCP__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:18     .text:00000000 WS2812B_Gpio_Init
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:34     .text:00000006 WS2812B_Send_Byte
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:717    .text:00000178 WS2812B_Send_Pixel
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:749    .text:00000198 WS2812B_Pixel_Delay
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:779    .text:000001aa WS2812_Clear_All_Pixels
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:809    .text:000001c2 WS2812B_Init
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1027   .bss:00000000 red
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1045   .bss:00000003 red_dir
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1051   .bss:00000004 green_dir
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1057   .bss:00000005 blue_dir
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:841    .text:000001e0 WS2812B_Rotate_All_Color
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1033   .bss:00000001 green
-C:\Users\FARIDU~1\AppData\Local\Temp/ccO2SipU.s:1039   .bss:00000002 blue
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:2      *ABS*:0000003f __SREG__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:3      *ABS*:0000003e __SP_H__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:4      *ABS*:0000003d __SP_L__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:5      *ABS*:00000034 __CCP__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:18     .text:00000000 WS2812B_Gpio_Init
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:34     .text:00000006 WS2812B_Send_Byte
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:717    .text:00000178 WS2812B_Send_Pixel
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:749    .text:00000198 WS2812B_Pixel_Delay
+C:\Users\FARIDU~1\AppData\Local\Temp/ccHNX4ye.s:779    .text:000001aa WS2812B_Init
 
-UNDEFINED SYMBOLS
-__do_clear_bss
+NO UNDEFINED SYMBOLS

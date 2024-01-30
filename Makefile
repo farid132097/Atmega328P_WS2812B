@@ -80,7 +80,7 @@ OBJDIR = .
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c ws2812b.c
+SRC = $(TARGET).c ws2812b.c animation.c
 
 
 # List C++ source files here. (C dependencies are automatically generated.)

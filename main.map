@@ -3,7 +3,12 @@ Archive member included because of file (symbol)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
                               c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o (exit)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                              ws2812b.o (__do_clear_bss)
+                              animation.o (__do_clear_bss)
+
+Allocating common symbols
+Common symbol       size              file
+
+RGBAnim             0x15              animation.o
 
 Memory Configuration
 
@@ -22,6 +27,7 @@ Address of section .data set to 0x800100
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 LOAD main.o
 LOAD ws2812b.o
+LOAD animation.o
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
@@ -117,7 +123,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3b4
+.text           0x00000000      0x82e
  *(.vectors)
  .vectors       0x00000000       0x68 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
                 0x00000000                __vectors
@@ -197,27 +203,35 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x0000008c                __vector_16
                 0x0000008c                __vector_18
                 0x0000008c                __vector_20
- .text          0x00000090       0x18 main.o
+ .text          0x00000090       0x2c main.o
                 0x00000090                main
- .text          0x000000a8      0x308 ws2812b.o
-                0x00000220                WS2812B_Send_Pixel
-                0x00000252                WS2812_Clear_All_Pixels
-                0x00000288                WS2812B_Rotate_All_Color
-                0x0000026a                WS2812B_Init
-                0x000000ae                WS2812B_Send_Byte
-                0x000000a8                WS2812B_Gpio_Init
-                0x00000240                WS2812B_Pixel_Delay
- .text          0x000003b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text          0x000003b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x000003b0                . = ALIGN (0x2)
+ .text          0x000000bc      0x1b0 ws2812b.o
+                0x00000234                WS2812B_Send_Pixel
+                0x00000266                WS2812B_Init
+                0x000000c2                WS2812B_Send_Byte
+                0x000000bc                WS2812B_Gpio_Init
+                0x00000254                WS2812B_Pixel_Delay
+ .text          0x0000026c      0x5be animation.o
+                0x00000778                RGB_Animation_Slide_Fill
+                0x0000027c                RGB_Animation_Slide
+                0x00000534                RGB_Brightness_Dec
+                0x00000656                RGB_Animation_Slide_Unfill
+                0x0000026c                RGB_Animation_Clear_Pixel_Buf
+                0x00000404                RGB_Animation_Rotate_All_Color
+                0x000007bc                RGB_Animation_Clear_All_Pixels
+                0x0000068e                RGB_Brightness_Inc
+                0x000007de                RGB_Animation_Init
+ .text          0x0000082a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text          0x0000082a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x0000082a                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x000003b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x000003b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x000003b0                . = ALIGN (0x2)
+ .text.libgcc   0x0000082a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x0000082a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x0000082a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000003b0                exit
-                0x000003b0                _exit
+ .fini9         0x0000082a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x0000082a                exit
+                0x0000082a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -236,16 +250,17 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003b0        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000082a        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003b4                _etext = .
+                0x0000082e                _etext = .
 
-.data           0x00800100        0x0 load address 0x000003b4
+.data           0x00800100        0x0 load address 0x0000082e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
  .data          0x00800100        0x0 main.o
  .data          0x00800100        0x0 ws2812b.o
+ .data          0x00800100        0x0 animation.o
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
  *(.data*)
@@ -256,32 +271,39 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00800100                _edata = .
                 0x00800100                PROVIDE (__data_end, .)
 
-.bss            0x00800100        0x6
+.bss            0x00800100       0x23
                 0x00800100                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
  .bss           0x00800100        0x0 main.o
- .bss           0x00800100        0x6 ws2812b.o
+ .bss           0x00800100        0x0 ws2812b.o
+ .bss           0x00800100        0xe animation.o
                 0x00800102                blue
                 0x00800104                green_dir
+                0x0080010c                color3
                 0x00800101                green
                 0x00800100                red
+                0x0080010a                color2
                 0x00800103                red_dir
+                0x00800106                color
                 0x00800105                blue_dir
- .bss           0x00800106        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .bss           0x00800106        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x00800108                color1
+ .bss           0x0080010e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .bss           0x0080010e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
  *(.bss*)
  *(COMMON)
-                0x00800106                PROVIDE (__bss_end, .)
-                0x000003b4                __data_load_start = LOADADDR (.data)
-                0x000003b4                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080010e       0x15 animation.o
+                0x0080010e                RGBAnim
+                0x00800123                PROVIDE (__bss_end, .)
+                0x0000082e                __data_load_start = LOADADDR (.data)
+                0x0000082e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800106        0x0
-                0x00800106                PROVIDE (__noinit_start, .)
+.noinit         0x00800123        0x0
+                0x00800123                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800106                PROVIDE (__noinit_end, .)
-                0x00800106                _end = .
-                0x00800106                PROVIDE (__heap_start, .)
+                0x00800123                PROVIDE (__noinit_end, .)
+                0x00800123                _end = .
+                0x00800123                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -332,78 +354,101 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x40
+.debug_aranges  0x00000000       0x60
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 main.o
  .debug_aranges
                 0x00000020       0x20 ws2812b.o
+ .debug_aranges
+                0x00000040       0x20 animation.o
 
 .debug_pubnames
-                0x00000000      0x114
+                0x00000000      0x225
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000       0x1b main.o
  .debug_pubnames
-                0x0000001b       0xf9 ws2812b.o
+                0x0000001b       0x7e ws2812b.o
+ .debug_pubnames
+                0x00000099      0x18c animation.o
 
-.debug_info     0x00000000      0x317
+.debug_info     0x00000000      0x917
  *(.debug_info)
  .debug_info    0x00000000       0xfd main.o
- .debug_info    0x000000fd      0x21a ws2812b.o
+ .debug_info    0x000000fd      0x146 ws2812b.o
+ .debug_info    0x00000243      0x6d4 animation.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x192
+.debug_abbrev   0x00000000      0x380
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x9b main.o
- .debug_abbrev  0x0000009b       0xf7 ws2812b.o
+ .debug_abbrev  0x0000009b       0xb5 ws2812b.o
+ .debug_abbrev  0x00000150      0x230 animation.o
 
-.debug_line     0x00000000      0x904
+.debug_line     0x00000000      0xd80
  *(.debug_line)
- .debug_line    0x00000000      0x10a main.o
- .debug_line    0x0000010a      0x7fa ws2812b.o
+ .debug_line    0x00000000      0x11a main.o
+ .debug_line    0x0000011a      0x65f ws2812b.o
+ .debug_line    0x00000779      0x607 animation.o
 
-.debug_frame    0x00000000       0xa0
+.debug_frame    0x00000000      0x120
  *(.debug_frame)
  .debug_frame   0x00000000       0x20 main.o
- .debug_frame   0x00000020       0x80 ws2812b.o
+ .debug_frame   0x00000020       0x60 ws2812b.o
+ .debug_frame   0x00000080       0xa0 animation.o
 
-.debug_str      0x00000000      0x195
+.debug_str      0x00000000      0x2d9
  *(.debug_str)
  .debug_str     0x00000000       0xcb main.o
                                  0xff (size before relaxing)
- .debug_str     0x000000cb       0xca ws2812b.o
-                                0x17a (size before relaxing)
+ .debug_str     0x000000cb       0x73 ws2812b.o
+                                0x123 (size before relaxing)
+ .debug_str     0x0000013e      0x19b animation.o
+                                0x296 (size before relaxing)
 
-.debug_loc      0x00000000       0x88
+.debug_loc      0x00000000      0x569
  *(.debug_loc)
- .debug_loc     0x00000000       0x88 ws2812b.o
+ .debug_loc     0x00000000       0x62 ws2812b.o
+ .debug_loc     0x00000062      0x507 animation.o
 
 .debug_macinfo
  *(.debug_macinfo)
 OUTPUT(main.elf elf32-avr)
 LOAD linker stubs
 
-.debug_ranges   0x00000000       0x48
+.debug_ranges   0x00000000      0x198
  .debug_ranges  0x00000000       0x48 main.o
+ .debug_ranges  0x00000048      0x150 animation.o
 
 Cross Reference Table
 
 Symbol                                            File
+RGBAnim                                           animation.o
+RGB_Animation_Clear_All_Pixels                    animation.o
+RGB_Animation_Clear_Pixel_Buf                     animation.o
+RGB_Animation_Init                                animation.o
+                                                  main.o
+RGB_Animation_Rotate_All_Color                    animation.o
+RGB_Animation_Slide                               animation.o
+RGB_Animation_Slide_Fill                          animation.o
+                                                  main.o
+RGB_Animation_Slide_Unfill                        animation.o
+                                                  main.o
+RGB_Brightness_Dec                                animation.o
+RGB_Brightness_Inc                                animation.o
 WS2812B_Gpio_Init                                 ws2812b.o
 WS2812B_Init                                      ws2812b.o
                                                   main.o
 WS2812B_Pixel_Delay                               ws2812b.o
-WS2812B_Rotate_All_Color                          ws2812b.o
-                                                  main.o
 WS2812B_Send_Byte                                 ws2812b.o
 WS2812B_Send_Pixel                                ws2812b.o
-WS2812_Clear_All_Pixels                           ws2812b.o
+                                                  animation.o
 __bad_interrupt                                   c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 __bss_end                                         c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
 __bss_start                                       c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
 __do_clear_bss                                    c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                                                  ws2812b.o
+                                                  animation.o
 __heap_end                                        c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 __init                                            c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 __stack                                           c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
@@ -435,13 +480,17 @@ __vector_9                                        c:/winavr-20100110/bin/../lib/
 __vector_default                                  c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 __vectors                                         c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
 _exit                                             c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-blue                                              ws2812b.o
-blue_dir                                          ws2812b.o
+blue                                              animation.o
+blue_dir                                          animation.o
+color                                             animation.o
+color1                                            animation.o
+color2                                            animation.o
+color3                                            animation.o
 exit                                              c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
                                                   c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
-green                                             ws2812b.o
-green_dir                                         ws2812b.o
+green                                             animation.o
+green_dir                                         animation.o
 main                                              main.o
                                                   c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
-red                                               ws2812b.o
-red_dir                                           ws2812b.o
+red                                               animation.o
+red_dir                                           animation.o

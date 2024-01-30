@@ -1,0 +1,1231 @@
+   1               		.file	"animation.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	RGB_Animation_Clear_Pixel_Buf
+  18               	RGB_Animation_Clear_Pixel_Buf:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 E0E0      		ldi r30,lo8(RGBAnim+1)
+  25 0002 F0E0      		ldi r31,hi8(RGBAnim+1)
+  26               	.L2:
+  27               	.LBB65:
+  28               	.LM3:
+  29 0004 1192      		st Z+,__zero_reg__
+  30               	.LM4:
+  31 0006 80E0      		ldi r24,hi8(RGBAnim+21)
+  32 0008 E030      		cpi r30,lo8(RGBAnim+21)
+  33 000a F807      		cpc r31,r24
+  34 000c 01F4      		brne .L2
+  35               	/* epilogue start */
+  36               	.LBE65:
+  37               	.LM5:
+  38 000e 0895      		ret
+  39               	.LFE6:
+  41               	.global	RGB_Animation_Slide
+  43               	RGB_Animation_Slide:
+  44               	.LFB11:
+  45               	.LM6:
+  46 0010 8F92      		push r8
+  47 0012 9F92      		push r9
+  48 0014 AF92      		push r10
+  49 0016 BF92      		push r11
+  50 0018 CF92      		push r12
+  51 001a DF92      		push r13
+  52 001c EF92      		push r14
+  53 001e FF92      		push r15
+  54 0020 0F93      		push r16
+  55 0022 1F93      		push r17
+  56 0024 CF93      		push r28
+  57 0026 DF93      		push r29
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60               	.LM7:
+  61 0028 8091 0000 		lds r24,color
+  62 002c 9091 0000 		lds r25,(color)+1
+  63 0030 0097      		sbiw r24,0
+  64 0032 01F4      		brne .L6
+  65               	.LM8:
+  66 0034 8FEF      		ldi r24,lo8(255)
+  67 0036 90E0      		ldi r25,hi8(255)
+  68 0038 9093 0000 		sts (color1)+1,r25
+  69 003c 8093 0000 		sts color1,r24
+  70               	.LM9:
+  71 0040 1092 0000 		sts (color2)+1,__zero_reg__
+  72 0044 1092 0000 		sts color2,__zero_reg__
+  73               	.L20:
+  74               	.LM10:
+  75 0048 1092 0000 		sts (color3)+1,__zero_reg__
+  76 004c 1092 0000 		sts color3,__zero_reg__
+  77               	.L9:
+  78 0050 00E0      		ldi r16,lo8(0)
+  79 0052 10E0      		ldi r17,hi8(0)
+  80               	.LVL0:
+  81 0054 EE24      		clr r14
+  82 0056 FF24      		clr r15
+  83               	.LVL1:
+  84               	.LBB66:
+  85               	.LM11:
+  86 0058 94E1      		ldi r25,lo8(20)
+  87 005a 892E      		mov r8,r25
+  88 005c 912C      		mov r9,__zero_reg__
+  89               	.LBB67:
+  90               	.LBB68:
+  91               	.LBB69:
+  92               	.LBB70:
+  93               	.LM12:
+  94 005e 88EB      		ldi r24,lo8(3000)
+  95 0060 A82E      		mov r10,r24
+  96 0062 8BE0      		ldi r24,hi8(3000)
+  97 0064 B82E      		mov r11,r24
+  98 0066 00C0      		rjmp .L7
+  99               	.LVL2:
+ 100               	.L6:
+ 101               	.LBE70:
+ 102               	.LBE69:
+ 103               	.LBE68:
+ 104               	.LBE67:
+ 105               	.LBE66:
+ 106               	.LM13:
+ 107 0068 8130      		cpi r24,1
+ 108 006a 9105      		cpc r25,__zero_reg__
+ 109 006c 01F4      		brne .L8
+ 110               	.LM14:
+ 111 006e 8FEF      		ldi r24,lo8(255)
+ 112 0070 90E0      		ldi r25,hi8(255)
+ 113 0072 9093 0000 		sts (color1)+1,r25
+ 114 0076 8093 0000 		sts color1,r24
+ 115 007a 00C0      		rjmp .L22
+ 116               	.L8:
+ 117               	.LM15:
+ 118 007c 8230      		cpi r24,2
+ 119 007e 9105      		cpc r25,__zero_reg__
+ 120 0080 01F4      		brne .L10
+ 121               	.LM16:
+ 122 0082 1092 0000 		sts (color1)+1,__zero_reg__
+ 123 0086 1092 0000 		sts color1,__zero_reg__
+ 124               	.LM17:
+ 125 008a 8FEF      		ldi r24,lo8(255)
+ 126 008c 90E0      		ldi r25,hi8(255)
+ 127               	.L22:
+ 128 008e 9093 0000 		sts (color2)+1,r25
+ 129 0092 8093 0000 		sts color2,r24
+ 130 0096 00C0      		rjmp .L20
+ 131               	.L10:
+ 132               	.LM18:
+ 133 0098 8330      		cpi r24,3
+ 134 009a 9105      		cpc r25,__zero_reg__
+ 135 009c 01F4      		brne .L11
+ 136               	.LM19:
+ 137 009e 1092 0000 		sts (color1)+1,__zero_reg__
+ 138 00a2 1092 0000 		sts color1,__zero_reg__
+ 139               	.LM20:
+ 140 00a6 8FEF      		ldi r24,lo8(255)
+ 141 00a8 90E0      		ldi r25,hi8(255)
+ 142 00aa 9093 0000 		sts (color2)+1,r25
+ 143 00ae 8093 0000 		sts color2,r24
+ 144 00b2 00C0      		rjmp .L21
+ 145               	.L11:
+ 146               	.LM21:
+ 147 00b4 0497      		sbiw r24,4
+ 148 00b6 01F4      		brne .L9
+ 149               	.LM22:
+ 150 00b8 1092 0000 		sts (color1)+1,__zero_reg__
+ 151 00bc 1092 0000 		sts color1,__zero_reg__
+ 152               	.LM23:
+ 153 00c0 1092 0000 		sts (color2)+1,__zero_reg__
+ 154 00c4 1092 0000 		sts color2,__zero_reg__
+ 155               	.LM24:
+ 156 00c8 8FEF      		ldi r24,lo8(255)
+ 157 00ca 90E0      		ldi r25,hi8(255)
+ 158               	.L21:
+ 159 00cc 9093 0000 		sts (color3)+1,r25
+ 160 00d0 8093 0000 		sts color3,r24
+ 161 00d4 00C0      		rjmp .L9
+ 162               	.LVL3:
+ 163               	.L7:
+ 164               	.LBB78:
+ 165               	.LM25:
+ 166 00d6 6401      		movw r12,r8
+ 167 00d8 C01A      		sub r12,r16
+ 168 00da D10A      		sbc r13,r17
+ 169 00dc C0E0      		ldi r28,lo8(0)
+ 170 00de D0E0      		ldi r29,hi8(0)
+ 171               	.LVL4:
+ 172 00e0 00C0      		rjmp .L12
+ 173               	.L13:
+ 174               	.LBB74:
+ 175               	.LM26:
+ 176 00e2 80E0      		ldi r24,lo8(0)
+ 177 00e4 60E0      		ldi r22,lo8(0)
+ 178 00e6 40E0      		ldi r20,lo8(0)
+ 179 00e8 0E94 0000 		call WS2812B_Send_Pixel
+ 180               	.LM27:
+ 181 00ec 2196      		adiw r28,1
+ 182               	.L12:
+ 183 00ee C017      		cp r28,r16
+ 184 00f0 D107      		cpc r29,r17
+ 185 00f2 00F0      		brlo .L13
+ 186               	.LBE74:
+ 187               	.LBB75:
+ 188               	.LM28:
+ 189 00f4 8091 0000 		lds r24,color1
+ 190 00f8 6091 0000 		lds r22,color2
+ 191 00fc 4091 0000 		lds r20,color3
+ 192 0100 0E94 0000 		call WS2812B_Send_Pixel
+ 193 0104 8091 0000 		lds r24,color1
+ 194 0108 6091 0000 		lds r22,color2
+ 195 010c 4091 0000 		lds r20,color3
+ 196 0110 0E94 0000 		call WS2812B_Send_Pixel
+ 197 0114 8091 0000 		lds r24,color1
+ 198 0118 6091 0000 		lds r22,color2
+ 199 011c 4091 0000 		lds r20,color3
+ 200 0120 0E94 0000 		call WS2812B_Send_Pixel
+ 201 0124 C0E0      		ldi r28,lo8(0)
+ 202 0126 D0E0      		ldi r29,hi8(0)
+ 203               	.LVL5:
+ 204 0128 00C0      		rjmp .L14
+ 205               	.L15:
+ 206               	.LBE75:
+ 207               	.LBB76:
+ 208               	.LM29:
+ 209 012a 80E0      		ldi r24,lo8(0)
+ 210 012c 60E0      		ldi r22,lo8(0)
+ 211 012e 40E0      		ldi r20,lo8(0)
+ 212 0130 0E94 0000 		call WS2812B_Send_Pixel
+ 213               	.LM30:
+ 214 0134 2196      		adiw r28,1
+ 215               	.L14:
+ 216 0136 CC15      		cp r28,r12
+ 217 0138 DD05      		cpc r29,r13
+ 218 013a 00F0      		brlo .L15
+ 219               	.LBE76:
+ 220               	.LM31:
+ 221 013c 0F5F      		subi r16,lo8(-(1))
+ 222 013e 1F4F      		sbci r17,hi8(-(1))
+ 223               	.LM32:
+ 224 0140 0431      		cpi r16,20
+ 225 0142 1105      		cpc r17,__zero_reg__
+ 226 0144 00F0      		brlo .L16
+ 227 0146 00E0      		ldi r16,lo8(0)
+ 228 0148 10E0      		ldi r17,hi8(0)
+ 229               	.L16:
+ 230               	.LBB77:
+ 231               	.LBB73:
+ 232               	.LBB72:
+ 233               	.LBB71:
+ 234               	.LM33:
+ 235 014a C501      		movw r24,r10
+ 236               	.LVL6:
+ 237               	/* #APP */
+ 238               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 239 014c 0197      		1: sbiw r24,1
+ 240 014e 01F4      		brne 1b
+ 241               	 ;  0 "" 2
+ 242               	/* #NOAPP */
+ 243               	.LBE71:
+ 244               	.LBE72:
+ 245               	.LBE73:
+ 246               	.LBE77:
+ 247               	.LM34:
+ 248 0150 0894      		sec
+ 249 0152 E11C      		adc r14,__zero_reg__
+ 250 0154 F11C      		adc r15,__zero_reg__
+ 251 0156 84E1      		ldi r24,lo8(20)
+ 252 0158 E816      		cp r14,r24
+ 253 015a F104      		cpc r15,__zero_reg__
+ 254               	.LVL7:
+ 255 015c 01F0      		breq .+2
+ 256 015e 00C0      		rjmp .L7
+ 257               	.LBE78:
+ 258               	.LM35:
+ 259 0160 8091 0000 		lds r24,color
+ 260 0164 9091 0000 		lds r25,(color)+1
+ 261 0168 0196      		adiw r24,1
+ 262 016a 9093 0000 		sts (color)+1,r25
+ 263 016e 8093 0000 		sts color,r24
+ 264               	.LM36:
+ 265 0172 0597      		sbiw r24,5
+ 266 0174 00F0      		brlo .L18
+ 267               	.LM37:
+ 268 0176 1092 0000 		sts (color)+1,__zero_reg__
+ 269 017a 1092 0000 		sts color,__zero_reg__
+ 270               	.L18:
+ 271               	/* epilogue start */
+ 272               	.LM38:
+ 273 017e DF91      		pop r29
+ 274 0180 CF91      		pop r28
+ 275               	.LVL8:
+ 276 0182 1F91      		pop r17
+ 277 0184 0F91      		pop r16
+ 278               	.LVL9:
+ 279 0186 FF90      		pop r15
+ 280 0188 EF90      		pop r14
+ 281               	.LVL10:
+ 282 018a DF90      		pop r13
+ 283 018c CF90      		pop r12
+ 284               	.LVL11:
+ 285 018e BF90      		pop r11
+ 286 0190 AF90      		pop r10
+ 287 0192 9F90      		pop r9
+ 288 0194 8F90      		pop r8
+ 289 0196 0895      		ret
+ 290               	.LFE11:
+ 292               	.global	RGB_Animation_Rotate_All_Color
+ 294               	RGB_Animation_Rotate_All_Color:
+ 295               	.LFB10:
+ 296               	.LM39:
+ 297 0198 CF93      		push r28
+ 298 019a DF93      		push r29
+ 299               	/* prologue: function */
+ 300               	/* frame size = 0 */
+ 301               	.LM40:
+ 302 019c C0E0      		ldi r28,lo8(0)
+ 303 019e D0E0      		ldi r29,hi8(0)
+ 304               	.LVL12:
+ 305               	.L24:
+ 306               	.LBB79:
+ 307               	.LM41:
+ 308 01a0 8091 0000 		lds r24,red
+ 309 01a4 6091 0000 		lds r22,green
+ 310 01a8 4091 0000 		lds r20,blue
+ 311 01ac 0E94 0000 		call WS2812B_Send_Pixel
+ 312               	.LM42:
+ 313 01b0 2196      		adiw r28,1
+ 314 01b2 C431      		cpi r28,20
+ 315 01b4 D105      		cpc r29,__zero_reg__
+ 316 01b6 01F4      		brne .L24
+ 317               	.LBE79:
+ 318               	.LM43:
+ 319 01b8 8091 0000 		lds r24,red_dir
+ 320 01bc 8823      		tst r24
+ 321 01be 01F4      		brne .L25
+ 322               	.LM44:
+ 323 01c0 8091 0000 		lds r24,red
+ 324 01c4 8F3F      		cpi r24,lo8(-1)
+ 325 01c6 01F0      		breq .L26
+ 326               	.LM45:
+ 327 01c8 8F5F      		subi r24,lo8(-(1))
+ 328 01ca 00C0      		rjmp .L39
+ 329               	.L25:
+ 330               	.LM46:
+ 331 01cc 8130      		cpi r24,lo8(1)
+ 332 01ce 01F4      		brne .L26
+ 333               	.LM47:
+ 334 01d0 8091 0000 		lds r24,red
+ 335 01d4 8823      		tst r24
+ 336 01d6 01F0      		breq .L26
+ 337               	.LM48:
+ 338 01d8 8150      		subi r24,lo8(-(-1))
+ 339               	.L39:
+ 340 01da 8093 0000 		sts red,r24
+ 341               	.L26:
+ 342               	.LM49:
+ 343 01de 8091 0000 		lds r24,green_dir
+ 344 01e2 8823      		tst r24
+ 345 01e4 01F4      		brne .L27
+ 346               	.LM50:
+ 347 01e6 8091 0000 		lds r24,green
+ 348 01ea 8F3F      		cpi r24,lo8(-1)
+ 349 01ec 01F0      		breq .L28
+ 350               	.LM51:
+ 351 01ee 8F5F      		subi r24,lo8(-(1))
+ 352 01f0 00C0      		rjmp .L40
+ 353               	.L27:
+ 354               	.LM52:
+ 355 01f2 8130      		cpi r24,lo8(1)
+ 356 01f4 01F4      		brne .L28
+ 357               	.LM53:
+ 358 01f6 8091 0000 		lds r24,green
+ 359 01fa 8823      		tst r24
+ 360 01fc 01F0      		breq .L28
+ 361               	.LM54:
+ 362 01fe 8150      		subi r24,lo8(-(-1))
+ 363               	.L40:
+ 364 0200 8093 0000 		sts green,r24
+ 365               	.L28:
+ 366               	.LM55:
+ 367 0204 8091 0000 		lds r24,blue_dir
+ 368 0208 8823      		tst r24
+ 369 020a 01F4      		brne .L29
+ 370               	.LM56:
+ 371 020c 8091 0000 		lds r24,blue
+ 372 0210 8F3F      		cpi r24,lo8(-1)
+ 373 0212 01F0      		breq .L30
+ 374               	.LM57:
+ 375 0214 8F5F      		subi r24,lo8(-(1))
+ 376 0216 00C0      		rjmp .L41
+ 377               	.L29:
+ 378               	.LM58:
+ 379 0218 8130      		cpi r24,lo8(1)
+ 380 021a 01F4      		brne .L30
+ 381               	.LM59:
+ 382 021c 8091 0000 		lds r24,blue
+ 383 0220 8823      		tst r24
+ 384 0222 01F0      		breq .L30
+ 385               	.LM60:
+ 386 0224 8150      		subi r24,lo8(-(-1))
+ 387               	.L41:
+ 388 0226 8093 0000 		sts blue,r24
+ 389               	.L30:
+ 390               	.LM61:
+ 391 022a 8091 0000 		lds r24,red
+ 392 022e 8F3F      		cpi r24,lo8(-1)
+ 393 0230 01F4      		brne .L31
+ 394 0232 8091 0000 		lds r24,green
+ 395 0236 8823      		tst r24
+ 396 0238 01F4      		brne .L32
+ 397 023a 8091 0000 		lds r24,blue
+ 398 023e 8823      		tst r24
+ 399 0240 01F4      		brne .L34
+ 400               	.LM62:
+ 401 0242 82E0      		ldi r24,lo8(2)
+ 402 0244 8093 0000 		sts red_dir,r24
+ 403               	.LM63:
+ 404 0248 1092 0000 		sts green_dir,__zero_reg__
+ 405 024c 00C0      		rjmp .L42
+ 406               	.L32:
+ 407               	.LM64:
+ 408 024e 8F3F      		cpi r24,lo8(-1)
+ 409 0250 01F4      		brne .L34
+ 410 0252 8091 0000 		lds r24,blue
+ 411 0256 8823      		tst r24
+ 412 0258 01F4      		brne .L34
+ 413               	.LM65:
+ 414 025a 81E0      		ldi r24,lo8(1)
+ 415 025c 8093 0000 		sts red_dir,r24
+ 416               	.LM66:
+ 417 0260 82E0      		ldi r24,lo8(2)
+ 418 0262 8093 0000 		sts green_dir,r24
+ 419 0266 00C0      		rjmp .L42
+ 420               	.L31:
+ 421               	.LM67:
+ 422 0268 8823      		tst r24
+ 423 026a 01F4      		brne .L35
+ 424 026c 8091 0000 		lds r24,green
+ 425 0270 8F3F      		cpi r24,lo8(-1)
+ 426 0272 01F4      		brne .L37
+ 427 0274 8091 0000 		lds r24,blue
+ 428 0278 8823      		tst r24
+ 429 027a 01F4      		brne .L36
+ 430               	.LM68:
+ 431 027c 82E0      		ldi r24,lo8(2)
+ 432 027e 8093 0000 		sts red_dir,r24
+ 433               	.LM69:
+ 434 0282 8093 0000 		sts green_dir,r24
+ 435               	.LM70:
+ 436 0286 1092 0000 		sts blue_dir,__zero_reg__
+ 437 028a 00C0      		rjmp .L37
+ 438               	.L36:
+ 439               	.LM71:
+ 440 028c 8F3F      		cpi r24,lo8(-1)
+ 441 028e 01F4      		brne .L37
+ 442               	.LM72:
+ 443 0290 1092 0000 		sts red_dir,__zero_reg__
+ 444               	.LM73:
+ 445 0294 81E0      		ldi r24,lo8(1)
+ 446 0296 8093 0000 		sts green_dir,r24
+ 447               	.LM74:
+ 448 029a 82E0      		ldi r24,lo8(2)
+ 449 029c 00C0      		rjmp .L42
+ 450               	.L35:
+ 451               	.LM75:
+ 452 029e 8F3F      		cpi r24,lo8(-1)
+ 453 02a0 01F4      		brne .L37
+ 454               	.L34:
+ 455 02a2 8091 0000 		lds r24,green
+ 456 02a6 8823      		tst r24
+ 457 02a8 01F4      		brne .L37
+ 458 02aa 8091 0000 		lds r24,blue
+ 459 02ae 8F3F      		cpi r24,lo8(-1)
+ 460 02b0 01F4      		brne .L37
+ 461               	.LM76:
+ 462 02b2 82E0      		ldi r24,lo8(2)
+ 463 02b4 8093 0000 		sts red_dir,r24
+ 464               	.LM77:
+ 465 02b8 8093 0000 		sts green_dir,r24
+ 466               	.LM78:
+ 467 02bc 81E0      		ldi r24,lo8(1)
+ 468               	.L42:
+ 469 02be 8093 0000 		sts blue_dir,r24
+ 470               	.L37:
+ 471               	/* epilogue start */
+ 472               	.LM79:
+ 473 02c2 DF91      		pop r29
+ 474 02c4 CF91      		pop r28
+ 475               	.LVL13:
+ 476 02c6 0895      		ret
+ 477               	.LFE10:
+ 479               	.global	RGB_Brightness_Dec
+ 481               	RGB_Brightness_Dec:
+ 482               	.LFB9:
+ 483               	.LM80:
+ 484               	.LVL14:
+ 485 02c8 2F92      		push r2
+ 486 02ca 3F92      		push r3
+ 487 02cc 4F92      		push r4
+ 488 02ce 5F92      		push r5
+ 489 02d0 6F92      		push r6
+ 490 02d2 7F92      		push r7
+ 491 02d4 8F92      		push r8
+ 492 02d6 9F92      		push r9
+ 493 02d8 BF92      		push r11
+ 494 02da CF92      		push r12
+ 495 02dc DF92      		push r13
+ 496 02de EF92      		push r14
+ 497 02e0 FF92      		push r15
+ 498 02e2 0F93      		push r16
+ 499 02e4 1F93      		push r17
+ 500 02e6 DF93      		push r29
+ 501 02e8 CF93      		push r28
+ 502 02ea 00D0      		rcall .
+ 503 02ec 00D0      		rcall .
+ 504 02ee CDB7      		in r28,__SP_L__
+ 505 02f0 DEB7      		in r29,__SP_H__
+ 506               	/* prologue: function */
+ 507               	/* frame size = 4 */
+ 508 02f2 B82E      		mov r11,r24
+ 509 02f4 C62E      		mov r12,r22
+ 510 02f6 D42E      		mov r13,r20
+ 511               	.LM81:
+ 512 02f8 8093 0000 		sts RGBAnim,r24
+ 513               	.LM82:
+ 514 02fc 8617      		cp r24,r22
+ 515 02fe 00F4      		brsh .L44
+ 516               	.LVL15:
+ 517               	.LM83:
+ 518 0300 6093 0000 		sts RGBAnim,r22
+ 519               	.L44:
+ 520               	.LM84:
+ 521 0304 8091 0000 		lds r24,RGBAnim
+ 522               	.LVL16:
+ 523 0308 8D15      		cp r24,r13
+ 524 030a 00F4      		brsh .L45
+ 525               	.LM85:
+ 526 030c D092 0000 		sts RGBAnim,r13
+ 527               	.L45:
+ 528               	.LBB80:
+ 529               	.LM86:
+ 530 0310 8091 0000 		lds r24,RGBAnim
+ 531 0314 082F      		mov r16,r24
+ 532               	.LVL17:
+ 533 0316 10E0      		ldi r17,lo8(0)
+ 534               	.LVL18:
+ 535 0318 EE24      		clr r14
+ 536 031a FF24      		clr r15
+ 537               	.LBB81:
+ 538               	.LBB82:
+ 539               	.LM87:
+ 540 031c C901      		movw r24,r18
+ 541 031e 8050      		subi r24,lo8(-(RGBAnim))
+ 542 0320 9040      		sbci r25,hi8(-(RGBAnim))
+ 543 0322 9A83      		std Y+2,r25
+ 544 0324 8983      		std Y+1,r24
+ 545 0326 1801      		movw r2,r16
+ 546               	.LBE82:
+ 547               	.LM88:
+ 548 0328 4B2C      		mov r4,r11
+ 549 032a 5524      		clr r5
+ 550               	.LVL19:
+ 551               	.LM89:
+ 552 032c 6C2C      		mov r6,r12
+ 553 032e 7724      		clr r7
+ 554               	.LVL20:
+ 555               	.LM90:
+ 556 0330 8D2C      		mov r8,r13
+ 557 0332 9924      		clr r9
+ 558               	.LVL21:
+ 559               	.LVL22:
+ 560               	.L56:
+ 561               	.LBE81:
+ 562               	.LM91:
+ 563 0334 E0E0      		ldi r30,lo8(RGBAnim+1)
+ 564 0336 F0E0      		ldi r31,hi8(RGBAnim+1)
+ 565 0338 FC83      		std Y+4,r31
+ 566 033a EB83      		std Y+3,r30
+ 567 033c 00C0      		rjmp .L46
+ 568               	.LVL23:
+ 569               	.L49:
+ 570               	.LBB90:
+ 571               	.LBB83:
+ 572               	.LM92:
+ 573 033e EB81      		ldd r30,Y+3
+ 574 0340 FC81      		ldd r31,Y+4
+ 575 0342 8081      		ld r24,Z
+ 576 0344 8823      		tst r24
+ 577 0346 01F0      		breq .L47
+ 578               	.LM93:
+ 579 0348 8B2D      		mov r24,r11
+ 580 034a 6C2D      		mov r22,r12
+ 581 034c 4D2D      		mov r20,r13
+ 582 034e 00C0      		rjmp .L59
+ 583               	.LVL24:
+ 584               	.L47:
+ 585               	.LM94:
+ 586 0350 80E0      		ldi r24,lo8(0)
+ 587 0352 60E0      		ldi r22,lo8(0)
+ 588 0354 40E0      		ldi r20,lo8(0)
+ 589               	.L59:
+ 590 0356 0E94 0000 		call WS2812B_Send_Pixel
+ 591               	.LVL25:
+ 592 035a 2B81      		ldd r18,Y+3
+ 593 035c 3C81      		ldd r19,Y+4
+ 594 035e 2F5F      		subi r18,lo8(-(1))
+ 595 0360 3F4F      		sbci r19,hi8(-(1))
+ 596 0362 3C83      		std Y+4,r19
+ 597 0364 2B83      		std Y+3,r18
+ 598               	.LVL26:
+ 599               	.L46:
+ 600               	.LM95:
+ 601 0366 8B81      		ldd r24,Y+3
+ 602 0368 9C81      		ldd r25,Y+4
+ 603               	.LVL27:
+ 604 036a E981      		ldd r30,Y+1
+ 605 036c FA81      		ldd r31,Y+2
+ 606 036e 8E17      		cp r24,r30
+ 607 0370 9F07      		cpc r25,r31
+ 608 0372 01F4      		brne .L49
+ 609 0374 9101      		movw r18,r2
+ 610               	.LVL28:
+ 611 0376 2E19      		sub r18,r14
+ 612 0378 3F09      		sbc r19,r15
+ 613               	.LBE83:
+ 614               	.LM96:
+ 615 037a 4216      		cp r4,r18
+ 616 037c 5306      		cpc r5,r19
+ 617 037e 04F4      		brge .L50
+ 618               	.LM97:
+ 619 0380 8B2D      		mov r24,r11
+ 620 0382 00C0      		rjmp .L51
+ 621               	.L50:
+ 622 0384 802F      		mov r24,r16
+ 623               	.L51:
+ 624               	.LM98:
+ 625 0386 6216      		cp r6,r18
+ 626 0388 7306      		cpc r7,r19
+ 627 038a 04F4      		brge .L52
+ 628               	.LM99:
+ 629 038c 6C2D      		mov r22,r12
+ 630 038e 00C0      		rjmp .L53
+ 631               	.LVL29:
+ 632               	.L52:
+ 633 0390 602F      		mov r22,r16
+ 634               	.LVL30:
+ 635               	.L53:
+ 636               	.LM100:
+ 637 0392 8216      		cp r8,r18
+ 638 0394 9306      		cpc r9,r19
+ 639 0396 04F4      		brge .L54
+ 640               	.LVL31:
+ 641               	.LM101:
+ 642 0398 4D2D      		mov r20,r13
+ 643 039a 00C0      		rjmp .L55
+ 644               	.LVL32:
+ 645               	.L54:
+ 646 039c 402F      		mov r20,r16
+ 647               	.LVL33:
+ 648               	.L55:
+ 649               	.LM102:
+ 650 039e 0E94 0000 		call WS2812B_Send_Pixel
+ 651               	.LBB84:
+ 652               	.LBB85:
+ 653               	.LBB86:
+ 654               	.LBB87:
+ 655               	.LBB88:
+ 656               	.LBB89:
+ 657               	.LM103:
+ 658 03a2 8CE2      		ldi r24,lo8(300)
+ 659 03a4 91E0      		ldi r25,hi8(300)
+ 660               	.LVL34:
+ 661               	/* #APP */
+ 662               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 663 03a6 0197      		1: sbiw r24,1
+ 664 03a8 01F4      		brne 1b
+ 665               	 ;  0 "" 2
+ 666               	/* #NOAPP */
+ 667               	.LBE89:
+ 668               	.LBE88:
+ 669               	.LBE87:
+ 670               	.LBE86:
+ 671               	.LBE85:
+ 672               	.LBE84:
+ 673               	.LBE90:
+ 674               	.LM104:
+ 675 03aa 0150      		subi r16,lo8(-(-1))
+ 676 03ac 1040      		sbci r17,hi8(-(-1))
+ 677               	.LVL35:
+ 678 03ae 0894      		sec
+ 679 03b0 E11C      		adc r14,__zero_reg__
+ 680 03b2 F11C      		adc r15,__zero_reg__
+ 681 03b4 FFEF      		ldi r31,hi8(-1)
+ 682 03b6 0F3F      		cpi r16,lo8(-1)
+ 683 03b8 1F07      		cpc r17,r31
+ 684 03ba 01F0      		breq .+2
+ 685 03bc 00C0      		rjmp .L56
+ 686               	/* epilogue start */
+ 687               	.LBE80:
+ 688               	.LM105:
+ 689 03be 0F90      		pop __tmp_reg__
+ 690 03c0 0F90      		pop __tmp_reg__
+ 691 03c2 0F90      		pop __tmp_reg__
+ 692 03c4 0F90      		pop __tmp_reg__
+ 693 03c6 CF91      		pop r28
+ 694 03c8 DF91      		pop r29
+ 695 03ca 1F91      		pop r17
+ 696               	.LVL36:
+ 697 03cc 0F91      		pop r16
+ 698               	.LVL37:
+ 699 03ce FF90      		pop r15
+ 700 03d0 EF90      		pop r14
+ 701 03d2 DF90      		pop r13
+ 702 03d4 CF90      		pop r12
+ 703 03d6 BF90      		pop r11
+ 704 03d8 9F90      		pop r9
+ 705               	.LVL38:
+ 706 03da 8F90      		pop r8
+ 707               	.LVL39:
+ 708 03dc 7F90      		pop r7
+ 709               	.LVL40:
+ 710 03de 6F90      		pop r6
+ 711               	.LVL41:
+ 712 03e0 5F90      		pop r5
+ 713               	.LVL42:
+ 714 03e2 4F90      		pop r4
+ 715               	.LVL43:
+ 716 03e4 3F90      		pop r3
+ 717 03e6 2F90      		pop r2
+ 718 03e8 0895      		ret
+ 719               	.LFE9:
+ 721               	.global	RGB_Animation_Slide_Unfill
+ 723               	RGB_Animation_Slide_Unfill:
+ 724               	.LFB13:
+ 725               	.LM106:
+ 726               	.LVL44:
+ 727 03ea FF92      		push r15
+ 728 03ec 0F93      		push r16
+ 729 03ee 1F93      		push r17
+ 730 03f0 CF93      		push r28
+ 731 03f2 DF93      		push r29
+ 732               	/* prologue: function */
+ 733               	/* frame size = 0 */
+ 734 03f4 F82E      		mov r15,r24
+ 735 03f6 062F      		mov r16,r22
+ 736 03f8 142F      		mov r17,r20
+ 737               	.LM107:
+ 738 03fa C4E1      		ldi r28,lo8(20)
+ 739 03fc D0E0      		ldi r29,hi8(20)
+ 740               	.LVL45:
+ 741               	.L61:
+ 742               	.LBB91:
+ 743               	.LM108:
+ 744 03fe 8F2D      		mov r24,r15
+ 745 0400 602F      		mov r22,r16
+ 746 0402 412F      		mov r20,r17
+ 747 0404 9E01      		movw r18,r28
+ 748 0406 0E94 0000 		call RGB_Brightness_Dec
+ 749               	.LM109:
+ 750 040a FE01      		movw r30,r28
+ 751 040c E050      		subi r30,lo8(-(RGBAnim))
+ 752 040e F040      		sbci r31,hi8(-(RGBAnim))
+ 753 0410 1082      		st Z,__zero_reg__
+ 754 0412 2197      		sbiw r28,1
+ 755               	.LM110:
+ 756 0414 01F4      		brne .L61
+ 757               	/* epilogue start */
+ 758               	.LBE91:
+ 759               	.LM111:
+ 760 0416 DF91      		pop r29
+ 761 0418 CF91      		pop r28
+ 762 041a 1F91      		pop r17
+ 763               	.LVL46:
+ 764 041c 0F91      		pop r16
+ 765               	.LVL47:
+ 766 041e FF90      		pop r15
+ 767               	.LVL48:
+ 768 0420 0895      		ret
+ 769               	.LFE13:
+ 771               	.global	RGB_Brightness_Inc
+ 773               	RGB_Brightness_Inc:
+ 774               	.LFB8:
+ 775               	.LM112:
+ 776               	.LVL49:
+ 777 0422 2F92      		push r2
+ 778 0424 3F92      		push r3
+ 779 0426 4F92      		push r4
+ 780 0428 5F92      		push r5
+ 781 042a 6F92      		push r6
+ 782 042c 7F92      		push r7
+ 783 042e 8F92      		push r8
+ 784 0430 9F92      		push r9
+ 785 0432 AF92      		push r10
+ 786 0434 BF92      		push r11
+ 787 0436 DF92      		push r13
+ 788 0438 EF92      		push r14
+ 789 043a FF92      		push r15
+ 790 043c 0F93      		push r16
+ 791 043e 1F93      		push r17
+ 792 0440 CF93      		push r28
+ 793 0442 DF93      		push r29
+ 794               	/* prologue: function */
+ 795               	/* frame size = 0 */
+ 796 0444 D82E      		mov r13,r24
+ 797 0446 E62E      		mov r14,r22
+ 798 0448 F42E      		mov r15,r20
+ 799               	.LM113:
+ 800 044a 8093 0000 		sts RGBAnim,r24
+ 801               	.LM114:
+ 802 044e 8617      		cp r24,r22
+ 803 0450 00F4      		brsh .L65
+ 804               	.LVL50:
+ 805               	.LM115:
+ 806 0452 6093 0000 		sts RGBAnim,r22
+ 807               	.L65:
+ 808               	.LM116:
+ 809 0456 8091 0000 		lds r24,RGBAnim
+ 810               	.LVL51:
+ 811 045a 8F15      		cp r24,r15
+ 812 045c 00F4      		brsh .L66
+ 813               	.LM117:
+ 814 045e F092 0000 		sts RGBAnim,r15
+ 815               	.L66:
+ 816 0462 00E0      		ldi r16,lo8(0)
+ 817 0464 10E0      		ldi r17,hi8(0)
+ 818               	.LVL52:
+ 819               	.LBB92:
+ 820               	.LBB93:
+ 821               	.LBB105:
+ 822               	.LM118:
+ 823 0466 40E0      		ldi r20,lo8(RGBAnim)
+ 824 0468 442E      		mov r4,r20
+ 825 046a 40E0      		ldi r20,hi8(RGBAnim)
+ 826 046c 542E      		mov r5,r20
+ 827 046e 420E      		add r4,r18
+ 828 0470 531E      		adc r5,r19
+ 829               	.LBE105:
+ 830               	.LM119:
+ 831 0472 6D2C      		mov r6,r13
+ 832 0474 7724      		clr r7
+ 833               	.LVL53:
+ 834 0476 8E2C      		mov r8,r14
+ 835 0478 9924      		clr r9
+ 836               	.LVL54:
+ 837 047a AF2C      		mov r10,r15
+ 838 047c BB24      		clr r11
+ 839               	.LVL55:
+ 840               	.LBB94:
+ 841               	.LBB95:
+ 842               	.LBB96:
+ 843               	.LBB97:
+ 844               	.LBB98:
+ 845               	.LBB99:
+ 846               	.LM120:
+ 847 047e 2CE2      		ldi r18,lo8(300)
+ 848 0480 222E      		mov r2,r18
+ 849 0482 21E0      		ldi r18,hi8(300)
+ 850 0484 322E      		mov r3,r18
+ 851               	.LVL56:
+ 852 0486 00C0      		rjmp .L67
+ 853               	.LVL57:
+ 854               	.L75:
+ 855               	.LBE99:
+ 856               	.LBE98:
+ 857               	.LBE97:
+ 858               	.LBE96:
+ 859               	.LBE95:
+ 860               	.LBE94:
+ 861               	.LBE93:
+ 862               	.LBE92:
+ 863               	.LM121:
+ 864 0488 C0E0      		ldi r28,lo8(RGBAnim+1)
+ 865 048a D0E0      		ldi r29,hi8(RGBAnim+1)
+ 866 048c 00C0      		rjmp .L68
+ 867               	.L71:
+ 868               	.LBB109:
+ 869               	.LBB108:
+ 870               	.LBB106:
+ 871               	.LM122:
+ 872 048e 8881      		ld r24,Y
+ 873 0490 8823      		tst r24
+ 874 0492 01F0      		breq .L69
+ 875               	.LM123:
+ 876 0494 8D2D      		mov r24,r13
+ 877 0496 6E2D      		mov r22,r14
+ 878 0498 4F2D      		mov r20,r15
+ 879 049a 00C0      		rjmp .L77
+ 880               	.LVL58:
+ 881               	.L69:
+ 882               	.LM124:
+ 883 049c 80E0      		ldi r24,lo8(0)
+ 884 049e 60E0      		ldi r22,lo8(0)
+ 885 04a0 40E0      		ldi r20,lo8(0)
+ 886               	.L77:
+ 887 04a2 0E94 0000 		call WS2812B_Send_Pixel
+ 888 04a6 2196      		adiw r28,1
+ 889               	.LVL59:
+ 890               	.L68:
+ 891               	.LM125:
+ 892 04a8 C415      		cp r28,r4
+ 893 04aa D505      		cpc r29,r5
+ 894 04ac 01F4      		brne .L71
+ 895               	.LBE106:
+ 896               	.LM126:
+ 897 04ae 202F      		mov r18,r16
+ 898               	.LVL60:
+ 899 04b0 6016      		cp r6,r16
+ 900 04b2 7106      		cpc r7,r17
+ 901 04b4 00F4      		brsh .L72
+ 902               	.LVL61:
+ 903 04b6 262D      		mov r18,r6
+ 904               	.LVL62:
+ 905               	.L72:
+ 906 04b8 602F      		mov r22,r16
+ 907               	.LVL63:
+ 908 04ba 8016      		cp r8,r16
+ 909 04bc 9106      		cpc r9,r17
+ 910 04be 00F4      		brsh .L73
+ 911               	.LVL64:
+ 912 04c0 682D      		mov r22,r8
+ 913               	.LVL65:
+ 914               	.L73:
+ 915 04c2 402F      		mov r20,r16
+ 916               	.LVL66:
+ 917 04c4 A016      		cp r10,r16
+ 918 04c6 B106      		cpc r11,r17
+ 919 04c8 00F4      		brsh .L74
+ 920               	.LVL67:
+ 921 04ca 4A2D      		mov r20,r10
+ 922               	.LVL68:
+ 923               	.L74:
+ 924 04cc 822F      		mov r24,r18
+ 925 04ce 0E94 0000 		call WS2812B_Send_Pixel
+ 926               	.LVL69:
+ 927               	.LBB107:
+ 928               	.LBB104:
+ 929               	.LBB103:
+ 930               	.LBB102:
+ 931               	.LBB101:
+ 932               	.LBB100:
+ 933               	.LM127:
+ 934 04d2 C101      		movw r24,r2
+ 935               	.LVL70:
+ 936               	/* #APP */
+ 937               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 938 04d4 0197      		1: sbiw r24,1
+ 939 04d6 01F4      		brne 1b
+ 940               	 ;  0 "" 2
+ 941               	/* #NOAPP */
+ 942               	.LBE100:
+ 943               	.LBE101:
+ 944               	.LBE102:
+ 945               	.LBE103:
+ 946               	.LBE104:
+ 947               	.LBE107:
+ 948               	.LBE108:
+ 949               	.LM128:
+ 950 04d8 0F5F      		subi r16,lo8(-(1))
+ 951 04da 1F4F      		sbci r17,hi8(-(1))
+ 952               	.LVL71:
+ 953               	.L67:
+ 954 04dc 8091 0000 		lds r24,RGBAnim
+ 955               	.LVL72:
+ 956 04e0 90E0      		ldi r25,lo8(0)
+ 957 04e2 0817      		cp r16,r24
+ 958 04e4 1907      		cpc r17,r25
+ 959 04e6 00F0      		brlo .L75
+ 960               	.LVL73:
+ 961               	/* epilogue start */
+ 962               	.LBE109:
+ 963               	.LM129:
+ 964 04e8 DF91      		pop r29
+ 965 04ea CF91      		pop r28
+ 966 04ec 1F91      		pop r17
+ 967 04ee 0F91      		pop r16
+ 968               	.LVL74:
+ 969 04f0 FF90      		pop r15
+ 970 04f2 EF90      		pop r14
+ 971 04f4 DF90      		pop r13
+ 972 04f6 BF90      		pop r11
+ 973               	.LVL75:
+ 974 04f8 AF90      		pop r10
+ 975               	.LVL76:
+ 976 04fa 9F90      		pop r9
+ 977               	.LVL77:
+ 978 04fc 8F90      		pop r8
+ 979               	.LVL78:
+ 980 04fe 7F90      		pop r7
+ 981               	.LVL79:
+ 982 0500 6F90      		pop r6
+ 983               	.LVL80:
+ 984 0502 5F90      		pop r5
+ 985 0504 4F90      		pop r4
+ 986 0506 3F90      		pop r3
+ 987 0508 2F90      		pop r2
+ 988 050a 0895      		ret
+ 989               	.LFE8:
+ 991               	.global	RGB_Animation_Slide_Fill
+ 993               	RGB_Animation_Slide_Fill:
+ 994               	.LFB12:
+ 995               	.LM130:
+ 996               	.LVL81:
+ 997 050c EF92      		push r14
+ 998 050e FF92      		push r15
+ 999 0510 0F93      		push r16
+ 1000 0512 1F93      		push r17
+ 1001 0514 CF93      		push r28
+ 1002 0516 DF93      		push r29
+ 1003               	/* prologue: function */
+ 1004               	/* frame size = 0 */
+ 1005 0518 F82E      		mov r15,r24
+ 1006 051a 062F      		mov r16,r22
+ 1007 051c 142F      		mov r17,r20
+ 1008               	.LM131:
+ 1009 051e C0E0      		ldi r28,lo8(0)
+ 1010 0520 D0E0      		ldi r29,hi8(0)
+ 1011               	.LVL82:
+ 1012               	.LBB110:
+ 1013               	.LM132:
+ 1014 0522 EE24      		clr r14
+ 1015 0524 E394      		inc r14
+ 1016               	.LVL83:
+ 1017               	.L79:
+ 1018               	.LM133:
+ 1019 0526 2196      		adiw r28,1
+ 1020 0528 8F2D      		mov r24,r15
+ 1021 052a 602F      		mov r22,r16
+ 1022 052c 412F      		mov r20,r17
+ 1023 052e 9E01      		movw r18,r28
+ 1024 0530 0E94 0000 		call RGB_Brightness_Inc
+ 1025               	.LM134:
+ 1026 0534 FE01      		movw r30,r28
+ 1027 0536 E050      		subi r30,lo8(-(RGBAnim))
+ 1028 0538 F040      		sbci r31,hi8(-(RGBAnim))
+ 1029 053a E082      		st Z,r14
+ 1030               	.LM135:
+ 1031 053c C431      		cpi r28,20
+ 1032 053e D105      		cpc r29,__zero_reg__
+ 1033 0540 01F4      		brne .L79
+ 1034               	/* epilogue start */
+ 1035               	.LBE110:
+ 1036               	.LM136:
+ 1037 0542 DF91      		pop r29
+ 1038 0544 CF91      		pop r28
+ 1039               	.LVL84:
+ 1040 0546 1F91      		pop r17
+ 1041               	.LVL85:
+ 1042 0548 0F91      		pop r16
+ 1043               	.LVL86:
+ 1044 054a FF90      		pop r15
+ 1045               	.LVL87:
+ 1046 054c EF90      		pop r14
+ 1047 054e 0895      		ret
+ 1048               	.LFE12:
+ 1050               	.global	RGB_Animation_Clear_All_Pixels
+ 1052               	RGB_Animation_Clear_All_Pixels:
+ 1053               	.LFB7:
+ 1054               	.LM137:
+ 1055 0550 CF93      		push r28
+ 1056 0552 DF93      		push r29
+ 1057               	/* prologue: function */
+ 1058               	/* frame size = 0 */
+ 1059               	.LM138:
+ 1060 0554 C0E0      		ldi r28,lo8(0)
+ 1061 0556 D0E0      		ldi r29,hi8(0)
+ 1062               	.LVL88:
+ 1063               	.L83:
+ 1064               	.LBB111:
+ 1065               	.LM139:
+ 1066 0558 80E0      		ldi r24,lo8(0)
+ 1067 055a 60E0      		ldi r22,lo8(0)
+ 1068 055c 40E0      		ldi r20,lo8(0)
+ 1069 055e 0E94 0000 		call WS2812B_Send_Pixel
+ 1070               	.LM140:
+ 1071 0562 2196      		adiw r28,1
+ 1072 0564 81E0      		ldi r24,hi8(300)
+ 1073 0566 CC32      		cpi r28,lo8(300)
+ 1074 0568 D807      		cpc r29,r24
+ 1075 056a 01F4      		brne .L83
+ 1076               	/* epilogue start */
+ 1077               	.LBE111:
+ 1078               	.LM141:
+ 1079 056c DF91      		pop r29
+ 1080 056e CF91      		pop r28
+ 1081               	.LVL89:
+ 1082 0570 0895      		ret
+ 1083               	.LFE7:
+ 1085               	.global	RGB_Animation_Init
+ 1087               	RGB_Animation_Init:
+ 1088               	.LFB14:
+ 1089               	.LM142:
+ 1090               	/* prologue: function */
+ 1091               	/* frame size = 0 */
+ 1092               	.LM143:
+ 1093 0572 8FEF      		ldi r24,lo8(-1)
+ 1094 0574 8093 0000 		sts red,r24
+ 1095               	.LM144:
+ 1096 0578 82E0      		ldi r24,lo8(2)
+ 1097 057a 8093 0000 		sts red_dir,r24
+ 1098               	.LM145:
+ 1099 057e 8093 0000 		sts green_dir,r24
+ 1100               	.LM146:
+ 1101 0582 8093 0000 		sts blue_dir,r24
+ 1102 0586 88EE      		ldi r24,lo8(1000)
+ 1103 0588 93E0      		ldi r25,hi8(1000)
+ 1104               	.LVL90:
+ 1105               	.LBB112:
+ 1106               	.LBB113:
+ 1107               	.LBB114:
+ 1108               	.LBB115:
+ 1109               	.LM147:
+ 1110 058a 2CE2      		ldi r18,lo8(300)
+ 1111 058c 31E0      		ldi r19,hi8(300)
+ 1112               	.L87:
+ 1113 058e F901      		movw r30,r18
+ 1114               	.LVL91:
+ 1115               	/* #APP */
+ 1116               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1117 0590 3197      		1: sbiw r30,1
+ 1118 0592 01F4      		brne 1b
+ 1119               	 ;  0 "" 2
+ 1120               	/* #NOAPP */
+ 1121               	.LBE115:
+ 1122               	.LBE114:
+ 1123               	.LM148:
+ 1124 0594 0197      		sbiw r24,1
+ 1125               	.LM149:
+ 1126 0596 01F4      		brne .L87
+ 1127               	.LBE113:
+ 1128               	.LBE112:
+ 1129               	.LM150:
+ 1130 0598 0E94 0000 		call RGB_Animation_Clear_All_Pixels
+ 1131               	.LVL92:
+ 1132 059c 88EE      		ldi r24,lo8(1000)
+ 1133 059e 93E0      		ldi r25,hi8(1000)
+ 1134               	.LVL93:
+ 1135               	.LBB116:
+ 1136               	.LBB117:
+ 1137               	.LBB118:
+ 1138               	.LBB119:
+ 1139               	.LM151:
+ 1140 05a0 2CE2      		ldi r18,lo8(300)
+ 1141 05a2 31E0      		ldi r19,hi8(300)
+ 1142               	.L88:
+ 1143 05a4 F901      		movw r30,r18
+ 1144               	.LVL94:
+ 1145               	/* #APP */
+ 1146               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 1147 05a6 3197      		1: sbiw r30,1
+ 1148 05a8 01F4      		brne 1b
+ 1149               	 ;  0 "" 2
+ 1150               	/* #NOAPP */
+ 1151               	.LBE119:
+ 1152               	.LBE118:
+ 1153               	.LM152:
+ 1154 05aa 0197      		sbiw r24,1
+ 1155               	.LM153:
+ 1156 05ac 01F4      		brne .L88
+ 1157 05ae E0E0      		ldi r30,lo8(RGBAnim+1)
+ 1158 05b0 F0E0      		ldi r31,hi8(RGBAnim+1)
+ 1159               	.LVL95:
+ 1160               	.L89:
+ 1161               	.LBE117:
+ 1162               	.LBE116:
+ 1163               	.LBB120:
+ 1164               	.LBB121:
+ 1165               	.LBB122:
+ 1166               	.LM154:
+ 1167 05b2 1192      		st Z+,__zero_reg__
+ 1168               	.LM155:
+ 1169 05b4 80E0      		ldi r24,hi8(RGBAnim+21)
+ 1170 05b6 E030      		cpi r30,lo8(RGBAnim+21)
+ 1171 05b8 F807      		cpc r31,r24
+ 1172               	.LVL96:
+ 1173 05ba 01F4      		brne .L89
+ 1174               	/* epilogue start */
+ 1175               	.LBE122:
+ 1176               	.LBE121:
+ 1177               	.LBE120:
+ 1178               	.LM156:
+ 1179 05bc 0895      		ret
+ 1180               	.LFE14:
+ 1182               	.global	red
+ 1183               	.global	red
+ 1184               		.section .bss
+ 1187               	red:
+ 1188 0000 00        		.skip 1,0
+ 1189               	.global	green
+ 1190               	.global	green
+ 1193               	green:
+ 1194 0001 00        		.skip 1,0
+ 1195               	.global	blue
+ 1196               	.global	blue
+ 1199               	blue:
+ 1200 0002 00        		.skip 1,0
+ 1201               	.global	red_dir
+ 1202               	.global	red_dir
+ 1205               	red_dir:
+ 1206 0003 00        		.skip 1,0
+ 1207               	.global	green_dir
+ 1208               	.global	green_dir
+ 1211               	green_dir:
+ 1212 0004 00        		.skip 1,0
+ 1213               	.global	blue_dir
+ 1214               	.global	blue_dir
+ 1217               	blue_dir:
+ 1218 0005 00        		.skip 1,0
+ 1219               	.global	color
+ 1220               	.global	color
+ 1223               	color:
+ 1224 0006 0000      		.skip 2,0
+ 1225               	.global	color1
+ 1226               	.global	color1
+ 1229               	color1:
+ 1230 0008 0000      		.skip 2,0
+ 1231               	.global	color2
+ 1232               	.global	color2
+ 1235               	color2:
+ 1236 000a 0000      		.skip 2,0
+ 1237               	.global	color3
+ 1238               	.global	color3
+ 1241               	color3:
+ 1242 000c 0000      		.skip 2,0
+ 1243               		.comm RGBAnim,21,1
+ 1332               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 animation.c
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:2      *ABS*:0000003f __SREG__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:3      *ABS*:0000003e __SP_H__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:4      *ABS*:0000003d __SP_L__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:5      *ABS*:00000034 __CCP__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:18     .text:00000000 RGB_Animation_Clear_Pixel_Buf
+                            *COM*:00000015 RGBAnim
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:43     .text:00000010 RGB_Animation_Slide
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1223   .bss:00000006 color
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1229   .bss:00000008 color1
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1235   .bss:0000000a color2
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1241   .bss:0000000c color3
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:294    .text:00000198 RGB_Animation_Rotate_All_Color
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1187   .bss:00000000 red
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1193   .bss:00000001 green
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1199   .bss:00000002 blue
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1205   .bss:00000003 red_dir
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1211   .bss:00000004 green_dir
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1217   .bss:00000005 blue_dir
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:481    .text:000002c8 RGB_Brightness_Dec
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:723    .text:000003ea RGB_Animation_Slide_Unfill
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:773    .text:00000422 RGB_Brightness_Inc
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:993    .text:0000050c RGB_Animation_Slide_Fill
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1052   .text:00000550 RGB_Animation_Clear_All_Pixels
+C:\Users\FARIDU~1\AppData\Local\Temp/ccIuSb7L.s:1087   .text:00000572 RGB_Animation_Init
+
+UNDEFINED SYMBOLS
+WS2812B_Send_Pixel
+__do_clear_bss
