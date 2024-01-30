@@ -3,27 +3,27 @@ main.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000082e  00000000  00000000  00000074  2**1
+  0 .text         00000b44  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .bss          00000023  00800100  00800100  000008a2  2**0
+  1 .bss          00000049  00800100  00800100  00000bb8  2**0
                   ALLOC
-  2 .debug_aranges 00000060  00000000  00000000  000008a2  2**0
+  2 .debug_aranges 00000060  00000000  00000000  00000bb8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_pubnames 00000225  00000000  00000000  00000902  2**0
+  3 .debug_pubnames 0000029d  00000000  00000000  00000c18  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   00000917  00000000  00000000  00000b27  2**0
+  4 .debug_info   00000da4  00000000  00000000  00000eb5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 00000380  00000000  00000000  0000143e  2**0
+  5 .debug_abbrev 000003e5  00000000  00000000  00001c59  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   00000d80  00000000  00000000  000017be  2**0
+  6 .debug_line   00001054  00000000  00000000  0000203e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  00000120  00000000  00000000  00002540  2**2
+  7 .debug_frame  00000160  00000000  00000000  00003094  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    000002d9  00000000  00000000  00002660  2**0
+  8 .debug_str    00000341  00000000  00000000  000031f4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    00000569  00000000  00000000  00002939  2**0
+  9 .debug_loc    00000bf2  00000000  00000000  00003535  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000198  00000000  00000000  00002ea2  2**0
+ 10 .debug_ranges 00000360  00000000  00000000  00004127  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -74,1638 +74,2265 @@ Disassembly of section .text:
   7c:	1d 92       	st	X+, r1
 
 0000007e <.do_clear_bss_start>:
-  7e:	a3 32       	cpi	r26, 0x23	; 35
+  7e:	a9 34       	cpi	r26, 0x49	; 73
   80:	b1 07       	cpc	r27, r17
   82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
   84:	0e 94 48 00 	call	0x90	; 0x90 <main>
-  88:	0c 94 15 04 	jmp	0x82a	; 0x82a <_exit>
+  88:	0c 94 a0 05 	jmp	0xb40	; 0xb40 <_exit>
 
 0000008c <__bad_interrupt>:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000090 <main>:
-#include <avr/io.h>
-#include <util/delay.h>
-#include "ws2812b.h"
-#include "animation.h"
+
+#define  RED    0
+#define  GREEN  50
+#define  BLUE   0
 
 int main(void){
-  90:	cf 93       	push	r28
-  92:	df 93       	push	r29
+  90:	0f 93       	push	r16
+  92:	1f 93       	push	r17
+  94:	cf 93       	push	r28
+  96:	df 93       	push	r29
 
   WS2812B_Init();
-  94:	0e 94 33 01 	call	0x266	; 0x266 <WS2812B_Init>
+  98:	0e 94 45 01 	call	0x28a	; 0x28a <WS2812B_Init>
   
   RGB_Animation_Init();
-  98:	0e 94 ef 03 	call	0x7de	; 0x7de <RGB_Animation_Init>
+  9c:	0e 94 7a 05 	call	0xaf4	; 0xaf4 <RGB_Animation_Init>
     milliseconds can be achieved.
  */
 void
 _delay_loop_2(uint16_t __count)
 {
 	__asm__ volatile (
-  9c:	c8 eb       	ldi	r28, 0xB8	; 184
-  9e:	db e0       	ldi	r29, 0x0B	; 11
+  a0:	cc e2       	ldi	r28, 0x2C	; 44
+  a2:	d1 e0       	ldi	r29, 0x01	; 1
   //WS2812B_Send_Pixel(0,0,0);
   //WS2812B_Send_Pixel(0,100,200);
   //RGB_Brightness_Inc(0,100,200,1);
   //WS2812B_Send_Pixel(0,100,200);
   while(1){
-    RGB_Animation_Slide_Fill(0,100,200);
-  a0:	80 e0       	ldi	r24, 0x00	; 0
-  a2:	64 e6       	ldi	r22, 0x64	; 100
-  a4:	48 ec       	ldi	r20, 0xC8	; 200
-  a6:	0e 94 bc 03 	call	0x778	; 0x778 <RGB_Animation_Slide_Fill>
-	RGB_Animation_Slide_Unfill(0,100,200);
-  aa:	80 e0       	ldi	r24, 0x00	; 0
-  ac:	64 e6       	ldi	r22, 0x64	; 100
-  ae:	48 ec       	ldi	r20, 0xC8	; 200
-  b0:	0e 94 2b 03 	call	0x656	; 0x656 <RGB_Animation_Slide_Unfill>
-  b4:	ce 01       	movw	r24, r28
-  b6:	01 97       	sbiw	r24, 0x01	; 1
-  b8:	f1 f7       	brne	.-4      	; 0xb6 <main+0x26>
-  ba:	f2 cf       	rjmp	.-28     	; 0xa0 <main+0x10>
+    RGB_Animation_Slide_Fill(RED, GREEN, BLUE);
+  a4:	08 eb       	ldi	r16, 0xB8	; 184
+  a6:	1b e0       	ldi	r17, 0x0B	; 11
+  a8:	80 e0       	ldi	r24, 0x00	; 0
+  aa:	62 e3       	ldi	r22, 0x32	; 50
+  ac:	40 e0       	ldi	r20, 0x00	; 0
+  ae:	0e 94 47 05 	call	0xa8e	; 0xa8e <RGB_Animation_Slide_Fill>
+  b2:	80 e1       	ldi	r24, 0x10	; 16
+  b4:	97 e2       	ldi	r25, 0x27	; 39
+  b6:	fe 01       	movw	r30, r28
+  b8:	31 97       	sbiw	r30, 0x01	; 1
+  ba:	f1 f7       	brne	.-4      	; 0xb8 <main+0x28>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  bc:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  be:	d9 f7       	brne	.-10     	; 0xb6 <main+0x26>
+	_delay_ms(1000);
+	RGB_Animation_Slide_Unfill(RED, GREEN, BLUE);
+  c0:	80 e0       	ldi	r24, 0x00	; 0
+  c2:	62 e3       	ldi	r22, 0x32	; 50
+  c4:	40 e0       	ldi	r20, 0x00	; 0
+  c6:	0e 94 a8 04 	call	0x950	; 0x950 <RGB_Animation_Slide_Unfill>
+  ca:	80 e1       	ldi	r24, 0x10	; 16
+  cc:	97 e2       	ldi	r25, 0x27	; 39
+  ce:	fe 01       	movw	r30, r28
+  d0:	31 97       	sbiw	r30, 0x01	; 1
+  d2:	f1 f7       	brne	.-4      	; 0xd0 <main+0x40>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  d4:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  d6:	d9 f7       	brne	.-10     	; 0xce <main+0x3e>
+  d8:	c8 01       	movw	r24, r16
+  da:	01 97       	sbiw	r24, 0x01	; 1
+  dc:	f1 f7       	brne	.-4      	; 0xda <main+0x4a>
+  de:	e4 cf       	rjmp	.-56     	; 0xa8 <main+0x18>
 
-000000bc <WS2812B_Gpio_Init>:
+000000e0 <WS2812B_Gpio_Init>:
 #include <util/delay.h>
 #include "ws2812b.h"
 
 
 void WS2812B_Gpio_Init(void){
   WS2812B_DDR  |=  (1<<WS2812B_bp);
-  bc:	55 9a       	sbi	0x0a, 5	; 10
+  e0:	55 9a       	sbi	0x0a, 5	; 10
   WS2812B_PORT &=~ (1<<WS2812B_bp);
-  be:	5d 98       	cbi	0x0b, 5	; 11
+  e2:	5d 98       	cbi	0x0b, 5	; 11
 }
-  c0:	08 95       	ret
+  e4:	08 95       	ret
 
-000000c2 <WS2812B_Send_Byte>:
+000000e6 <WS2812B_Send_Byte>:
 
 void WS2812B_Send_Byte(uint8_t val){
   if(val & 0x80){
-  c2:	87 ff       	sbrs	r24, 7
-  c4:	0b c0       	rjmp	.+22     	; 0xdc <WS2812B_Send_Byte+0x1a>
+  e6:	87 ff       	sbrs	r24, 7
+  e8:	0b c0       	rjmp	.+22     	; 0x100 <WS2812B_Send_Byte+0x1a>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
-  c6:	5d 9a       	sbi	0x0b, 5	; 11
-    asm( "nop ");
-  c8:	00 00       	nop
-    asm( "nop ");
-  ca:	00 00       	nop
-    asm( "nop ");
-  cc:	00 00       	nop
-    asm( "nop ");
-  ce:	00 00       	nop
-    asm( "nop ");
-  d0:	00 00       	nop
-    asm( "nop ");
-  d2:	00 00       	nop
-	asm( "nop ");
-  d4:	00 00       	nop
-    asm( "nop ");
-  d6:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
-  d8:	5d 98       	cbi	0x0b, 5	; 11
-  da:	0a c0       	rjmp	.+20     	; 0xf0 <WS2812B_Send_Byte+0x2e>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
-  dc:	5d 9a       	sbi	0x0b, 5	; 11
-    asm( "nop ");
-  de:	00 00       	nop
-    asm( "nop ");
-  e0:	00 00       	nop
-    asm( "nop ");
-  e2:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
-  e4:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
-  e6:	00 00       	nop
-	asm( "nop ");
-  e8:	00 00       	nop
-    asm( "nop ");
-  ea:	00 00       	nop
+  ea:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
   ec:	00 00       	nop
-	asm( "nop ");
+    asm( "nop ");
   ee:	00 00       	nop
-  }
-  
-  
-  if(val & 0x40){
-  f0:	86 ff       	sbrs	r24, 6
-  f2:	0b c0       	rjmp	.+22     	; 0x10a <WS2812B_Send_Byte+0x48>
-	WS2812B_PORT |=  (1<<WS2812B_bp);
-  f4:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+  f0:	00 00       	nop
+    asm( "nop ");
+  f2:	00 00       	nop
+    asm( "nop ");
+  f4:	00 00       	nop
     asm( "nop ");
   f6:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
   f8:	00 00       	nop
     asm( "nop ");
   fa:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+  fc:	5d 98       	cbi	0x0b, 5	; 11
+  fe:	0a c0       	rjmp	.+20     	; 0x114 <WS2812B_Send_Byte+0x2e>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 100:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
-  fc:	00 00       	nop
-    asm( "nop ");
-  fe:	00 00       	nop
-    asm( "nop ");
- 100:	00 00       	nop
-	asm( "nop ");
  102:	00 00       	nop
     asm( "nop ");
  104:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 106:	5d 98       	cbi	0x0b, 5	; 11
- 108:	0a c0       	rjmp	.+20     	; 0x11e <WS2812B_Send_Byte+0x5c>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 10a:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 106:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 108:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 10a:	00 00       	nop
+	asm( "nop ");
  10c:	00 00       	nop
     asm( "nop ");
  10e:	00 00       	nop
     asm( "nop ");
  110:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 112:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 114:	00 00       	nop
 	asm( "nop ");
- 116:	00 00       	nop
-    asm( "nop ");
- 118:	00 00       	nop
-    asm( "nop ");
- 11a:	00 00       	nop
-	asm( "nop ");
- 11c:	00 00       	nop
+ 112:	00 00       	nop
   }
   
   
-  if(val & 0x20){
- 11e:	85 ff       	sbrs	r24, 5
- 120:	0b c0       	rjmp	.+22     	; 0x138 <WS2812B_Send_Byte+0x76>
+  if(val & 0x40){
+ 114:	86 ff       	sbrs	r24, 6
+ 116:	0b c0       	rjmp	.+22     	; 0x12e <WS2812B_Send_Byte+0x48>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 122:	5d 9a       	sbi	0x0b, 5	; 11
+ 118:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 11a:	00 00       	nop
+    asm( "nop ");
+ 11c:	00 00       	nop
+    asm( "nop ");
+ 11e:	00 00       	nop
+    asm( "nop ");
+ 120:	00 00       	nop
+    asm( "nop ");
+ 122:	00 00       	nop
     asm( "nop ");
  124:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  126:	00 00       	nop
     asm( "nop ");
  128:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 12a:	5d 98       	cbi	0x0b, 5	; 11
+ 12c:	0a c0       	rjmp	.+20     	; 0x142 <WS2812B_Send_Byte+0x5c>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 12e:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 12a:	00 00       	nop
-    asm( "nop ");
- 12c:	00 00       	nop
-    asm( "nop ");
- 12e:	00 00       	nop
-	asm( "nop ");
  130:	00 00       	nop
     asm( "nop ");
  132:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 134:	5d 98       	cbi	0x0b, 5	; 11
- 136:	0a c0       	rjmp	.+20     	; 0x14c <WS2812B_Send_Byte+0x8a>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 138:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 134:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 136:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 138:	00 00       	nop
+	asm( "nop ");
  13a:	00 00       	nop
     asm( "nop ");
  13c:	00 00       	nop
     asm( "nop ");
  13e:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 140:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 142:	00 00       	nop
 	asm( "nop ");
- 144:	00 00       	nop
-    asm( "nop ");
- 146:	00 00       	nop
-    asm( "nop ");
- 148:	00 00       	nop
-	asm( "nop ");
- 14a:	00 00       	nop
+ 140:	00 00       	nop
   }
   
   
-  if(val & 0x10){
- 14c:	84 ff       	sbrs	r24, 4
- 14e:	0b c0       	rjmp	.+22     	; 0x166 <WS2812B_Send_Byte+0xa4>
+  if(val & 0x20){
+ 142:	85 ff       	sbrs	r24, 5
+ 144:	0b c0       	rjmp	.+22     	; 0x15c <WS2812B_Send_Byte+0x76>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 150:	5d 9a       	sbi	0x0b, 5	; 11
+ 146:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 148:	00 00       	nop
+    asm( "nop ");
+ 14a:	00 00       	nop
+    asm( "nop ");
+ 14c:	00 00       	nop
+    asm( "nop ");
+ 14e:	00 00       	nop
+    asm( "nop ");
+ 150:	00 00       	nop
     asm( "nop ");
  152:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  154:	00 00       	nop
     asm( "nop ");
  156:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 158:	5d 98       	cbi	0x0b, 5	; 11
+ 15a:	0a c0       	rjmp	.+20     	; 0x170 <WS2812B_Send_Byte+0x8a>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 15c:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 158:	00 00       	nop
-    asm( "nop ");
- 15a:	00 00       	nop
-    asm( "nop ");
- 15c:	00 00       	nop
-	asm( "nop ");
  15e:	00 00       	nop
     asm( "nop ");
  160:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 162:	5d 98       	cbi	0x0b, 5	; 11
- 164:	0a c0       	rjmp	.+20     	; 0x17a <WS2812B_Send_Byte+0xb8>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 166:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 162:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 164:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 166:	00 00       	nop
+	asm( "nop ");
  168:	00 00       	nop
     asm( "nop ");
  16a:	00 00       	nop
     asm( "nop ");
  16c:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 16e:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 170:	00 00       	nop
 	asm( "nop ");
- 172:	00 00       	nop
-    asm( "nop ");
- 174:	00 00       	nop
-    asm( "nop ");
- 176:	00 00       	nop
-	asm( "nop ");
- 178:	00 00       	nop
+ 16e:	00 00       	nop
   }
   
   
-  if(val & 0x08){
- 17a:	83 ff       	sbrs	r24, 3
- 17c:	0b c0       	rjmp	.+22     	; 0x194 <WS2812B_Send_Byte+0xd2>
+  if(val & 0x10){
+ 170:	84 ff       	sbrs	r24, 4
+ 172:	0b c0       	rjmp	.+22     	; 0x18a <WS2812B_Send_Byte+0xa4>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 17e:	5d 9a       	sbi	0x0b, 5	; 11
+ 174:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 176:	00 00       	nop
+    asm( "nop ");
+ 178:	00 00       	nop
+    asm( "nop ");
+ 17a:	00 00       	nop
+    asm( "nop ");
+ 17c:	00 00       	nop
+    asm( "nop ");
+ 17e:	00 00       	nop
     asm( "nop ");
  180:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  182:	00 00       	nop
     asm( "nop ");
  184:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 186:	5d 98       	cbi	0x0b, 5	; 11
+ 188:	0a c0       	rjmp	.+20     	; 0x19e <WS2812B_Send_Byte+0xb8>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 18a:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 186:	00 00       	nop
-    asm( "nop ");
- 188:	00 00       	nop
-    asm( "nop ");
- 18a:	00 00       	nop
-	asm( "nop ");
  18c:	00 00       	nop
     asm( "nop ");
  18e:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 190:	5d 98       	cbi	0x0b, 5	; 11
- 192:	0a c0       	rjmp	.+20     	; 0x1a8 <WS2812B_Send_Byte+0xe6>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 194:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 190:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 192:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 194:	00 00       	nop
+	asm( "nop ");
  196:	00 00       	nop
     asm( "nop ");
  198:	00 00       	nop
     asm( "nop ");
  19a:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 19c:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 19e:	00 00       	nop
 	asm( "nop ");
- 1a0:	00 00       	nop
-    asm( "nop ");
- 1a2:	00 00       	nop
-    asm( "nop ");
- 1a4:	00 00       	nop
-	asm( "nop ");
- 1a6:	00 00       	nop
+ 19c:	00 00       	nop
   }
   
   
-  if(val & 0x04){
- 1a8:	82 ff       	sbrs	r24, 2
- 1aa:	0b c0       	rjmp	.+22     	; 0x1c2 <WS2812B_Send_Byte+0x100>
+  if(val & 0x08){
+ 19e:	83 ff       	sbrs	r24, 3
+ 1a0:	0b c0       	rjmp	.+22     	; 0x1b8 <WS2812B_Send_Byte+0xd2>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 1ac:	5d 9a       	sbi	0x0b, 5	; 11
+ 1a2:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 1a4:	00 00       	nop
+    asm( "nop ");
+ 1a6:	00 00       	nop
+    asm( "nop ");
+ 1a8:	00 00       	nop
+    asm( "nop ");
+ 1aa:	00 00       	nop
+    asm( "nop ");
+ 1ac:	00 00       	nop
     asm( "nop ");
  1ae:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  1b0:	00 00       	nop
     asm( "nop ");
  1b2:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 1b4:	5d 98       	cbi	0x0b, 5	; 11
+ 1b6:	0a c0       	rjmp	.+20     	; 0x1cc <WS2812B_Send_Byte+0xe6>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 1b8:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 1b4:	00 00       	nop
-    asm( "nop ");
- 1b6:	00 00       	nop
-    asm( "nop ");
- 1b8:	00 00       	nop
-	asm( "nop ");
  1ba:	00 00       	nop
     asm( "nop ");
  1bc:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 1be:	5d 98       	cbi	0x0b, 5	; 11
- 1c0:	0a c0       	rjmp	.+20     	; 0x1d6 <WS2812B_Send_Byte+0x114>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 1c2:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 1be:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 1c0:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 1c2:	00 00       	nop
+	asm( "nop ");
  1c4:	00 00       	nop
     asm( "nop ");
  1c6:	00 00       	nop
     asm( "nop ");
  1c8:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 1ca:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 1cc:	00 00       	nop
 	asm( "nop ");
- 1ce:	00 00       	nop
-    asm( "nop ");
- 1d0:	00 00       	nop
-    asm( "nop ");
- 1d2:	00 00       	nop
-	asm( "nop ");
- 1d4:	00 00       	nop
+ 1ca:	00 00       	nop
   }
   
   
-  if(val & 0x02){
- 1d6:	81 ff       	sbrs	r24, 1
- 1d8:	0b c0       	rjmp	.+22     	; 0x1f0 <WS2812B_Send_Byte+0x12e>
+  if(val & 0x04){
+ 1cc:	82 ff       	sbrs	r24, 2
+ 1ce:	0b c0       	rjmp	.+22     	; 0x1e6 <WS2812B_Send_Byte+0x100>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 1da:	5d 9a       	sbi	0x0b, 5	; 11
+ 1d0:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 1d2:	00 00       	nop
+    asm( "nop ");
+ 1d4:	00 00       	nop
+    asm( "nop ");
+ 1d6:	00 00       	nop
+    asm( "nop ");
+ 1d8:	00 00       	nop
+    asm( "nop ");
+ 1da:	00 00       	nop
     asm( "nop ");
  1dc:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  1de:	00 00       	nop
     asm( "nop ");
  1e0:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 1e2:	5d 98       	cbi	0x0b, 5	; 11
+ 1e4:	0a c0       	rjmp	.+20     	; 0x1fa <WS2812B_Send_Byte+0x114>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 1e6:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 1e2:	00 00       	nop
-    asm( "nop ");
- 1e4:	00 00       	nop
-    asm( "nop ");
- 1e6:	00 00       	nop
-	asm( "nop ");
  1e8:	00 00       	nop
     asm( "nop ");
  1ea:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 1ec:	5d 98       	cbi	0x0b, 5	; 11
- 1ee:	0a c0       	rjmp	.+20     	; 0x204 <WS2812B_Send_Byte+0x142>
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 1f0:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 1ec:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 1ee:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 1f0:	00 00       	nop
+	asm( "nop ");
  1f2:	00 00       	nop
     asm( "nop ");
  1f4:	00 00       	nop
     asm( "nop ");
  1f6:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 1f8:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 1fa:	00 00       	nop
 	asm( "nop ");
- 1fc:	00 00       	nop
-    asm( "nop ");
- 1fe:	00 00       	nop
-    asm( "nop ");
- 200:	00 00       	nop
-	asm( "nop ");
- 202:	00 00       	nop
+ 1f8:	00 00       	nop
   }
   
   
-  if(val & 0x01){
- 204:	80 ff       	sbrs	r24, 0
- 206:	0b c0       	rjmp	.+22     	; 0x21e <WS2812B_Send_Byte+0x15c>
+  if(val & 0x02){
+ 1fa:	81 ff       	sbrs	r24, 1
+ 1fc:	0b c0       	rjmp	.+22     	; 0x214 <WS2812B_Send_Byte+0x12e>
 	WS2812B_PORT |=  (1<<WS2812B_bp);
- 208:	5d 9a       	sbi	0x0b, 5	; 11
+ 1fe:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 200:	00 00       	nop
+    asm( "nop ");
+ 202:	00 00       	nop
+    asm( "nop ");
+ 204:	00 00       	nop
+    asm( "nop ");
+ 206:	00 00       	nop
+    asm( "nop ");
+ 208:	00 00       	nop
     asm( "nop ");
  20a:	00 00       	nop
-    asm( "nop ");
+	asm( "nop ");
  20c:	00 00       	nop
     asm( "nop ");
  20e:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 210:	5d 98       	cbi	0x0b, 5	; 11
+ 212:	0a c0       	rjmp	.+20     	; 0x228 <WS2812B_Send_Byte+0x142>
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 214:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
- 210:	00 00       	nop
-    asm( "nop ");
- 212:	00 00       	nop
-    asm( "nop ");
- 214:	00 00       	nop
-	asm( "nop ");
  216:	00 00       	nop
     asm( "nop ");
  218:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 21a:	5d 98       	cbi	0x0b, 5	; 11
- 21c:	08 95       	ret
-  }else{
-	WS2812B_PORT |=  (1<<WS2812B_bp);
- 21e:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
+ 21a:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 21c:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 21e:	00 00       	nop
+	asm( "nop ");
  220:	00 00       	nop
     asm( "nop ");
  222:	00 00       	nop
     asm( "nop ");
  224:	00 00       	nop
-    WS2812B_PORT &=~ (1<<WS2812B_bp);
- 226:	5d 98       	cbi	0x0b, 5	; 11
-    asm( "nop ");
- 228:	00 00       	nop
 	asm( "nop ");
- 22a:	00 00       	nop
-    asm( "nop ");
- 22c:	00 00       	nop
+ 226:	00 00       	nop
+  }
+  
+  
+  if(val & 0x01){
+ 228:	80 ff       	sbrs	r24, 0
+ 22a:	0b c0       	rjmp	.+22     	; 0x242 <WS2812B_Send_Byte+0x15c>
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 22c:	5d 9a       	sbi	0x0b, 5	; 11
     asm( "nop ");
  22e:	00 00       	nop
-	asm( "nop ");
+    asm( "nop ");
  230:	00 00       	nop
- 232:	08 95       	ret
+    asm( "nop ");
+ 232:	00 00       	nop
+    asm( "nop ");
+ 234:	00 00       	nop
+    asm( "nop ");
+ 236:	00 00       	nop
+    asm( "nop ");
+ 238:	00 00       	nop
+	asm( "nop ");
+ 23a:	00 00       	nop
+    asm( "nop ");
+ 23c:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 23e:	5d 98       	cbi	0x0b, 5	; 11
+ 240:	08 95       	ret
+  }else{
+	WS2812B_PORT |=  (1<<WS2812B_bp);
+ 242:	5d 9a       	sbi	0x0b, 5	; 11
+    asm( "nop ");
+ 244:	00 00       	nop
+    asm( "nop ");
+ 246:	00 00       	nop
+    asm( "nop ");
+ 248:	00 00       	nop
+    WS2812B_PORT &=~ (1<<WS2812B_bp);
+ 24a:	5d 98       	cbi	0x0b, 5	; 11
+    asm( "nop ");
+ 24c:	00 00       	nop
+	asm( "nop ");
+ 24e:	00 00       	nop
+    asm( "nop ");
+ 250:	00 00       	nop
+    asm( "nop ");
+ 252:	00 00       	nop
+	asm( "nop ");
+ 254:	00 00       	nop
+ 256:	08 95       	ret
 
-00000234 <WS2812B_Send_Pixel>:
+00000258 <WS2812B_Send_Pixel>:
   }
 }
 
 void WS2812B_Send_Pixel(uint8_t r, uint8_t g, uint8_t b){
- 234:	0f 93       	push	r16
- 236:	1f 93       	push	r17
- 238:	18 2f       	mov	r17, r24
- 23a:	86 2f       	mov	r24, r22
- 23c:	04 2f       	mov	r16, r20
+ 258:	0f 93       	push	r16
+ 25a:	1f 93       	push	r17
+ 25c:	18 2f       	mov	r17, r24
+ 25e:	86 2f       	mov	r24, r22
+ 260:	04 2f       	mov	r16, r20
   WS2812B_Send_Byte(g);
- 23e:	0e 94 61 00 	call	0xc2	; 0xc2 <WS2812B_Send_Byte>
+ 262:	0e 94 73 00 	call	0xe6	; 0xe6 <WS2812B_Send_Byte>
   WS2812B_Send_Byte(r);
- 242:	81 2f       	mov	r24, r17
- 244:	0e 94 61 00 	call	0xc2	; 0xc2 <WS2812B_Send_Byte>
+ 266:	81 2f       	mov	r24, r17
+ 268:	0e 94 73 00 	call	0xe6	; 0xe6 <WS2812B_Send_Byte>
   WS2812B_Send_Byte(b);
- 248:	80 2f       	mov	r24, r16
- 24a:	0e 94 61 00 	call	0xc2	; 0xc2 <WS2812B_Send_Byte>
+ 26c:	80 2f       	mov	r24, r16
+ 26e:	0e 94 73 00 	call	0xe6	; 0xe6 <WS2812B_Send_Byte>
 }
- 24e:	1f 91       	pop	r17
- 250:	0f 91       	pop	r16
- 252:	08 95       	ret
+ 272:	1f 91       	pop	r17
+ 274:	0f 91       	pop	r16
+ 276:	08 95       	ret
 
-00000254 <WS2812B_Pixel_Delay>:
+00000278 <WS2812B_Pixel_Delay>:
 
 void WS2812B_Pixel_Delay(void){
- 254:	80 e0       	ldi	r24, 0x00	; 0
- 256:	90 e0       	ldi	r25, 0x00	; 0
+ 278:	80 e0       	ldi	r24, 0x00	; 0
+ 27a:	90 e0       	ldi	r25, 0x00	; 0
   for(uint32_t i=0;i<40000;i++){
 	asm( "nop ");
- 258:	00 00       	nop
- 25a:	01 96       	adiw	r24, 0x01	; 1
+ 27c:	00 00       	nop
+ 27e:	01 96       	adiw	r24, 0x01	; 1
   WS2812B_Send_Byte(r);
   WS2812B_Send_Byte(b);
 }
 
 void WS2812B_Pixel_Delay(void){
   for(uint32_t i=0;i<40000;i++){
- 25c:	2c e9       	ldi	r18, 0x9C	; 156
- 25e:	80 34       	cpi	r24, 0x40	; 64
- 260:	92 07       	cpc	r25, r18
- 262:	d1 f7       	brne	.-12     	; 0x258 <WS2812B_Pixel_Delay+0x4>
+ 280:	2c e9       	ldi	r18, 0x9C	; 156
+ 282:	80 34       	cpi	r24, 0x40	; 64
+ 284:	92 07       	cpc	r25, r18
+ 286:	d1 f7       	brne	.-12     	; 0x27c <WS2812B_Pixel_Delay+0x4>
 	asm( "nop ");
   }
 }
- 264:	08 95       	ret
+ 288:	08 95       	ret
 
-00000266 <WS2812B_Init>:
+0000028a <WS2812B_Init>:
 #include <util/delay.h>
 #include "ws2812b.h"
 
 
 void WS2812B_Gpio_Init(void){
   WS2812B_DDR  |=  (1<<WS2812B_bp);
- 266:	55 9a       	sbi	0x0a, 5	; 10
+ 28a:	55 9a       	sbi	0x0a, 5	; 10
   WS2812B_PORT &=~ (1<<WS2812B_bp);
- 268:	5d 98       	cbi	0x0b, 5	; 11
+ 28c:	5d 98       	cbi	0x0b, 5	; 11
 }
 
   
 void WS2812B_Init(void){
   WS2812B_Gpio_Init();
 }
- 26a:	08 95       	ret
+ 28e:	08 95       	ret
 
-0000026c <RGB_Animation_Clear_Pixel_Buf>:
+00000290 <RGB_Animation_Clear_Pixel_Buf>:
   uint8_t PixelBuf[WS2812B_ANIMATION_PIXELS];
 }rgb_anim_t;
 
 rgb_anim_t RGBAnim;
 
 void RGB_Animation_Clear_Pixel_Buf(void){
- 26c:	ef e0       	ldi	r30, 0x0F	; 15
- 26e:	f1 e0       	ldi	r31, 0x01	; 1
+ 290:	ef e0       	ldi	r30, 0x0F	; 15
+ 292:	f1 e0       	ldi	r31, 0x01	; 1
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
 	RGBAnim.PixelBuf[i]=0;
- 270:	11 92       	st	Z+, r1
+ 294:	11 92       	st	Z+, r1
 }rgb_anim_t;
 
 rgb_anim_t RGBAnim;
 
 void RGB_Animation_Clear_Pixel_Buf(void){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
- 272:	81 e0       	ldi	r24, 0x01	; 1
- 274:	e3 32       	cpi	r30, 0x23	; 35
- 276:	f8 07       	cpc	r31, r24
- 278:	d9 f7       	brne	.-10     	; 0x270 <RGB_Animation_Clear_Pixel_Buf+0x4>
+ 296:	81 e0       	ldi	r24, 0x01	; 1
+ 298:	e9 34       	cpi	r30, 0x49	; 73
+ 29a:	f8 07       	cpc	r31, r24
+ 29c:	d9 f7       	brne	.-10     	; 0x294 <RGB_Animation_Clear_Pixel_Buf+0x4>
 	RGBAnim.PixelBuf[i]=0;
   }
 }
- 27a:	08 95       	ret
+ 29e:	08 95       	ret
 
-0000027c <RGB_Animation_Slide>:
+000002a0 <RGB_Animation_Brightness_Dec>:
+    WS2812B_Send_Pixel(r,g,b);
+	_delay_ms(10);
+  }
+}
+
+void RGB_Animation_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b){
+ 2a0:	df 92       	push	r13
+ 2a2:	ef 92       	push	r14
+ 2a4:	ff 92       	push	r15
+ 2a6:	0f 93       	push	r16
+ 2a8:	1f 93       	push	r17
+ 2aa:	cf 93       	push	r28
+ 2ac:	df 93       	push	r29
+ 2ae:	d8 2e       	mov	r13, r24
+ 2b0:	e6 2e       	mov	r14, r22
+ 2b2:	f4 2e       	mov	r15, r20
+ 2b4:	c0 e0       	ldi	r28, 0x00	; 0
+ 2b6:	d0 e0       	ldi	r29, 0x00	; 0
+ 2b8:	00 e3       	ldi	r16, 0x30	; 48
+ 2ba:	15 e7       	ldi	r17, 0x75	; 117
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+    WS2812B_Send_Pixel(r,g,b);
+ 2bc:	8d 2d       	mov	r24, r13
+ 2be:	6e 2d       	mov	r22, r14
+ 2c0:	4f 2d       	mov	r20, r15
+ 2c2:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 2c6:	c8 01       	movw	r24, r16
+ 2c8:	01 97       	sbiw	r24, 0x01	; 1
+ 2ca:	f1 f7       	brne	.-4      	; 0x2c8 <RGB_Animation_Brightness_Dec+0x28>
+	_delay_ms(10);
+  }
+}
+
+void RGB_Animation_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b){
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+ 2cc:	21 96       	adiw	r28, 0x01	; 1
+ 2ce:	ca 33       	cpi	r28, 0x3A	; 58
+ 2d0:	d1 05       	cpc	r29, r1
+ 2d2:	a1 f7       	brne	.-24     	; 0x2bc <RGB_Animation_Brightness_Dec+0x1c>
+    WS2812B_Send_Pixel(r,g,b);
+	_delay_ms(10);
+  }
+}
+ 2d4:	df 91       	pop	r29
+ 2d6:	cf 91       	pop	r28
+ 2d8:	1f 91       	pop	r17
+ 2da:	0f 91       	pop	r16
+ 2dc:	ff 90       	pop	r15
+ 2de:	ef 90       	pop	r14
+ 2e0:	df 90       	pop	r13
+ 2e2:	08 95       	ret
+
+000002e4 <RGB_Animation_Brightness_Inc>:
+    RGB_Brightness_Dec(r,g,b,i+1);
+	RGBAnim.PixelBuf[i]=0;
+  }
+}
+
+void RGB_Animation_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b){
+ 2e4:	cf 92       	push	r12
+ 2e6:	df 92       	push	r13
+ 2e8:	ff 92       	push	r15
+ 2ea:	0f 93       	push	r16
+ 2ec:	1f 93       	push	r17
+ 2ee:	cf 93       	push	r28
+ 2f0:	df 93       	push	r29
+ 2f2:	f8 2e       	mov	r15, r24
+ 2f4:	06 2f       	mov	r16, r22
+ 2f6:	14 2f       	mov	r17, r20
+  RGBAnim.MaxVal=r;
+ 2f8:	80 93 0e 01 	sts	0x010E, r24
+  
+  if(g>RGBAnim.MaxVal){
+ 2fc:	86 17       	cp	r24, r22
+ 2fe:	10 f4       	brcc	.+4      	; 0x304 <RGB_Animation_Brightness_Inc+0x20>
+    RGBAnim.MaxVal=g;
+ 300:	60 93 0e 01 	sts	0x010E, r22
+  }
+  
+  if(b>RGBAnim.MaxVal){
+ 304:	80 91 0e 01 	lds	r24, 0x010E
+ 308:	81 17       	cp	r24, r17
+ 30a:	10 f4       	brcc	.+4      	; 0x310 <RGB_Animation_Brightness_Inc+0x2c>
+    RGBAnim.MaxVal=b;
+ 30c:	10 93 0e 01 	sts	0x010E, r17
+ 310:	c0 e0       	ldi	r28, 0x00	; 0
+ 312:	d0 e0       	ldi	r29, 0x00	; 0
+ 314:	80 e3       	ldi	r24, 0x30	; 48
+ 316:	c8 2e       	mov	r12, r24
+ 318:	85 e7       	ldi	r24, 0x75	; 117
+ 31a:	d8 2e       	mov	r13, r24
+  }
+  
+  
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+    WS2812B_Send_Pixel(r,g,b);
+ 31c:	8f 2d       	mov	r24, r15
+ 31e:	60 2f       	mov	r22, r16
+ 320:	41 2f       	mov	r20, r17
+ 322:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 326:	c6 01       	movw	r24, r12
+ 328:	01 97       	sbiw	r24, 0x01	; 1
+ 32a:	f1 f7       	brne	.-4      	; 0x328 <RGB_Animation_Brightness_Inc+0x44>
+  if(b>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=b;
+  }
+  
+  
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+ 32c:	21 96       	adiw	r28, 0x01	; 1
+ 32e:	ca 33       	cpi	r28, 0x3A	; 58
+ 330:	d1 05       	cpc	r29, r1
+ 332:	a1 f7       	brne	.-24     	; 0x31c <RGB_Animation_Brightness_Inc+0x38>
+    WS2812B_Send_Pixel(r,g,b);
+	_delay_ms(10);
+  }
+}
+ 334:	df 91       	pop	r29
+ 336:	cf 91       	pop	r28
+ 338:	1f 91       	pop	r17
+ 33a:	0f 91       	pop	r16
+ 33c:	ff 90       	pop	r15
+ 33e:	df 90       	pop	r13
+ 340:	cf 90       	pop	r12
+ 342:	08 95       	ret
+
+00000344 <RGB_Animation_Slide>:
 }
 
 
 uint16_t  color=0,color1=0,color2=0,color3=0;
 
 void RGB_Animation_Slide(void){
- 27c:	8f 92       	push	r8
- 27e:	9f 92       	push	r9
- 280:	af 92       	push	r10
- 282:	bf 92       	push	r11
- 284:	cf 92       	push	r12
- 286:	df 92       	push	r13
- 288:	ef 92       	push	r14
- 28a:	ff 92       	push	r15
- 28c:	0f 93       	push	r16
- 28e:	1f 93       	push	r17
- 290:	cf 93       	push	r28
- 292:	df 93       	push	r29
+ 344:	8f 92       	push	r8
+ 346:	9f 92       	push	r9
+ 348:	af 92       	push	r10
+ 34a:	bf 92       	push	r11
+ 34c:	cf 92       	push	r12
+ 34e:	df 92       	push	r13
+ 350:	ef 92       	push	r14
+ 352:	ff 92       	push	r15
+ 354:	0f 93       	push	r16
+ 356:	1f 93       	push	r17
+ 358:	cf 93       	push	r28
+ 35a:	df 93       	push	r29
   uint16_t leading_blank=0;
   uint16_t trailing_blank=0;
   
   if(color==0){
- 294:	80 91 06 01 	lds	r24, 0x0106
- 298:	90 91 07 01 	lds	r25, 0x0107
- 29c:	00 97       	sbiw	r24, 0x00	; 0
- 29e:	d1 f4       	brne	.+52     	; 0x2d4 <RGB_Animation_Slide+0x58>
+ 35c:	80 91 06 01 	lds	r24, 0x0106
+ 360:	90 91 07 01 	lds	r25, 0x0107
+ 364:	00 97       	sbiw	r24, 0x00	; 0
+ 366:	d1 f4       	brne	.+52     	; 0x39c <RGB_Animation_Slide+0x58>
 	  color1=0xFF;
- 2a0:	8f ef       	ldi	r24, 0xFF	; 255
- 2a2:	90 e0       	ldi	r25, 0x00	; 0
- 2a4:	90 93 09 01 	sts	0x0109, r25
- 2a8:	80 93 08 01 	sts	0x0108, r24
+ 368:	8f ef       	ldi	r24, 0xFF	; 255
+ 36a:	90 e0       	ldi	r25, 0x00	; 0
+ 36c:	90 93 09 01 	sts	0x0109, r25
+ 370:	80 93 08 01 	sts	0x0108, r24
 	  color2=0x00;
- 2ac:	10 92 0b 01 	sts	0x010B, r1
- 2b0:	10 92 0a 01 	sts	0x010A, r1
+ 374:	10 92 0b 01 	sts	0x010B, r1
+ 378:	10 92 0a 01 	sts	0x010A, r1
 	  color3=0x00;
- 2b4:	10 92 0d 01 	sts	0x010D, r1
- 2b8:	10 92 0c 01 	sts	0x010C, r1
- 2bc:	00 e0       	ldi	r16, 0x00	; 0
- 2be:	10 e0       	ldi	r17, 0x00	; 0
- 2c0:	ee 24       	eor	r14, r14
- 2c2:	ff 24       	eor	r15, r15
+ 37c:	10 92 0d 01 	sts	0x010D, r1
+ 380:	10 92 0c 01 	sts	0x010C, r1
+ 384:	00 e0       	ldi	r16, 0x00	; 0
+ 386:	10 e0       	ldi	r17, 0x00	; 0
+ 388:	ee 24       	eor	r14, r14
+ 38a:	ff 24       	eor	r15, r15
 	}
   
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
     
 	trailing_blank = WS2812B_ANIMATION_PIXELS;
 	trailing_blank-= leading_blank;
- 2c4:	94 e1       	ldi	r25, 0x14	; 20
- 2c6:	89 2e       	mov	r8, r25
- 2c8:	91 2c       	mov	r9, r1
- 2ca:	88 eb       	ldi	r24, 0xB8	; 184
- 2cc:	a8 2e       	mov	r10, r24
- 2ce:	8b e0       	ldi	r24, 0x0B	; 11
- 2d0:	b8 2e       	mov	r11, r24
- 2d2:	37 c0       	rjmp	.+110    	; 0x342 <RGB_Animation_Slide+0xc6>
+ 38c:	2a e3       	ldi	r18, 0x3A	; 58
+ 38e:	82 2e       	mov	r8, r18
+ 390:	91 2c       	mov	r9, r1
+ 392:	98 eb       	ldi	r25, 0xB8	; 184
+ 394:	a9 2e       	mov	r10, r25
+ 396:	9b e0       	ldi	r25, 0x0B	; 11
+ 398:	b9 2e       	mov	r11, r25
+ 39a:	37 c0       	rjmp	.+110    	; 0x40a <RGB_Animation_Slide+0xc6>
   if(color==0){
 	  color1=0xFF;
 	  color2=0x00;
 	  color3=0x00;
 	}
 	else if(color==1){
- 2d4:	81 30       	cpi	r24, 0x01	; 1
- 2d6:	91 05       	cpc	r25, r1
- 2d8:	39 f4       	brne	.+14     	; 0x2e8 <RGB_Animation_Slide+0x6c>
+ 39c:	81 30       	cpi	r24, 0x01	; 1
+ 39e:	91 05       	cpc	r25, r1
+ 3a0:	39 f4       	brne	.+14     	; 0x3b0 <RGB_Animation_Slide+0x6c>
 	  color1=0xFF;
- 2da:	8f ef       	ldi	r24, 0xFF	; 255
- 2dc:	90 e0       	ldi	r25, 0x00	; 0
- 2de:	90 93 09 01 	sts	0x0109, r25
- 2e2:	80 93 08 01 	sts	0x0108, r24
- 2e6:	09 c0       	rjmp	.+18     	; 0x2fa <RGB_Animation_Slide+0x7e>
+ 3a2:	8f ef       	ldi	r24, 0xFF	; 255
+ 3a4:	90 e0       	ldi	r25, 0x00	; 0
+ 3a6:	90 93 09 01 	sts	0x0109, r25
+ 3aa:	80 93 08 01 	sts	0x0108, r24
+ 3ae:	09 c0       	rjmp	.+18     	; 0x3c2 <RGB_Animation_Slide+0x7e>
 	  color2=0xFF;
 	  color3=0x00;
 	}
 	else if(color==2){
- 2e8:	82 30       	cpi	r24, 0x02	; 2
- 2ea:	91 05       	cpc	r25, r1
- 2ec:	59 f4       	brne	.+22     	; 0x304 <RGB_Animation_Slide+0x88>
+ 3b0:	82 30       	cpi	r24, 0x02	; 2
+ 3b2:	91 05       	cpc	r25, r1
+ 3b4:	59 f4       	brne	.+22     	; 0x3cc <RGB_Animation_Slide+0x88>
 	  color1=0x00;
- 2ee:	10 92 09 01 	sts	0x0109, r1
- 2f2:	10 92 08 01 	sts	0x0108, r1
+ 3b6:	10 92 09 01 	sts	0x0109, r1
+ 3ba:	10 92 08 01 	sts	0x0108, r1
 	  color2=0xFF;
- 2f6:	8f ef       	ldi	r24, 0xFF	; 255
- 2f8:	90 e0       	ldi	r25, 0x00	; 0
- 2fa:	90 93 0b 01 	sts	0x010B, r25
- 2fe:	80 93 0a 01 	sts	0x010A, r24
- 302:	d8 cf       	rjmp	.-80     	; 0x2b4 <RGB_Animation_Slide+0x38>
+ 3be:	8f ef       	ldi	r24, 0xFF	; 255
+ 3c0:	90 e0       	ldi	r25, 0x00	; 0
+ 3c2:	90 93 0b 01 	sts	0x010B, r25
+ 3c6:	80 93 0a 01 	sts	0x010A, r24
+ 3ca:	d8 cf       	rjmp	.-80     	; 0x37c <RGB_Animation_Slide+0x38>
 	  color3=0x00;
 	}
 	else if(color==3){
- 304:	83 30       	cpi	r24, 0x03	; 3
- 306:	91 05       	cpc	r25, r1
- 308:	59 f4       	brne	.+22     	; 0x320 <RGB_Animation_Slide+0xa4>
+ 3cc:	83 30       	cpi	r24, 0x03	; 3
+ 3ce:	91 05       	cpc	r25, r1
+ 3d0:	59 f4       	brne	.+22     	; 0x3e8 <RGB_Animation_Slide+0xa4>
 	  color1=0x00;
- 30a:	10 92 09 01 	sts	0x0109, r1
- 30e:	10 92 08 01 	sts	0x0108, r1
+ 3d2:	10 92 09 01 	sts	0x0109, r1
+ 3d6:	10 92 08 01 	sts	0x0108, r1
 	  color2=0xFF;
- 312:	8f ef       	ldi	r24, 0xFF	; 255
- 314:	90 e0       	ldi	r25, 0x00	; 0
- 316:	90 93 0b 01 	sts	0x010B, r25
- 31a:	80 93 0a 01 	sts	0x010A, r24
- 31e:	0c c0       	rjmp	.+24     	; 0x338 <RGB_Animation_Slide+0xbc>
+ 3da:	8f ef       	ldi	r24, 0xFF	; 255
+ 3dc:	90 e0       	ldi	r25, 0x00	; 0
+ 3de:	90 93 0b 01 	sts	0x010B, r25
+ 3e2:	80 93 0a 01 	sts	0x010A, r24
+ 3e6:	0c c0       	rjmp	.+24     	; 0x400 <RGB_Animation_Slide+0xbc>
 	  color3=0xFF;
 	}
 	else if(color==4){
- 320:	04 97       	sbiw	r24, 0x04	; 4
- 322:	61 f6       	brne	.-104    	; 0x2bc <RGB_Animation_Slide+0x40>
+ 3e8:	04 97       	sbiw	r24, 0x04	; 4
+ 3ea:	61 f6       	brne	.-104    	; 0x384 <RGB_Animation_Slide+0x40>
 	  color1=0x00;
- 324:	10 92 09 01 	sts	0x0109, r1
- 328:	10 92 08 01 	sts	0x0108, r1
+ 3ec:	10 92 09 01 	sts	0x0109, r1
+ 3f0:	10 92 08 01 	sts	0x0108, r1
 	  color2=0x00;
- 32c:	10 92 0b 01 	sts	0x010B, r1
- 330:	10 92 0a 01 	sts	0x010A, r1
+ 3f4:	10 92 0b 01 	sts	0x010B, r1
+ 3f8:	10 92 0a 01 	sts	0x010A, r1
 	  color3=0xFF;
- 334:	8f ef       	ldi	r24, 0xFF	; 255
- 336:	90 e0       	ldi	r25, 0x00	; 0
- 338:	90 93 0d 01 	sts	0x010D, r25
- 33c:	80 93 0c 01 	sts	0x010C, r24
- 340:	bd cf       	rjmp	.-134    	; 0x2bc <RGB_Animation_Slide+0x40>
+ 3fc:	8f ef       	ldi	r24, 0xFF	; 255
+ 3fe:	90 e0       	ldi	r25, 0x00	; 0
+ 400:	90 93 0d 01 	sts	0x010D, r25
+ 404:	80 93 0c 01 	sts	0x010C, r24
+ 408:	bd cf       	rjmp	.-134    	; 0x384 <RGB_Animation_Slide+0x40>
 	}
   
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
     
 	trailing_blank = WS2812B_ANIMATION_PIXELS;
 	trailing_blank-= leading_blank;
- 342:	64 01       	movw	r12, r8
- 344:	c0 1a       	sub	r12, r16
- 346:	d1 0a       	sbc	r13, r17
- 348:	c0 e0       	ldi	r28, 0x00	; 0
- 34a:	d0 e0       	ldi	r29, 0x00	; 0
- 34c:	06 c0       	rjmp	.+12     	; 0x35a <RGB_Animation_Slide+0xde>
+ 40a:	64 01       	movw	r12, r8
+ 40c:	c0 1a       	sub	r12, r16
+ 40e:	d1 0a       	sbc	r13, r17
+ 410:	c0 e0       	ldi	r28, 0x00	; 0
+ 412:	d0 e0       	ldi	r29, 0x00	; 0
+ 414:	06 c0       	rjmp	.+12     	; 0x422 <RGB_Animation_Slide+0xde>
 	
 	
 	
     for(uint16_t i=0;i<leading_blank;i++){
       WS2812B_Send_Pixel(0x00,0x00,0x00);
- 34e:	80 e0       	ldi	r24, 0x00	; 0
- 350:	60 e0       	ldi	r22, 0x00	; 0
- 352:	40 e0       	ldi	r20, 0x00	; 0
- 354:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
+ 416:	80 e0       	ldi	r24, 0x00	; 0
+ 418:	60 e0       	ldi	r22, 0x00	; 0
+ 41a:	40 e0       	ldi	r20, 0x00	; 0
+ 41c:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
 	trailing_blank = WS2812B_ANIMATION_PIXELS;
 	trailing_blank-= leading_blank;
 	
 	
 	
     for(uint16_t i=0;i<leading_blank;i++){
- 358:	21 96       	adiw	r28, 0x01	; 1
- 35a:	c0 17       	cp	r28, r16
- 35c:	d1 07       	cpc	r29, r17
- 35e:	b8 f3       	brcs	.-18     	; 0x34e <RGB_Animation_Slide+0xd2>
+ 420:	21 96       	adiw	r28, 0x01	; 1
+ 422:	c0 17       	cp	r28, r16
+ 424:	d1 07       	cpc	r29, r17
+ 426:	b8 f3       	brcs	.-18     	; 0x416 <RGB_Animation_Slide+0xd2>
       WS2812B_Send_Pixel(0x00,0x00,0x00);
     }
 	
 	for(uint16_t i=0;i<3;i++){
 	  WS2812B_Send_Pixel(color1,color2,color3);
- 360:	80 91 08 01 	lds	r24, 0x0108
- 364:	60 91 0a 01 	lds	r22, 0x010A
- 368:	40 91 0c 01 	lds	r20, 0x010C
- 36c:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 370:	80 91 08 01 	lds	r24, 0x0108
- 374:	60 91 0a 01 	lds	r22, 0x010A
- 378:	40 91 0c 01 	lds	r20, 0x010C
- 37c:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 380:	80 91 08 01 	lds	r24, 0x0108
- 384:	60 91 0a 01 	lds	r22, 0x010A
- 388:	40 91 0c 01 	lds	r20, 0x010C
- 38c:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 390:	c0 e0       	ldi	r28, 0x00	; 0
- 392:	d0 e0       	ldi	r29, 0x00	; 0
- 394:	06 c0       	rjmp	.+12     	; 0x3a2 <RGB_Animation_Slide+0x126>
+ 428:	80 91 08 01 	lds	r24, 0x0108
+ 42c:	60 91 0a 01 	lds	r22, 0x010A
+ 430:	40 91 0c 01 	lds	r20, 0x010C
+ 434:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 438:	80 91 08 01 	lds	r24, 0x0108
+ 43c:	60 91 0a 01 	lds	r22, 0x010A
+ 440:	40 91 0c 01 	lds	r20, 0x010C
+ 444:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 448:	80 91 08 01 	lds	r24, 0x0108
+ 44c:	60 91 0a 01 	lds	r22, 0x010A
+ 450:	40 91 0c 01 	lds	r20, 0x010C
+ 454:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 458:	c0 e0       	ldi	r28, 0x00	; 0
+ 45a:	d0 e0       	ldi	r29, 0x00	; 0
+ 45c:	06 c0       	rjmp	.+12     	; 0x46a <RGB_Animation_Slide+0x126>
 	}
 	
     for(uint16_t i=0;i<trailing_blank;i++){
       WS2812B_Send_Pixel(0x00,0x00,0x00);
- 396:	80 e0       	ldi	r24, 0x00	; 0
- 398:	60 e0       	ldi	r22, 0x00	; 0
- 39a:	40 e0       	ldi	r20, 0x00	; 0
- 39c:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
+ 45e:	80 e0       	ldi	r24, 0x00	; 0
+ 460:	60 e0       	ldi	r22, 0x00	; 0
+ 462:	40 e0       	ldi	r20, 0x00	; 0
+ 464:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
 	
 	for(uint16_t i=0;i<3;i++){
 	  WS2812B_Send_Pixel(color1,color2,color3);
 	}
 	
     for(uint16_t i=0;i<trailing_blank;i++){
- 3a0:	21 96       	adiw	r28, 0x01	; 1
- 3a2:	cc 15       	cp	r28, r12
- 3a4:	dd 05       	cpc	r29, r13
- 3a6:	b8 f3       	brcs	.-18     	; 0x396 <RGB_Animation_Slide+0x11a>
+ 468:	21 96       	adiw	r28, 0x01	; 1
+ 46a:	cc 15       	cp	r28, r12
+ 46c:	dd 05       	cpc	r29, r13
+ 46e:	b8 f3       	brcs	.-18     	; 0x45e <RGB_Animation_Slide+0x11a>
       WS2812B_Send_Pixel(0x00,0x00,0x00);
     }
 	
 	leading_blank++;
- 3a8:	0f 5f       	subi	r16, 0xFF	; 255
- 3aa:	1f 4f       	sbci	r17, 0xFF	; 255
+ 470:	0f 5f       	subi	r16, 0xFF	; 255
+ 472:	1f 4f       	sbci	r17, 0xFF	; 255
 	if(leading_blank>=WS2812B_ANIMATION_PIXELS){
- 3ac:	04 31       	cpi	r16, 0x14	; 20
- 3ae:	11 05       	cpc	r17, r1
- 3b0:	10 f0       	brcs	.+4      	; 0x3b6 <RGB_Animation_Slide+0x13a>
- 3b2:	00 e0       	ldi	r16, 0x00	; 0
- 3b4:	10 e0       	ldi	r17, 0x00	; 0
- 3b6:	c5 01       	movw	r24, r10
- 3b8:	01 97       	sbiw	r24, 0x01	; 1
- 3ba:	f1 f7       	brne	.-4      	; 0x3b8 <RGB_Animation_Slide+0x13c>
+ 474:	0a 33       	cpi	r16, 0x3A	; 58
+ 476:	11 05       	cpc	r17, r1
+ 478:	10 f0       	brcs	.+4      	; 0x47e <RGB_Animation_Slide+0x13a>
+ 47a:	00 e0       	ldi	r16, 0x00	; 0
+ 47c:	10 e0       	ldi	r17, 0x00	; 0
+ 47e:	c5 01       	movw	r24, r10
+ 480:	01 97       	sbiw	r24, 0x01	; 1
+ 482:	f1 f7       	brne	.-4      	; 0x480 <RGB_Animation_Slide+0x13c>
 	  color1=0xFF;
 	  color2=0x00;
 	  color3=0xFF;
 	}
   
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
- 3bc:	08 94       	sec
- 3be:	e1 1c       	adc	r14, r1
- 3c0:	f1 1c       	adc	r15, r1
- 3c2:	84 e1       	ldi	r24, 0x14	; 20
- 3c4:	e8 16       	cp	r14, r24
- 3c6:	f1 04       	cpc	r15, r1
- 3c8:	09 f0       	breq	.+2      	; 0x3cc <RGB_Animation_Slide+0x150>
- 3ca:	bb cf       	rjmp	.-138    	; 0x342 <RGB_Animation_Slide+0xc6>
+ 484:	08 94       	sec
+ 486:	e1 1c       	adc	r14, r1
+ 488:	f1 1c       	adc	r15, r1
+ 48a:	8a e3       	ldi	r24, 0x3A	; 58
+ 48c:	e8 16       	cp	r14, r24
+ 48e:	f1 04       	cpc	r15, r1
+ 490:	09 f0       	breq	.+2      	; 0x494 <RGB_Animation_Slide+0x150>
+ 492:	bb cf       	rjmp	.-138    	; 0x40a <RGB_Animation_Slide+0xc6>
 	
 	
 	_delay_ms(1);
   }
   
   color++;
- 3cc:	80 91 06 01 	lds	r24, 0x0106
- 3d0:	90 91 07 01 	lds	r25, 0x0107
- 3d4:	01 96       	adiw	r24, 0x01	; 1
- 3d6:	90 93 07 01 	sts	0x0107, r25
- 3da:	80 93 06 01 	sts	0x0106, r24
+ 494:	80 91 06 01 	lds	r24, 0x0106
+ 498:	90 91 07 01 	lds	r25, 0x0107
+ 49c:	01 96       	adiw	r24, 0x01	; 1
+ 49e:	90 93 07 01 	sts	0x0107, r25
+ 4a2:	80 93 06 01 	sts	0x0106, r24
 	if(color>4){
- 3de:	05 97       	sbiw	r24, 0x05	; 5
- 3e0:	20 f0       	brcs	.+8      	; 0x3ea <RGB_Animation_Slide+0x16e>
+ 4a6:	05 97       	sbiw	r24, 0x05	; 5
+ 4a8:	20 f0       	brcs	.+8      	; 0x4b2 <RGB_Animation_Slide+0x16e>
 	  color=0;
- 3e2:	10 92 07 01 	sts	0x0107, r1
- 3e6:	10 92 06 01 	sts	0x0106, r1
+ 4aa:	10 92 07 01 	sts	0x0107, r1
+ 4ae:	10 92 06 01 	sts	0x0106, r1
 	}
 }
- 3ea:	df 91       	pop	r29
- 3ec:	cf 91       	pop	r28
- 3ee:	1f 91       	pop	r17
- 3f0:	0f 91       	pop	r16
- 3f2:	ff 90       	pop	r15
- 3f4:	ef 90       	pop	r14
- 3f6:	df 90       	pop	r13
- 3f8:	cf 90       	pop	r12
- 3fa:	bf 90       	pop	r11
- 3fc:	af 90       	pop	r10
- 3fe:	9f 90       	pop	r9
- 400:	8f 90       	pop	r8
- 402:	08 95       	ret
+ 4b2:	df 91       	pop	r29
+ 4b4:	cf 91       	pop	r28
+ 4b6:	1f 91       	pop	r17
+ 4b8:	0f 91       	pop	r16
+ 4ba:	ff 90       	pop	r15
+ 4bc:	ef 90       	pop	r14
+ 4be:	df 90       	pop	r13
+ 4c0:	cf 90       	pop	r12
+ 4c2:	bf 90       	pop	r11
+ 4c4:	af 90       	pop	r10
+ 4c6:	9f 90       	pop	r9
+ 4c8:	8f 90       	pop	r8
+ 4ca:	08 95       	ret
 
-00000404 <RGB_Animation_Rotate_All_Color>:
-	_delay_us(100);
-  }
+000004cc <RGB_Animation_Rotate_All_Color>:
 }
 
 
+
+
 void RGB_Animation_Rotate_All_Color(void){
- 404:	cf 93       	push	r28
- 406:	df 93       	push	r29
- 408:	c0 e0       	ldi	r28, 0x00	; 0
- 40a:	d0 e0       	ldi	r29, 0x00	; 0
+ 4cc:	cf 93       	push	r28
+ 4ce:	df 93       	push	r29
+ 4d0:	c0 e0       	ldi	r28, 0x00	; 0
+ 4d2:	d0 e0       	ldi	r29, 0x00	; 0
   for(uint16_t j=0;j<WS2812B_ANIMATION_PIXELS;j++){
 	WS2812B_Send_Pixel(red,green,blue);
- 40c:	80 91 00 01 	lds	r24, 0x0100
- 410:	60 91 01 01 	lds	r22, 0x0101
- 414:	40 91 02 01 	lds	r20, 0x0102
- 418:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
-  }
-}
+ 4d4:	80 91 00 01 	lds	r24, 0x0100
+ 4d8:	60 91 01 01 	lds	r22, 0x0101
+ 4dc:	40 91 02 01 	lds	r20, 0x0102
+ 4e0:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+
+
 
 
 void RGB_Animation_Rotate_All_Color(void){
   for(uint16_t j=0;j<WS2812B_ANIMATION_PIXELS;j++){
- 41c:	21 96       	adiw	r28, 0x01	; 1
- 41e:	c4 31       	cpi	r28, 0x14	; 20
- 420:	d1 05       	cpc	r29, r1
- 422:	a1 f7       	brne	.-24     	; 0x40c <RGB_Animation_Rotate_All_Color+0x8>
+ 4e4:	21 96       	adiw	r28, 0x01	; 1
+ 4e6:	ca 33       	cpi	r28, 0x3A	; 58
+ 4e8:	d1 05       	cpc	r29, r1
+ 4ea:	a1 f7       	brne	.-24     	; 0x4d4 <RGB_Animation_Rotate_All_Color+0x8>
 	WS2812B_Send_Pixel(red,green,blue);
   }
 
   if(red_dir==UPCOUNT){
- 424:	80 91 03 01 	lds	r24, 0x0103
- 428:	88 23       	and	r24, r24
- 42a:	31 f4       	brne	.+12     	; 0x438 <RGB_Animation_Rotate_All_Color+0x34>
+ 4ec:	80 91 03 01 	lds	r24, 0x0103
+ 4f0:	88 23       	and	r24, r24
+ 4f2:	31 f4       	brne	.+12     	; 0x500 <RGB_Animation_Rotate_All_Color+0x34>
 	if(red<RED_MAX){
- 42c:	80 91 00 01 	lds	r24, 0x0100
- 430:	8f 3f       	cpi	r24, 0xFF	; 255
- 432:	59 f0       	breq	.+22     	; 0x44a <RGB_Animation_Rotate_All_Color+0x46>
+ 4f4:	80 91 00 01 	lds	r24, 0x0100
+ 4f8:	8f 3f       	cpi	r24, 0xFF	; 255
+ 4fa:	59 f0       	breq	.+22     	; 0x512 <RGB_Animation_Rotate_All_Color+0x46>
 	  red++;
- 434:	8f 5f       	subi	r24, 0xFF	; 255
- 436:	07 c0       	rjmp	.+14     	; 0x446 <RGB_Animation_Rotate_All_Color+0x42>
+ 4fc:	8f 5f       	subi	r24, 0xFF	; 255
+ 4fe:	07 c0       	rjmp	.+14     	; 0x50e <RGB_Animation_Rotate_All_Color+0x42>
 	}
   }else if(red_dir==DOWNCOUNT){
- 438:	81 30       	cpi	r24, 0x01	; 1
- 43a:	39 f4       	brne	.+14     	; 0x44a <RGB_Animation_Rotate_All_Color+0x46>
+ 500:	81 30       	cpi	r24, 0x01	; 1
+ 502:	39 f4       	brne	.+14     	; 0x512 <RGB_Animation_Rotate_All_Color+0x46>
 	if(red>0){
- 43c:	80 91 00 01 	lds	r24, 0x0100
- 440:	88 23       	and	r24, r24
- 442:	19 f0       	breq	.+6      	; 0x44a <RGB_Animation_Rotate_All_Color+0x46>
+ 504:	80 91 00 01 	lds	r24, 0x0100
+ 508:	88 23       	and	r24, r24
+ 50a:	19 f0       	breq	.+6      	; 0x512 <RGB_Animation_Rotate_All_Color+0x46>
 	  red--;
- 444:	81 50       	subi	r24, 0x01	; 1
- 446:	80 93 00 01 	sts	0x0100, r24
+ 50c:	81 50       	subi	r24, 0x01	; 1
+ 50e:	80 93 00 01 	sts	0x0100, r24
 	}
   }
 	
   if(green_dir==UPCOUNT){
- 44a:	80 91 04 01 	lds	r24, 0x0104
- 44e:	88 23       	and	r24, r24
- 450:	31 f4       	brne	.+12     	; 0x45e <RGB_Animation_Rotate_All_Color+0x5a>
+ 512:	80 91 04 01 	lds	r24, 0x0104
+ 516:	88 23       	and	r24, r24
+ 518:	31 f4       	brne	.+12     	; 0x526 <RGB_Animation_Rotate_All_Color+0x5a>
 	if(green<GREEN_MAX){
- 452:	80 91 01 01 	lds	r24, 0x0101
- 456:	8f 3f       	cpi	r24, 0xFF	; 255
- 458:	59 f0       	breq	.+22     	; 0x470 <RGB_Animation_Rotate_All_Color+0x6c>
+ 51a:	80 91 01 01 	lds	r24, 0x0101
+ 51e:	8f 3f       	cpi	r24, 0xFF	; 255
+ 520:	59 f0       	breq	.+22     	; 0x538 <RGB_Animation_Rotate_All_Color+0x6c>
 	  green++;
- 45a:	8f 5f       	subi	r24, 0xFF	; 255
- 45c:	07 c0       	rjmp	.+14     	; 0x46c <RGB_Animation_Rotate_All_Color+0x68>
+ 522:	8f 5f       	subi	r24, 0xFF	; 255
+ 524:	07 c0       	rjmp	.+14     	; 0x534 <RGB_Animation_Rotate_All_Color+0x68>
 	}
   }else if(green_dir==DOWNCOUNT){
- 45e:	81 30       	cpi	r24, 0x01	; 1
- 460:	39 f4       	brne	.+14     	; 0x470 <RGB_Animation_Rotate_All_Color+0x6c>
+ 526:	81 30       	cpi	r24, 0x01	; 1
+ 528:	39 f4       	brne	.+14     	; 0x538 <RGB_Animation_Rotate_All_Color+0x6c>
 	if(green>0){
- 462:	80 91 01 01 	lds	r24, 0x0101
- 466:	88 23       	and	r24, r24
- 468:	19 f0       	breq	.+6      	; 0x470 <RGB_Animation_Rotate_All_Color+0x6c>
+ 52a:	80 91 01 01 	lds	r24, 0x0101
+ 52e:	88 23       	and	r24, r24
+ 530:	19 f0       	breq	.+6      	; 0x538 <RGB_Animation_Rotate_All_Color+0x6c>
 	  green--;
- 46a:	81 50       	subi	r24, 0x01	; 1
- 46c:	80 93 01 01 	sts	0x0101, r24
+ 532:	81 50       	subi	r24, 0x01	; 1
+ 534:	80 93 01 01 	sts	0x0101, r24
 	}
   }
 
   if(blue_dir==UPCOUNT){
- 470:	80 91 05 01 	lds	r24, 0x0105
- 474:	88 23       	and	r24, r24
- 476:	31 f4       	brne	.+12     	; 0x484 <RGB_Animation_Rotate_All_Color+0x80>
+ 538:	80 91 05 01 	lds	r24, 0x0105
+ 53c:	88 23       	and	r24, r24
+ 53e:	31 f4       	brne	.+12     	; 0x54c <RGB_Animation_Rotate_All_Color+0x80>
 	if(blue<BLUE_MAX){
- 478:	80 91 02 01 	lds	r24, 0x0102
- 47c:	8f 3f       	cpi	r24, 0xFF	; 255
- 47e:	59 f0       	breq	.+22     	; 0x496 <RGB_Animation_Rotate_All_Color+0x92>
+ 540:	80 91 02 01 	lds	r24, 0x0102
+ 544:	8f 3f       	cpi	r24, 0xFF	; 255
+ 546:	59 f0       	breq	.+22     	; 0x55e <RGB_Animation_Rotate_All_Color+0x92>
 	  blue++;
- 480:	8f 5f       	subi	r24, 0xFF	; 255
- 482:	07 c0       	rjmp	.+14     	; 0x492 <RGB_Animation_Rotate_All_Color+0x8e>
+ 548:	8f 5f       	subi	r24, 0xFF	; 255
+ 54a:	07 c0       	rjmp	.+14     	; 0x55a <RGB_Animation_Rotate_All_Color+0x8e>
 	}
   }else if(blue_dir==DOWNCOUNT){
- 484:	81 30       	cpi	r24, 0x01	; 1
- 486:	39 f4       	brne	.+14     	; 0x496 <RGB_Animation_Rotate_All_Color+0x92>
+ 54c:	81 30       	cpi	r24, 0x01	; 1
+ 54e:	39 f4       	brne	.+14     	; 0x55e <RGB_Animation_Rotate_All_Color+0x92>
 	if(blue>0){
- 488:	80 91 02 01 	lds	r24, 0x0102
- 48c:	88 23       	and	r24, r24
- 48e:	19 f0       	breq	.+6      	; 0x496 <RGB_Animation_Rotate_All_Color+0x92>
+ 550:	80 91 02 01 	lds	r24, 0x0102
+ 554:	88 23       	and	r24, r24
+ 556:	19 f0       	breq	.+6      	; 0x55e <RGB_Animation_Rotate_All_Color+0x92>
 	  blue--;
- 490:	81 50       	subi	r24, 0x01	; 1
- 492:	80 93 02 01 	sts	0x0102, r24
+ 558:	81 50       	subi	r24, 0x01	; 1
+ 55a:	80 93 02 01 	sts	0x0102, r24
 	}
   }
 
   if     ((red == RED_MAX) && (green == 0  ) && (blue == 0)){
- 496:	80 91 00 01 	lds	r24, 0x0100
- 49a:	8f 3f       	cpi	r24, 0xFF	; 255
- 49c:	d9 f4       	brne	.+54     	; 0x4d4 <RGB_Animation_Rotate_All_Color+0xd0>
- 49e:	80 91 01 01 	lds	r24, 0x0101
- 4a2:	88 23       	and	r24, r24
- 4a4:	51 f4       	brne	.+20     	; 0x4ba <RGB_Animation_Rotate_All_Color+0xb6>
- 4a6:	80 91 02 01 	lds	r24, 0x0102
- 4aa:	88 23       	and	r24, r24
- 4ac:	81 f5       	brne	.+96     	; 0x50e <RGB_Animation_Rotate_All_Color+0x10a>
+ 55e:	80 91 00 01 	lds	r24, 0x0100
+ 562:	8f 3f       	cpi	r24, 0xFF	; 255
+ 564:	d9 f4       	brne	.+54     	; 0x59c <RGB_Animation_Rotate_All_Color+0xd0>
+ 566:	80 91 01 01 	lds	r24, 0x0101
+ 56a:	88 23       	and	r24, r24
+ 56c:	51 f4       	brne	.+20     	; 0x582 <RGB_Animation_Rotate_All_Color+0xb6>
+ 56e:	80 91 02 01 	lds	r24, 0x0102
+ 572:	88 23       	and	r24, r24
+ 574:	81 f5       	brne	.+96     	; 0x5d6 <RGB_Animation_Rotate_All_Color+0x10a>
 	red_dir   = HALT;
- 4ae:	82 e0       	ldi	r24, 0x02	; 2
- 4b0:	80 93 03 01 	sts	0x0103, r24
+ 576:	82 e0       	ldi	r24, 0x02	; 2
+ 578:	80 93 03 01 	sts	0x0103, r24
 	green_dir = UPCOUNT;
- 4b4:	10 92 04 01 	sts	0x0104, r1
- 4b8:	38 c0       	rjmp	.+112    	; 0x52a <RGB_Animation_Rotate_All_Color+0x126>
+ 57c:	10 92 04 01 	sts	0x0104, r1
+ 580:	38 c0       	rjmp	.+112    	; 0x5f2 <RGB_Animation_Rotate_All_Color+0x126>
 	blue_dir  = HALT;
   }
   else if((red == RED_MAX) && (green == GREEN_MAX) && (blue == 0)){
- 4ba:	8f 3f       	cpi	r24, 0xFF	; 255
- 4bc:	41 f5       	brne	.+80     	; 0x50e <RGB_Animation_Rotate_All_Color+0x10a>
- 4be:	80 91 02 01 	lds	r24, 0x0102
- 4c2:	88 23       	and	r24, r24
- 4c4:	21 f5       	brne	.+72     	; 0x50e <RGB_Animation_Rotate_All_Color+0x10a>
+ 582:	8f 3f       	cpi	r24, 0xFF	; 255
+ 584:	41 f5       	brne	.+80     	; 0x5d6 <RGB_Animation_Rotate_All_Color+0x10a>
+ 586:	80 91 02 01 	lds	r24, 0x0102
+ 58a:	88 23       	and	r24, r24
+ 58c:	21 f5       	brne	.+72     	; 0x5d6 <RGB_Animation_Rotate_All_Color+0x10a>
 	red_dir   = DOWNCOUNT;
- 4c6:	81 e0       	ldi	r24, 0x01	; 1
- 4c8:	80 93 03 01 	sts	0x0103, r24
+ 58e:	81 e0       	ldi	r24, 0x01	; 1
+ 590:	80 93 03 01 	sts	0x0103, r24
 	green_dir = HALT;
- 4cc:	82 e0       	ldi	r24, 0x02	; 2
- 4ce:	80 93 04 01 	sts	0x0104, r24
- 4d2:	2b c0       	rjmp	.+86     	; 0x52a <RGB_Animation_Rotate_All_Color+0x126>
+ 594:	82 e0       	ldi	r24, 0x02	; 2
+ 596:	80 93 04 01 	sts	0x0104, r24
+ 59a:	2b c0       	rjmp	.+86     	; 0x5f2 <RGB_Animation_Rotate_All_Color+0x126>
 	blue_dir  = HALT;
   }	
   else if((red == 0  ) && (green == GREEN_MAX) && (blue == 0)){
- 4d4:	88 23       	and	r24, r24
- 4d6:	c9 f4       	brne	.+50     	; 0x50a <RGB_Animation_Rotate_All_Color+0x106>
- 4d8:	80 91 01 01 	lds	r24, 0x0101
- 4dc:	8f 3f       	cpi	r24, 0xFF	; 255
- 4de:	39 f5       	brne	.+78     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
- 4e0:	80 91 02 01 	lds	r24, 0x0102
- 4e4:	88 23       	and	r24, r24
- 4e6:	41 f4       	brne	.+16     	; 0x4f8 <RGB_Animation_Rotate_All_Color+0xf4>
+ 59c:	88 23       	and	r24, r24
+ 59e:	c9 f4       	brne	.+50     	; 0x5d2 <RGB_Animation_Rotate_All_Color+0x106>
+ 5a0:	80 91 01 01 	lds	r24, 0x0101
+ 5a4:	8f 3f       	cpi	r24, 0xFF	; 255
+ 5a6:	39 f5       	brne	.+78     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
+ 5a8:	80 91 02 01 	lds	r24, 0x0102
+ 5ac:	88 23       	and	r24, r24
+ 5ae:	41 f4       	brne	.+16     	; 0x5c0 <RGB_Animation_Rotate_All_Color+0xf4>
 	red_dir   = HALT;
- 4e8:	82 e0       	ldi	r24, 0x02	; 2
- 4ea:	80 93 03 01 	sts	0x0103, r24
+ 5b0:	82 e0       	ldi	r24, 0x02	; 2
+ 5b2:	80 93 03 01 	sts	0x0103, r24
 	green_dir = HALT;
- 4ee:	80 93 04 01 	sts	0x0104, r24
+ 5b6:	80 93 04 01 	sts	0x0104, r24
 	blue_dir  = UPCOUNT;
- 4f2:	10 92 05 01 	sts	0x0105, r1
- 4f6:	1b c0       	rjmp	.+54     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
+ 5ba:	10 92 05 01 	sts	0x0105, r1
+ 5be:	1b c0       	rjmp	.+54     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
   }
 
   else if((red == 0  ) && (green == GREEN_MAX) && (blue == BLUE_MAX)){
- 4f8:	8f 3f       	cpi	r24, 0xFF	; 255
- 4fa:	c9 f4       	brne	.+50     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
+ 5c0:	8f 3f       	cpi	r24, 0xFF	; 255
+ 5c2:	c9 f4       	brne	.+50     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
 	red_dir   = UPCOUNT;
- 4fc:	10 92 03 01 	sts	0x0103, r1
+ 5c4:	10 92 03 01 	sts	0x0103, r1
 	green_dir = DOWNCOUNT;
- 500:	81 e0       	ldi	r24, 0x01	; 1
- 502:	80 93 04 01 	sts	0x0104, r24
+ 5c8:	81 e0       	ldi	r24, 0x01	; 1
+ 5ca:	80 93 04 01 	sts	0x0104, r24
 	blue_dir  = HALT;
- 506:	82 e0       	ldi	r24, 0x02	; 2
- 508:	10 c0       	rjmp	.+32     	; 0x52a <RGB_Animation_Rotate_All_Color+0x126>
+ 5ce:	82 e0       	ldi	r24, 0x02	; 2
+ 5d0:	10 c0       	rjmp	.+32     	; 0x5f2 <RGB_Animation_Rotate_All_Color+0x126>
 	red_dir   = UPCOUNT;
 	green_dir = HALT;
 	blue_dir  = HALT;
   }*/
   
   else if((red == RED_MAX) && (green == 0) && (blue == BLUE_MAX)){
- 50a:	8f 3f       	cpi	r24, 0xFF	; 255
- 50c:	81 f4       	brne	.+32     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
- 50e:	80 91 01 01 	lds	r24, 0x0101
- 512:	88 23       	and	r24, r24
- 514:	61 f4       	brne	.+24     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
- 516:	80 91 02 01 	lds	r24, 0x0102
- 51a:	8f 3f       	cpi	r24, 0xFF	; 255
- 51c:	41 f4       	brne	.+16     	; 0x52e <RGB_Animation_Rotate_All_Color+0x12a>
+ 5d2:	8f 3f       	cpi	r24, 0xFF	; 255
+ 5d4:	81 f4       	brne	.+32     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
+ 5d6:	80 91 01 01 	lds	r24, 0x0101
+ 5da:	88 23       	and	r24, r24
+ 5dc:	61 f4       	brne	.+24     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
+ 5de:	80 91 02 01 	lds	r24, 0x0102
+ 5e2:	8f 3f       	cpi	r24, 0xFF	; 255
+ 5e4:	41 f4       	brne	.+16     	; 0x5f6 <RGB_Animation_Rotate_All_Color+0x12a>
 	red_dir   = HALT;
- 51e:	82 e0       	ldi	r24, 0x02	; 2
- 520:	80 93 03 01 	sts	0x0103, r24
+ 5e6:	82 e0       	ldi	r24, 0x02	; 2
+ 5e8:	80 93 03 01 	sts	0x0103, r24
 	green_dir = HALT;
- 524:	80 93 04 01 	sts	0x0104, r24
+ 5ec:	80 93 04 01 	sts	0x0104, r24
 	blue_dir  = DOWNCOUNT;
- 528:	81 e0       	ldi	r24, 0x01	; 1
- 52a:	80 93 05 01 	sts	0x0105, r24
+ 5f0:	81 e0       	ldi	r24, 0x01	; 1
+ 5f2:	80 93 05 01 	sts	0x0105, r24
   }
 }
- 52e:	df 91       	pop	r29
- 530:	cf 91       	pop	r28
- 532:	08 95       	ret
+ 5f6:	df 91       	pop	r29
+ 5f8:	cf 91       	pop	r28
+ 5fa:	08 95       	ret
 
-00000534 <RGB_Brightness_Dec>:
-	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+000005fc <RGB_Brightness_Dec_Mid>:
+    }
 	_delay_us(100);
   }
 }
 
-void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
- 534:	2f 92       	push	r2
- 536:	3f 92       	push	r3
- 538:	4f 92       	push	r4
- 53a:	5f 92       	push	r5
- 53c:	6f 92       	push	r6
- 53e:	7f 92       	push	r7
- 540:	8f 92       	push	r8
- 542:	9f 92       	push	r9
- 544:	bf 92       	push	r11
- 546:	cf 92       	push	r12
- 548:	df 92       	push	r13
- 54a:	ef 92       	push	r14
- 54c:	ff 92       	push	r15
- 54e:	0f 93       	push	r16
- 550:	1f 93       	push	r17
- 552:	df 93       	push	r29
- 554:	cf 93       	push	r28
- 556:	00 d0       	rcall	.+0      	; 0x558 <RGB_Brightness_Dec+0x24>
- 558:	00 d0       	rcall	.+0      	; 0x55a <RGB_Brightness_Dec+0x26>
- 55a:	cd b7       	in	r28, 0x3d	; 61
- 55c:	de b7       	in	r29, 0x3e	; 62
- 55e:	b8 2e       	mov	r11, r24
- 560:	c6 2e       	mov	r12, r22
- 562:	d4 2e       	mov	r13, r20
+void RGB_Brightness_Dec_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
+ 5fc:	2f 92       	push	r2
+ 5fe:	3f 92       	push	r3
+ 600:	4f 92       	push	r4
+ 602:	5f 92       	push	r5
+ 604:	6f 92       	push	r6
+ 606:	7f 92       	push	r7
+ 608:	8f 92       	push	r8
+ 60a:	9f 92       	push	r9
+ 60c:	af 92       	push	r10
+ 60e:	bf 92       	push	r11
+ 610:	cf 92       	push	r12
+ 612:	df 92       	push	r13
+ 614:	ef 92       	push	r14
+ 616:	ff 92       	push	r15
+ 618:	0f 93       	push	r16
+ 61a:	1f 93       	push	r17
+ 61c:	cf 93       	push	r28
+ 61e:	df 93       	push	r29
+ 620:	d8 2e       	mov	r13, r24
+ 622:	e6 2e       	mov	r14, r22
+ 624:	f4 2e       	mov	r15, r20
   RGBAnim.MaxVal=r;
- 564:	80 93 0e 01 	sts	0x010E, r24
+ 626:	80 93 0e 01 	sts	0x010E, r24
   
   if(g>RGBAnim.MaxVal){
- 568:	86 17       	cp	r24, r22
- 56a:	10 f4       	brcc	.+4      	; 0x570 <RGB_Brightness_Dec+0x3c>
+ 62a:	86 17       	cp	r24, r22
+ 62c:	10 f4       	brcc	.+4      	; 0x632 <RGB_Brightness_Dec_Mid+0x36>
     RGBAnim.MaxVal=g;
- 56c:	60 93 0e 01 	sts	0x010E, r22
+ 62e:	60 93 0e 01 	sts	0x010E, r22
   }
   
   if(b>RGBAnim.MaxVal){
- 570:	80 91 0e 01 	lds	r24, 0x010E
- 574:	8d 15       	cp	r24, r13
- 576:	10 f4       	brcc	.+4      	; 0x57c <RGB_Brightness_Dec+0x48>
+ 632:	80 91 0e 01 	lds	r24, 0x010E
+ 636:	8f 15       	cp	r24, r15
+ 638:	10 f4       	brcc	.+4      	; 0x63e <RGB_Brightness_Dec_Mid+0x42>
     RGBAnim.MaxVal=b;
- 578:	d0 92 0e 01 	sts	0x010E, r13
-  uint16_t temp[3];
+ 63a:	f0 92 0e 01 	sts	0x010E, r15
+ 63e:	00 e0       	ldi	r16, 0x00	; 0
+ 640:	10 e0       	ldi	r17, 0x00	; 0
   temp[0]=0;
   temp[1]=0;
   temp[2]=0;
 
-  for(int i=RGBAnim.MaxVal;i>=0;i--){
- 57c:	80 91 0e 01 	lds	r24, 0x010E
- 580:	08 2f       	mov	r16, r24
- 582:	10 e0       	ldi	r17, 0x00	; 0
- 584:	ee 24       	eor	r14, r14
- 586:	ff 24       	eor	r15, r15
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
     uint16_t idle_pix=pixel-1;
+ 642:	19 01       	movw	r2, r18
+ 644:	08 94       	sec
+ 646:	21 08       	sbc	r2, r1
+ 648:	31 08       	sbc	r3, r1
     for(uint16_t j=0;j<idle_pix;j++){
- 588:	c9 01       	movw	r24, r18
- 58a:	82 5f       	subi	r24, 0xF2	; 242
- 58c:	9e 4f       	sbci	r25, 0xFE	; 254
- 58e:	9a 83       	std	Y+2, r25	; 0x02
- 590:	89 83       	std	Y+1, r24	; 0x01
- 592:	18 01       	movw	r2, r16
-	    WS2812B_Send_Pixel(0,0,0);
-	  }
-    }
-	
-	
-	if(i>r){
- 594:	4b 2c       	mov	r4, r11
- 596:	55 24       	eor	r5, r5
-	  temp[0]=r;
-	}else{
-	  temp[0]=i;
-	}
-	
-	if(i>g){
- 598:	6c 2c       	mov	r6, r12
- 59a:	77 24       	eor	r7, r7
-	  temp[1]=g;
-	}else{
-	  temp[1]=i;
-	}
-	
-	if(i>b){
- 59c:	8d 2c       	mov	r8, r13
- 59e:	99 24       	eor	r9, r9
-  uint16_t temp[3];
-  temp[0]=0;
-  temp[1]=0;
-  temp[2]=0;
-
-  for(int i=RGBAnim.MaxVal;i>=0;i--){
- 5a0:	ef e0       	ldi	r30, 0x0F	; 15
- 5a2:	f1 e0       	ldi	r31, 0x01	; 1
- 5a4:	fc 83       	std	Y+4, r31	; 0x04
- 5a6:	eb 83       	std	Y+3, r30	; 0x03
- 5a8:	14 c0       	rjmp	.+40     	; 0x5d2 <RGB_Brightness_Dec+0x9e>
-    uint16_t idle_pix=pixel-1;
-    for(uint16_t j=0;j<idle_pix;j++){
-      if(RGBAnim.PixelBuf[j]){
- 5aa:	eb 81       	ldd	r30, Y+3	; 0x03
- 5ac:	fc 81       	ldd	r31, Y+4	; 0x04
- 5ae:	80 81       	ld	r24, Z
- 5b0:	88 23       	and	r24, r24
- 5b2:	21 f0       	breq	.+8      	; 0x5bc <RGB_Brightness_Dec+0x88>
-	    WS2812B_Send_Pixel(r,g,b);
- 5b4:	8b 2d       	mov	r24, r11
- 5b6:	6c 2d       	mov	r22, r12
- 5b8:	4d 2d       	mov	r20, r13
- 5ba:	03 c0       	rjmp	.+6      	; 0x5c2 <RGB_Brightness_Dec+0x8e>
-	  }else{
-	    WS2812B_Send_Pixel(0,0,0);
- 5bc:	80 e0       	ldi	r24, 0x00	; 0
- 5be:	60 e0       	ldi	r22, 0x00	; 0
- 5c0:	40 e0       	ldi	r20, 0x00	; 0
- 5c2:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 5c6:	2b 81       	ldd	r18, Y+3	; 0x03
- 5c8:	3c 81       	ldd	r19, Y+4	; 0x04
- 5ca:	2f 5f       	subi	r18, 0xFF	; 255
- 5cc:	3f 4f       	sbci	r19, 0xFF	; 255
- 5ce:	3c 83       	std	Y+4, r19	; 0x04
- 5d0:	2b 83       	std	Y+3, r18	; 0x03
-  temp[1]=0;
-  temp[2]=0;
-
-  for(int i=RGBAnim.MaxVal;i>=0;i--){
-    uint16_t idle_pix=pixel-1;
-    for(uint16_t j=0;j<idle_pix;j++){
- 5d2:	8b 81       	ldd	r24, Y+3	; 0x03
- 5d4:	9c 81       	ldd	r25, Y+4	; 0x04
- 5d6:	e9 81       	ldd	r30, Y+1	; 0x01
- 5d8:	fa 81       	ldd	r31, Y+2	; 0x02
- 5da:	8e 17       	cp	r24, r30
- 5dc:	9f 07       	cpc	r25, r31
- 5de:	29 f7       	brne	.-54     	; 0x5aa <RGB_Brightness_Dec+0x76>
- 5e0:	91 01       	movw	r18, r2
- 5e2:	2e 19       	sub	r18, r14
- 5e4:	3f 09       	sbc	r19, r15
-	    WS2812B_Send_Pixel(0,0,0);
-	  }
-    }
-	
-	
-	if(i>r){
- 5e6:	42 16       	cp	r4, r18
- 5e8:	53 06       	cpc	r5, r19
- 5ea:	14 f4       	brge	.+4      	; 0x5f0 <RGB_Brightness_Dec+0xbc>
-	  temp[0]=r;
- 5ec:	8b 2d       	mov	r24, r11
- 5ee:	01 c0       	rjmp	.+2      	; 0x5f2 <RGB_Brightness_Dec+0xbe>
- 5f0:	80 2f       	mov	r24, r16
-	}else{
-	  temp[0]=i;
-	}
-	
-	if(i>g){
- 5f2:	62 16       	cp	r6, r18
- 5f4:	73 06       	cpc	r7, r19
- 5f6:	14 f4       	brge	.+4      	; 0x5fc <RGB_Brightness_Dec+0xc8>
-	  temp[1]=g;
- 5f8:	6c 2d       	mov	r22, r12
- 5fa:	01 c0       	rjmp	.+2      	; 0x5fe <RGB_Brightness_Dec+0xca>
- 5fc:	60 2f       	mov	r22, r16
-	}else{
-	  temp[1]=i;
-	}
-	
-	if(i>b){
- 5fe:	82 16       	cp	r8, r18
- 600:	93 06       	cpc	r9, r19
- 602:	14 f4       	brge	.+4      	; 0x608 <RGB_Brightness_Dec+0xd4>
-	  temp[2]=b;
- 604:	4d 2d       	mov	r20, r13
- 606:	01 c0       	rjmp	.+2      	; 0x60a <RGB_Brightness_Dec+0xd6>
- 608:	40 2f       	mov	r20, r16
+ 64a:	4e e0       	ldi	r20, 0x0E	; 14
+ 64c:	44 2e       	mov	r4, r20
+ 64e:	41 e0       	ldi	r20, 0x01	; 1
+ 650:	54 2e       	mov	r5, r20
+ 652:	42 0e       	add	r4, r18
+ 654:	53 1e       	adc	r5, r19
 	}else{
 	  temp[2]=i;
 	}
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
- 60a:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 60e:	8c e2       	ldi	r24, 0x2C	; 44
- 610:	91 e0       	ldi	r25, 0x01	; 1
- 612:	01 97       	sbiw	r24, 0x01	; 1
- 614:	f1 f7       	brne	.-4      	; 0x612 <RGB_Brightness_Dec+0xde>
+ 656:	6d 2c       	mov	r6, r13
+ 658:	77 24       	eor	r7, r7
+ 65a:	8e 2c       	mov	r8, r14
+ 65c:	99 24       	eor	r9, r9
+ 65e:	af 2c       	mov	r10, r15
+ 660:	bb 24       	eor	r11, r11
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 662:	30 e6       	ldi	r19, 0x60	; 96
+ 664:	c3 2e       	mov	r12, r19
+ 666:	34 c0       	rjmp	.+104    	; 0x6d0 <RGB_Brightness_Dec_Mid+0xd4>
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+ 668:	cf e0       	ldi	r28, 0x0F	; 15
+ 66a:	d1 e0       	ldi	r29, 0x01	; 1
+ 66c:	0d c0       	rjmp	.+26     	; 0x688 <RGB_Brightness_Dec_Mid+0x8c>
+    for(uint16_t j=0;j<idle_pix;j++){
+      if(RGBAnim.PixelBuf[j]){
+ 66e:	88 81       	ld	r24, Y
+ 670:	88 23       	and	r24, r24
+ 672:	21 f0       	breq	.+8      	; 0x67c <RGB_Brightness_Dec_Mid+0x80>
+	    WS2812B_Send_Pixel(r,g,b);
+ 674:	8d 2d       	mov	r24, r13
+ 676:	6e 2d       	mov	r22, r14
+ 678:	4f 2d       	mov	r20, r15
+ 67a:	03 c0       	rjmp	.+6      	; 0x682 <RGB_Brightness_Dec_Mid+0x86>
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+ 67c:	80 e0       	ldi	r24, 0x00	; 0
+ 67e:	60 e0       	ldi	r22, 0x00	; 0
+ 680:	40 e0       	ldi	r20, 0x00	; 0
+ 682:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 686:	21 96       	adiw	r28, 0x01	; 1
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+    for(uint16_t j=0;j<idle_pix;j++){
+ 688:	c4 15       	cp	r28, r4
+ 68a:	d5 05       	cpc	r29, r5
+ 68c:	81 f7       	brne	.-32     	; 0x66e <RGB_Brightness_Dec_Mid+0x72>
+	}else{
+	  temp[2]=i;
+	}
+	
+	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+ 68e:	20 2f       	mov	r18, r16
+ 690:	60 16       	cp	r6, r16
+ 692:	71 06       	cpc	r7, r17
+ 694:	08 f4       	brcc	.+2      	; 0x698 <RGB_Brightness_Dec_Mid+0x9c>
+ 696:	26 2d       	mov	r18, r6
+ 698:	60 2f       	mov	r22, r16
+ 69a:	80 16       	cp	r8, r16
+ 69c:	91 06       	cpc	r9, r17
+ 69e:	08 f4       	brcc	.+2      	; 0x6a2 <RGB_Brightness_Dec_Mid+0xa6>
+ 6a0:	68 2d       	mov	r22, r8
+ 6a2:	40 2f       	mov	r20, r16
+ 6a4:	a0 16       	cp	r10, r16
+ 6a6:	b1 06       	cpc	r11, r17
+ 6a8:	08 f4       	brcc	.+2      	; 0x6ac <RGB_Brightness_Dec_Mid+0xb0>
+ 6aa:	4a 2d       	mov	r20, r10
+ 6ac:	82 2f       	mov	r24, r18
+ 6ae:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 6b2:	c1 01       	movw	r24, r2
+ 6b4:	04 c0       	rjmp	.+8      	; 0x6be <RGB_Brightness_Dec_Mid+0xc2>
+ 6b6:	2c 2d       	mov	r18, r12
+ 6b8:	2a 95       	dec	r18
+ 6ba:	f1 f7       	brne	.-4      	; 0x6b8 <RGB_Brightness_Dec_Mid+0xbc>
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+ 6bc:	01 96       	adiw	r24, 0x01	; 1
+ 6be:	8a 33       	cpi	r24, 0x3A	; 58
+ 6c0:	91 05       	cpc	r25, r1
+ 6c2:	c8 f3       	brcs	.-14     	; 0x6b6 <RGB_Brightness_Dec_Mid+0xba>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 6c4:	8c e2       	ldi	r24, 0x2C	; 44
+ 6c6:	91 e0       	ldi	r25, 0x01	; 1
+ 6c8:	01 97       	sbiw	r24, 0x01	; 1
+ 6ca:	f1 f7       	brne	.-4      	; 0x6c8 <RGB_Brightness_Dec_Mid+0xcc>
+  uint16_t temp[3];
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+ 6cc:	0f 5f       	subi	r16, 0xFF	; 255
+ 6ce:	1f 4f       	sbci	r17, 0xFF	; 255
+ 6d0:	80 91 0e 01 	lds	r24, 0x010E
+ 6d4:	90 e0       	ldi	r25, 0x00	; 0
+ 6d6:	08 17       	cp	r16, r24
+ 6d8:	19 07       	cpc	r17, r25
+ 6da:	30 f2       	brcs	.-116    	; 0x668 <RGB_Brightness_Dec_Mid+0x6c>
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
+	_delay_us(100);
+  }
+}
+ 6dc:	df 91       	pop	r29
+ 6de:	cf 91       	pop	r28
+ 6e0:	1f 91       	pop	r17
+ 6e2:	0f 91       	pop	r16
+ 6e4:	ff 90       	pop	r15
+ 6e6:	ef 90       	pop	r14
+ 6e8:	df 90       	pop	r13
+ 6ea:	cf 90       	pop	r12
+ 6ec:	bf 90       	pop	r11
+ 6ee:	af 90       	pop	r10
+ 6f0:	9f 90       	pop	r9
+ 6f2:	8f 90       	pop	r8
+ 6f4:	7f 90       	pop	r7
+ 6f6:	6f 90       	pop	r6
+ 6f8:	5f 90       	pop	r5
+ 6fa:	4f 90       	pop	r4
+ 6fc:	3f 90       	pop	r3
+ 6fe:	2f 90       	pop	r2
+ 700:	08 95       	ret
+
+00000702 <RGB_Brightness_Inc_Mid>:
+  }
+}
+
+
+
+void RGB_Brightness_Inc_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
+ 702:	2f 92       	push	r2
+ 704:	3f 92       	push	r3
+ 706:	4f 92       	push	r4
+ 708:	5f 92       	push	r5
+ 70a:	6f 92       	push	r6
+ 70c:	7f 92       	push	r7
+ 70e:	8f 92       	push	r8
+ 710:	9f 92       	push	r9
+ 712:	af 92       	push	r10
+ 714:	bf 92       	push	r11
+ 716:	cf 92       	push	r12
+ 718:	df 92       	push	r13
+ 71a:	ef 92       	push	r14
+ 71c:	ff 92       	push	r15
+ 71e:	0f 93       	push	r16
+ 720:	1f 93       	push	r17
+ 722:	cf 93       	push	r28
+ 724:	df 93       	push	r29
+ 726:	d8 2e       	mov	r13, r24
+ 728:	e6 2e       	mov	r14, r22
+ 72a:	f4 2e       	mov	r15, r20
+  RGBAnim.MaxVal=r;
+ 72c:	80 93 0e 01 	sts	0x010E, r24
+  
+  if(g>RGBAnim.MaxVal){
+ 730:	86 17       	cp	r24, r22
+ 732:	10 f4       	brcc	.+4      	; 0x738 <RGB_Brightness_Inc_Mid+0x36>
+    RGBAnim.MaxVal=g;
+ 734:	60 93 0e 01 	sts	0x010E, r22
+  }
+  
+  if(b>RGBAnim.MaxVal){
+ 738:	80 91 0e 01 	lds	r24, 0x010E
+ 73c:	8f 15       	cp	r24, r15
+ 73e:	10 f4       	brcc	.+4      	; 0x744 <RGB_Brightness_Inc_Mid+0x42>
+    RGBAnim.MaxVal=b;
+ 740:	f0 92 0e 01 	sts	0x010E, r15
+ 744:	00 e0       	ldi	r16, 0x00	; 0
+ 746:	10 e0       	ldi	r17, 0x00	; 0
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+ 748:	19 01       	movw	r2, r18
+ 74a:	08 94       	sec
+ 74c:	21 08       	sbc	r2, r1
+ 74e:	31 08       	sbc	r3, r1
+    for(uint16_t j=0;j<idle_pix;j++){
+ 750:	6e e0       	ldi	r22, 0x0E	; 14
+ 752:	46 2e       	mov	r4, r22
+ 754:	61 e0       	ldi	r22, 0x01	; 1
+ 756:	56 2e       	mov	r5, r22
+ 758:	42 0e       	add	r4, r18
+ 75a:	53 1e       	adc	r5, r19
+	}else{
+	  temp[2]=i;
+	}
+	
+	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+ 75c:	6d 2c       	mov	r6, r13
+ 75e:	77 24       	eor	r7, r7
+ 760:	8e 2c       	mov	r8, r14
+ 762:	99 24       	eor	r9, r9
+ 764:	af 2c       	mov	r10, r15
+ 766:	bb 24       	eor	r11, r11
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 768:	50 e6       	ldi	r21, 0x60	; 96
+ 76a:	c5 2e       	mov	r12, r21
+ 76c:	34 c0       	rjmp	.+104    	; 0x7d6 <RGB_Brightness_Inc_Mid+0xd4>
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+ 76e:	cf e0       	ldi	r28, 0x0F	; 15
+ 770:	d1 e0       	ldi	r29, 0x01	; 1
+ 772:	0d c0       	rjmp	.+26     	; 0x78e <RGB_Brightness_Inc_Mid+0x8c>
+    for(uint16_t j=0;j<idle_pix;j++){
+      if(RGBAnim.PixelBuf[j]){
+ 774:	88 81       	ld	r24, Y
+ 776:	88 23       	and	r24, r24
+ 778:	21 f0       	breq	.+8      	; 0x782 <RGB_Brightness_Inc_Mid+0x80>
+	    WS2812B_Send_Pixel(r,g,b);
+ 77a:	8d 2d       	mov	r24, r13
+ 77c:	6e 2d       	mov	r22, r14
+ 77e:	4f 2d       	mov	r20, r15
+ 780:	03 c0       	rjmp	.+6      	; 0x788 <RGB_Brightness_Inc_Mid+0x86>
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+ 782:	80 e0       	ldi	r24, 0x00	; 0
+ 784:	60 e0       	ldi	r22, 0x00	; 0
+ 786:	40 e0       	ldi	r20, 0x00	; 0
+ 788:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 78c:	21 96       	adiw	r28, 0x01	; 1
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+    for(uint16_t j=0;j<idle_pix;j++){
+ 78e:	c4 15       	cp	r28, r4
+ 790:	d5 05       	cpc	r29, r5
+ 792:	81 f7       	brne	.-32     	; 0x774 <RGB_Brightness_Inc_Mid+0x72>
+	}else{
+	  temp[2]=i;
+	}
+	
+	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+ 794:	20 2f       	mov	r18, r16
+ 796:	60 16       	cp	r6, r16
+ 798:	71 06       	cpc	r7, r17
+ 79a:	08 f4       	brcc	.+2      	; 0x79e <RGB_Brightness_Inc_Mid+0x9c>
+ 79c:	26 2d       	mov	r18, r6
+ 79e:	60 2f       	mov	r22, r16
+ 7a0:	80 16       	cp	r8, r16
+ 7a2:	91 06       	cpc	r9, r17
+ 7a4:	08 f4       	brcc	.+2      	; 0x7a8 <RGB_Brightness_Inc_Mid+0xa6>
+ 7a6:	68 2d       	mov	r22, r8
+ 7a8:	40 2f       	mov	r20, r16
+ 7aa:	a0 16       	cp	r10, r16
+ 7ac:	b1 06       	cpc	r11, r17
+ 7ae:	08 f4       	brcc	.+2      	; 0x7b2 <RGB_Brightness_Inc_Mid+0xb0>
+ 7b0:	4a 2d       	mov	r20, r10
+ 7b2:	82 2f       	mov	r24, r18
+ 7b4:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 7b8:	c1 01       	movw	r24, r2
+ 7ba:	04 c0       	rjmp	.+8      	; 0x7c4 <RGB_Brightness_Inc_Mid+0xc2>
+ 7bc:	2c 2d       	mov	r18, r12
+ 7be:	2a 95       	dec	r18
+ 7c0:	f1 f7       	brne	.-4      	; 0x7be <RGB_Brightness_Inc_Mid+0xbc>
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+ 7c2:	01 96       	adiw	r24, 0x01	; 1
+ 7c4:	8a 33       	cpi	r24, 0x3A	; 58
+ 7c6:	91 05       	cpc	r25, r1
+ 7c8:	c8 f3       	brcs	.-14     	; 0x7bc <RGB_Brightness_Inc_Mid+0xba>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 7ca:	8c e2       	ldi	r24, 0x2C	; 44
+ 7cc:	91 e0       	ldi	r25, 0x01	; 1
+ 7ce:	01 97       	sbiw	r24, 0x01	; 1
+ 7d0:	f1 f7       	brne	.-4      	; 0x7ce <RGB_Brightness_Inc_Mid+0xcc>
+  uint16_t temp[3];
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+ 7d2:	0f 5f       	subi	r16, 0xFF	; 255
+ 7d4:	1f 4f       	sbci	r17, 0xFF	; 255
+ 7d6:	80 91 0e 01 	lds	r24, 0x010E
+ 7da:	90 e0       	ldi	r25, 0x00	; 0
+ 7dc:	08 17       	cp	r16, r24
+ 7de:	19 07       	cpc	r17, r25
+ 7e0:	30 f2       	brcs	.-116    	; 0x76e <RGB_Brightness_Inc_Mid+0x6c>
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
+	_delay_us(100);
+  }
+}
+ 7e2:	df 91       	pop	r29
+ 7e4:	cf 91       	pop	r28
+ 7e6:	1f 91       	pop	r17
+ 7e8:	0f 91       	pop	r16
+ 7ea:	ff 90       	pop	r15
+ 7ec:	ef 90       	pop	r14
+ 7ee:	df 90       	pop	r13
+ 7f0:	cf 90       	pop	r12
+ 7f2:	bf 90       	pop	r11
+ 7f4:	af 90       	pop	r10
+ 7f6:	9f 90       	pop	r9
+ 7f8:	8f 90       	pop	r8
+ 7fa:	7f 90       	pop	r7
+ 7fc:	6f 90       	pop	r6
+ 7fe:	5f 90       	pop	r5
+ 800:	4f 90       	pop	r4
+ 802:	3f 90       	pop	r3
+ 804:	2f 90       	pop	r2
+ 806:	08 95       	ret
+
+00000808 <RGB_Brightness_Dec>:
+    }
+	_delay_us(100);
+  }
+}
+
+void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
+ 808:	2f 92       	push	r2
+ 80a:	3f 92       	push	r3
+ 80c:	4f 92       	push	r4
+ 80e:	5f 92       	push	r5
+ 810:	6f 92       	push	r6
+ 812:	7f 92       	push	r7
+ 814:	8f 92       	push	r8
+ 816:	9f 92       	push	r9
+ 818:	af 92       	push	r10
+ 81a:	bf 92       	push	r11
+ 81c:	cf 92       	push	r12
+ 81e:	df 92       	push	r13
+ 820:	ef 92       	push	r14
+ 822:	ff 92       	push	r15
+ 824:	0f 93       	push	r16
+ 826:	1f 93       	push	r17
+ 828:	df 93       	push	r29
+ 82a:	cf 93       	push	r28
+ 82c:	00 d0       	rcall	.+0      	; 0x82e <RGB_Brightness_Dec+0x26>
+ 82e:	00 d0       	rcall	.+0      	; 0x830 <RGB_Brightness_Dec+0x28>
+ 830:	00 d0       	rcall	.+0      	; 0x832 <RGB_Brightness_Dec+0x2a>
+ 832:	cd b7       	in	r28, 0x3d	; 61
+ 834:	de b7       	in	r29, 0x3e	; 62
+ 836:	b8 2e       	mov	r11, r24
+ 838:	c6 2e       	mov	r12, r22
+ 83a:	d4 2e       	mov	r13, r20
+  RGBAnim.MaxVal=r;
+ 83c:	80 93 0e 01 	sts	0x010E, r24
+  
+  if(g>RGBAnim.MaxVal){
+ 840:	86 17       	cp	r24, r22
+ 842:	10 f4       	brcc	.+4      	; 0x848 <RGB_Brightness_Dec+0x40>
+    RGBAnim.MaxVal=g;
+ 844:	60 93 0e 01 	sts	0x010E, r22
+  }
+  
+  if(b>RGBAnim.MaxVal){
+ 848:	80 91 0e 01 	lds	r24, 0x010E
+ 84c:	8d 15       	cp	r24, r13
+ 84e:	10 f4       	brcc	.+4      	; 0x854 <RGB_Brightness_Dec+0x4c>
+    RGBAnim.MaxVal=b;
+ 850:	d0 92 0e 01 	sts	0x010E, r13
   uint16_t temp[3];
   temp[0]=0;
   temp[1]=0;
   temp[2]=0;
 
   for(int i=RGBAnim.MaxVal;i>=0;i--){
- 616:	01 50       	subi	r16, 0x01	; 1
- 618:	10 40       	sbci	r17, 0x00	; 0
- 61a:	08 94       	sec
- 61c:	e1 1c       	adc	r14, r1
- 61e:	f1 1c       	adc	r15, r1
- 620:	ff ef       	ldi	r31, 0xFF	; 255
- 622:	0f 3f       	cpi	r16, 0xFF	; 255
- 624:	1f 07       	cpc	r17, r31
- 626:	09 f0       	breq	.+2      	; 0x62a <RGB_Brightness_Dec+0xf6>
- 628:	bb cf       	rjmp	.-138    	; 0x5a0 <RGB_Brightness_Dec+0x6c>
+ 854:	80 91 0e 01 	lds	r24, 0x010E
+ 858:	08 2f       	mov	r16, r24
+ 85a:	10 e0       	ldi	r17, 0x00	; 0
+ 85c:	ee 24       	eor	r14, r14
+ 85e:	ff 24       	eor	r15, r15
+    uint16_t idle_pix=pixel-1;
+ 860:	c9 01       	movw	r24, r18
+ 862:	01 97       	sbiw	r24, 0x01	; 1
+ 864:	9a 83       	std	Y+2, r25	; 0x02
+ 866:	89 83       	std	Y+1, r24	; 0x01
+    for(uint16_t j=0;j<idle_pix;j++){
+ 868:	f9 01       	movw	r30, r18
+ 86a:	e2 5f       	subi	r30, 0xF2	; 242
+ 86c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 86e:	fc 83       	std	Y+4, r31	; 0x04
+ 870:	eb 83       	std	Y+3, r30	; 0x03
+ 872:	18 01       	movw	r2, r16
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+	  }
+    }
+	
+	if(i>r){
+ 874:	4b 2c       	mov	r4, r11
+ 876:	55 24       	eor	r5, r5
+	  temp[0]=r;
+	}else{
+	  temp[0]=i;
+	}
+	
+	if(i>g){
+ 878:	6c 2c       	mov	r6, r12
+ 87a:	77 24       	eor	r7, r7
+	  temp[1]=g;
+	}else{
+	  temp[1]=i;
+	}
+	
+	if(i>b){
+ 87c:	8d 2c       	mov	r8, r13
+ 87e:	99 24       	eor	r9, r9
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 880:	70 e6       	ldi	r23, 0x60	; 96
+ 882:	a7 2e       	mov	r10, r23
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(int i=RGBAnim.MaxVal;i>=0;i--){
+    uint16_t idle_pix=pixel-1;
+ 884:	2f e0       	ldi	r18, 0x0F	; 15
+ 886:	31 e0       	ldi	r19, 0x01	; 1
+ 888:	12 c0       	rjmp	.+36     	; 0x8ae <RGB_Brightness_Dec+0xa6>
+    for(uint16_t j=0;j<idle_pix;j++){
+      if(RGBAnim.PixelBuf[j]){
+ 88a:	ed 81       	ldd	r30, Y+5	; 0x05
+ 88c:	fe 81       	ldd	r31, Y+6	; 0x06
+ 88e:	80 81       	ld	r24, Z
+ 890:	88 23       	and	r24, r24
+ 892:	21 f0       	breq	.+8      	; 0x89c <RGB_Brightness_Dec+0x94>
+	    WS2812B_Send_Pixel(r,g,b);
+ 894:	8b 2d       	mov	r24, r11
+ 896:	6c 2d       	mov	r22, r12
+ 898:	4d 2d       	mov	r20, r13
+ 89a:	03 c0       	rjmp	.+6      	; 0x8a2 <RGB_Brightness_Dec+0x9a>
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+ 89c:	80 e0       	ldi	r24, 0x00	; 0
+ 89e:	60 e0       	ldi	r22, 0x00	; 0
+ 8a0:	40 e0       	ldi	r20, 0x00	; 0
+ 8a2:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 8a6:	2d 81       	ldd	r18, Y+5	; 0x05
+ 8a8:	3e 81       	ldd	r19, Y+6	; 0x06
+ 8aa:	2f 5f       	subi	r18, 0xFF	; 255
+ 8ac:	3f 4f       	sbci	r19, 0xFF	; 255
+ 8ae:	3e 83       	std	Y+6, r19	; 0x06
+ 8b0:	2d 83       	std	Y+5, r18	; 0x05
+  temp[1]=0;
+  temp[2]=0;
+
+  for(int i=RGBAnim.MaxVal;i>=0;i--){
+    uint16_t idle_pix=pixel-1;
+    for(uint16_t j=0;j<idle_pix;j++){
+ 8b2:	8d 81       	ldd	r24, Y+5	; 0x05
+ 8b4:	9e 81       	ldd	r25, Y+6	; 0x06
+ 8b6:	eb 81       	ldd	r30, Y+3	; 0x03
+ 8b8:	fc 81       	ldd	r31, Y+4	; 0x04
+ 8ba:	8e 17       	cp	r24, r30
+ 8bc:	9f 07       	cpc	r25, r31
+ 8be:	29 f7       	brne	.-54     	; 0x88a <RGB_Brightness_Dec+0x82>
+ 8c0:	91 01       	movw	r18, r2
+ 8c2:	2e 19       	sub	r18, r14
+ 8c4:	3f 09       	sbc	r19, r15
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+	  }
+    }
+	
+	if(i>r){
+ 8c6:	42 16       	cp	r4, r18
+ 8c8:	53 06       	cpc	r5, r19
+ 8ca:	14 f4       	brge	.+4      	; 0x8d0 <RGB_Brightness_Dec+0xc8>
+	  temp[0]=r;
+ 8cc:	8b 2d       	mov	r24, r11
+ 8ce:	01 c0       	rjmp	.+2      	; 0x8d2 <RGB_Brightness_Dec+0xca>
+ 8d0:	80 2f       	mov	r24, r16
+	}else{
+	  temp[0]=i;
+	}
+	
+	if(i>g){
+ 8d2:	62 16       	cp	r6, r18
+ 8d4:	73 06       	cpc	r7, r19
+ 8d6:	14 f4       	brge	.+4      	; 0x8dc <RGB_Brightness_Dec+0xd4>
+	  temp[1]=g;
+ 8d8:	6c 2d       	mov	r22, r12
+ 8da:	01 c0       	rjmp	.+2      	; 0x8de <RGB_Brightness_Dec+0xd6>
+ 8dc:	60 2f       	mov	r22, r16
+	}else{
+	  temp[1]=i;
+	}
+	
+	if(i>b){
+ 8de:	82 16       	cp	r8, r18
+ 8e0:	93 06       	cpc	r9, r19
+ 8e2:	14 f4       	brge	.+4      	; 0x8e8 <RGB_Brightness_Dec+0xe0>
+	  temp[2]=b;
+ 8e4:	4d 2d       	mov	r20, r13
+ 8e6:	01 c0       	rjmp	.+2      	; 0x8ea <RGB_Brightness_Dec+0xe2>
+ 8e8:	40 2f       	mov	r20, r16
+	}else{
+	  temp[2]=i;
+	}
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+ 8ea:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ 8ee:	89 81       	ldd	r24, Y+1	; 0x01
+ 8f0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 8f2:	04 c0       	rjmp	.+8      	; 0x8fc <RGB_Brightness_Dec+0xf4>
+ 8f4:	2a 2d       	mov	r18, r10
+ 8f6:	2a 95       	dec	r18
+ 8f8:	f1 f7       	brne	.-4      	; 0x8f6 <RGB_Brightness_Dec+0xee>
+	
+    for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+ 8fa:	01 96       	adiw	r24, 0x01	; 1
+ 8fc:	8a 33       	cpi	r24, 0x3A	; 58
+ 8fe:	91 05       	cpc	r25, r1
+ 900:	c8 f3       	brcs	.-14     	; 0x8f4 <RGB_Brightness_Dec+0xec>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 902:	8c e2       	ldi	r24, 0x2C	; 44
+ 904:	91 e0       	ldi	r25, 0x01	; 1
+ 906:	01 97       	sbiw	r24, 0x01	; 1
+ 908:	f1 f7       	brne	.-4      	; 0x906 <__stack+0x7>
+  uint16_t temp[3];
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(int i=RGBAnim.MaxVal;i>=0;i--){
+ 90a:	01 50       	subi	r16, 0x01	; 1
+ 90c:	10 40       	sbci	r17, 0x00	; 0
+ 90e:	08 94       	sec
+ 910:	e1 1c       	adc	r14, r1
+ 912:	f1 1c       	adc	r15, r1
+ 914:	ff ef       	ldi	r31, 0xFF	; 255
+ 916:	0f 3f       	cpi	r16, 0xFF	; 255
+ 918:	1f 07       	cpc	r17, r31
+ 91a:	09 f0       	breq	.+2      	; 0x91e <__stack+0x1f>
+ 91c:	b3 cf       	rjmp	.-154    	; 0x884 <RGB_Brightness_Dec+0x7c>
+      _delay_us(24);
+    }
+	
 	_delay_us(100);
   }
 }
- 62a:	0f 90       	pop	r0
- 62c:	0f 90       	pop	r0
- 62e:	0f 90       	pop	r0
- 630:	0f 90       	pop	r0
- 632:	cf 91       	pop	r28
- 634:	df 91       	pop	r29
- 636:	1f 91       	pop	r17
- 638:	0f 91       	pop	r16
- 63a:	ff 90       	pop	r15
- 63c:	ef 90       	pop	r14
- 63e:	df 90       	pop	r13
- 640:	cf 90       	pop	r12
- 642:	bf 90       	pop	r11
- 644:	9f 90       	pop	r9
- 646:	8f 90       	pop	r8
- 648:	7f 90       	pop	r7
- 64a:	6f 90       	pop	r6
- 64c:	5f 90       	pop	r5
- 64e:	4f 90       	pop	r4
- 650:	3f 90       	pop	r3
- 652:	2f 90       	pop	r2
- 654:	08 95       	ret
+ 91e:	26 96       	adiw	r28, 0x06	; 6
+ 920:	0f b6       	in	r0, 0x3f	; 63
+ 922:	f8 94       	cli
+ 924:	de bf       	out	0x3e, r29	; 62
+ 926:	0f be       	out	0x3f, r0	; 63
+ 928:	cd bf       	out	0x3d, r28	; 61
+ 92a:	cf 91       	pop	r28
+ 92c:	df 91       	pop	r29
+ 92e:	1f 91       	pop	r17
+ 930:	0f 91       	pop	r16
+ 932:	ff 90       	pop	r15
+ 934:	ef 90       	pop	r14
+ 936:	df 90       	pop	r13
+ 938:	cf 90       	pop	r12
+ 93a:	bf 90       	pop	r11
+ 93c:	af 90       	pop	r10
+ 93e:	9f 90       	pop	r9
+ 940:	8f 90       	pop	r8
+ 942:	7f 90       	pop	r7
+ 944:	6f 90       	pop	r6
+ 946:	5f 90       	pop	r5
+ 948:	4f 90       	pop	r4
+ 94a:	3f 90       	pop	r3
+ 94c:	2f 90       	pop	r2
+ 94e:	08 95       	ret
 
-00000656 <RGB_Animation_Slide_Unfill>:
+00000950 <RGB_Animation_Slide_Unfill>:
     RGB_Brightness_Inc(r,g,b,i+1);
 	RGBAnim.PixelBuf[i]=1;
   }
 }
 
 void RGB_Animation_Slide_Unfill(uint8_t r, uint8_t g, uint8_t b){
- 656:	ff 92       	push	r15
- 658:	0f 93       	push	r16
- 65a:	1f 93       	push	r17
- 65c:	cf 93       	push	r28
- 65e:	df 93       	push	r29
- 660:	f8 2e       	mov	r15, r24
- 662:	06 2f       	mov	r16, r22
- 664:	14 2f       	mov	r17, r20
- 666:	c4 e1       	ldi	r28, 0x14	; 20
- 668:	d0 e0       	ldi	r29, 0x00	; 0
+ 950:	ff 92       	push	r15
+ 952:	0f 93       	push	r16
+ 954:	1f 93       	push	r17
+ 956:	cf 93       	push	r28
+ 958:	df 93       	push	r29
+ 95a:	f8 2e       	mov	r15, r24
+ 95c:	06 2f       	mov	r16, r22
+ 95e:	14 2f       	mov	r17, r20
+ 960:	ca e3       	ldi	r28, 0x3A	; 58
+ 962:	d0 e0       	ldi	r29, 0x00	; 0
   for(int i=WS2812B_ANIMATION_PIXELS-1;i>=0;i--){
     RGB_Brightness_Dec(r,g,b,i+1);
- 66a:	8f 2d       	mov	r24, r15
- 66c:	60 2f       	mov	r22, r16
- 66e:	41 2f       	mov	r20, r17
- 670:	9e 01       	movw	r18, r28
- 672:	0e 94 9a 02 	call	0x534	; 0x534 <RGB_Brightness_Dec>
+ 964:	8f 2d       	mov	r24, r15
+ 966:	60 2f       	mov	r22, r16
+ 968:	41 2f       	mov	r20, r17
+ 96a:	9e 01       	movw	r18, r28
+ 96c:	0e 94 04 04 	call	0x808	; 0x808 <RGB_Brightness_Dec>
 	RGBAnim.PixelBuf[i]=0;
- 676:	fe 01       	movw	r30, r28
- 678:	e2 5f       	subi	r30, 0xF2	; 242
- 67a:	fe 4f       	sbci	r31, 0xFE	; 254
- 67c:	10 82       	st	Z, r1
- 67e:	21 97       	sbiw	r28, 0x01	; 1
+ 970:	fe 01       	movw	r30, r28
+ 972:	e2 5f       	subi	r30, 0xF2	; 242
+ 974:	fe 4f       	sbci	r31, 0xFE	; 254
+ 976:	10 82       	st	Z, r1
+ 978:	21 97       	sbiw	r28, 0x01	; 1
 	RGBAnim.PixelBuf[i]=1;
   }
 }
 
 void RGB_Animation_Slide_Unfill(uint8_t r, uint8_t g, uint8_t b){
   for(int i=WS2812B_ANIMATION_PIXELS-1;i>=0;i--){
- 680:	a1 f7       	brne	.-24     	; 0x66a <RGB_Animation_Slide_Unfill+0x14>
+ 97a:	a1 f7       	brne	.-24     	; 0x964 <RGB_Animation_Slide_Unfill+0x14>
     RGB_Brightness_Dec(r,g,b,i+1);
 	RGBAnim.PixelBuf[i]=0;
   }
 }
- 682:	df 91       	pop	r29
- 684:	cf 91       	pop	r28
- 686:	1f 91       	pop	r17
- 688:	0f 91       	pop	r16
- 68a:	ff 90       	pop	r15
- 68c:	08 95       	ret
+ 97c:	df 91       	pop	r29
+ 97e:	cf 91       	pop	r28
+ 980:	1f 91       	pop	r17
+ 982:	0f 91       	pop	r16
+ 984:	ff 90       	pop	r15
+ 986:	08 95       	ret
 
-0000068e <RGB_Brightness_Inc>:
+00000988 <RGB_Brightness_Inc>:
 	WS2812B_Send_Pixel(0,0,0);
   }
 }
 
 
 void RGB_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
- 68e:	2f 92       	push	r2
- 690:	3f 92       	push	r3
- 692:	4f 92       	push	r4
- 694:	5f 92       	push	r5
- 696:	6f 92       	push	r6
- 698:	7f 92       	push	r7
- 69a:	8f 92       	push	r8
- 69c:	9f 92       	push	r9
- 69e:	af 92       	push	r10
- 6a0:	bf 92       	push	r11
- 6a2:	df 92       	push	r13
- 6a4:	ef 92       	push	r14
- 6a6:	ff 92       	push	r15
- 6a8:	0f 93       	push	r16
- 6aa:	1f 93       	push	r17
- 6ac:	cf 93       	push	r28
- 6ae:	df 93       	push	r29
- 6b0:	d8 2e       	mov	r13, r24
- 6b2:	e6 2e       	mov	r14, r22
- 6b4:	f4 2e       	mov	r15, r20
+ 988:	2f 92       	push	r2
+ 98a:	3f 92       	push	r3
+ 98c:	4f 92       	push	r4
+ 98e:	5f 92       	push	r5
+ 990:	6f 92       	push	r6
+ 992:	7f 92       	push	r7
+ 994:	8f 92       	push	r8
+ 996:	9f 92       	push	r9
+ 998:	af 92       	push	r10
+ 99a:	bf 92       	push	r11
+ 99c:	cf 92       	push	r12
+ 99e:	df 92       	push	r13
+ 9a0:	ef 92       	push	r14
+ 9a2:	ff 92       	push	r15
+ 9a4:	0f 93       	push	r16
+ 9a6:	1f 93       	push	r17
+ 9a8:	cf 93       	push	r28
+ 9aa:	df 93       	push	r29
+ 9ac:	d8 2e       	mov	r13, r24
+ 9ae:	e6 2e       	mov	r14, r22
+ 9b0:	f4 2e       	mov	r15, r20
   RGBAnim.MaxVal=r;
- 6b6:	80 93 0e 01 	sts	0x010E, r24
+ 9b2:	80 93 0e 01 	sts	0x010E, r24
   
   if(g>RGBAnim.MaxVal){
- 6ba:	86 17       	cp	r24, r22
- 6bc:	10 f4       	brcc	.+4      	; 0x6c2 <RGB_Brightness_Inc+0x34>
+ 9b6:	86 17       	cp	r24, r22
+ 9b8:	10 f4       	brcc	.+4      	; 0x9be <RGB_Brightness_Inc+0x36>
     RGBAnim.MaxVal=g;
- 6be:	60 93 0e 01 	sts	0x010E, r22
+ 9ba:	60 93 0e 01 	sts	0x010E, r22
   }
   
   if(b>RGBAnim.MaxVal){
- 6c2:	80 91 0e 01 	lds	r24, 0x010E
- 6c6:	8f 15       	cp	r24, r15
- 6c8:	10 f4       	brcc	.+4      	; 0x6ce <RGB_Brightness_Inc+0x40>
+ 9be:	80 91 0e 01 	lds	r24, 0x010E
+ 9c2:	8f 15       	cp	r24, r15
+ 9c4:	10 f4       	brcc	.+4      	; 0x9ca <RGB_Brightness_Inc+0x42>
     RGBAnim.MaxVal=b;
- 6ca:	f0 92 0e 01 	sts	0x010E, r15
- 6ce:	00 e0       	ldi	r16, 0x00	; 0
- 6d0:	10 e0       	ldi	r17, 0x00	; 0
+ 9c6:	f0 92 0e 01 	sts	0x010E, r15
+ 9ca:	00 e0       	ldi	r16, 0x00	; 0
+ 9cc:	10 e0       	ldi	r17, 0x00	; 0
+  temp[0]=0;
   temp[1]=0;
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
     uint16_t idle_pix=pixel-1;
+ 9ce:	19 01       	movw	r2, r18
+ 9d0:	08 94       	sec
+ 9d2:	21 08       	sbc	r2, r1
+ 9d4:	31 08       	sbc	r3, r1
     for(uint16_t j=0;j<idle_pix;j++){
- 6d2:	4e e0       	ldi	r20, 0x0E	; 14
- 6d4:	44 2e       	mov	r4, r20
- 6d6:	41 e0       	ldi	r20, 0x01	; 1
- 6d8:	54 2e       	mov	r5, r20
- 6da:	42 0e       	add	r4, r18
- 6dc:	53 1e       	adc	r5, r19
+ 9d6:	fe e0       	ldi	r31, 0x0E	; 14
+ 9d8:	4f 2e       	mov	r4, r31
+ 9da:	f1 e0       	ldi	r31, 0x01	; 1
+ 9dc:	5f 2e       	mov	r5, r31
+ 9de:	42 0e       	add	r4, r18
+ 9e0:	53 1e       	adc	r5, r19
 	}else{
 	  temp[2]=i;
 	}
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
- 6de:	6d 2c       	mov	r6, r13
- 6e0:	77 24       	eor	r7, r7
- 6e2:	8e 2c       	mov	r8, r14
- 6e4:	99 24       	eor	r9, r9
- 6e6:	af 2c       	mov	r10, r15
- 6e8:	bb 24       	eor	r11, r11
- 6ea:	2c e2       	ldi	r18, 0x2C	; 44
- 6ec:	22 2e       	mov	r2, r18
- 6ee:	21 e0       	ldi	r18, 0x01	; 1
- 6f0:	32 2e       	mov	r3, r18
- 6f2:	2a c0       	rjmp	.+84     	; 0x748 <RGB_Brightness_Inc+0xba>
-  if(g>RGBAnim.MaxVal){
-    RGBAnim.MaxVal=g;
-  }
-  
-  if(b>RGBAnim.MaxVal){
-    RGBAnim.MaxVal=b;
- 6f4:	cf e0       	ldi	r28, 0x0F	; 15
- 6f6:	d1 e0       	ldi	r29, 0x01	; 1
- 6f8:	0d c0       	rjmp	.+26     	; 0x714 <RGB_Brightness_Inc+0x86>
+ 9e2:	6d 2c       	mov	r6, r13
+ 9e4:	77 24       	eor	r7, r7
+ 9e6:	8e 2c       	mov	r8, r14
+ 9e8:	99 24       	eor	r9, r9
+ 9ea:	af 2c       	mov	r10, r15
+ 9ec:	bb 24       	eor	r11, r11
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 9ee:	e0 e6       	ldi	r30, 0x60	; 96
+ 9f0:	ce 2e       	mov	r12, r30
+ 9f2:	34 c0       	rjmp	.+104    	; 0xa5c <RGB_Brightness_Inc+0xd4>
+  temp[0]=0;
+  temp[1]=0;
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
     uint16_t idle_pix=pixel-1;
+ 9f4:	cf e0       	ldi	r28, 0x0F	; 15
+ 9f6:	d1 e0       	ldi	r29, 0x01	; 1
+ 9f8:	0d c0       	rjmp	.+26     	; 0xa14 <RGB_Brightness_Inc+0x8c>
     for(uint16_t j=0;j<idle_pix;j++){
       if(RGBAnim.PixelBuf[j]){
- 6fa:	88 81       	ld	r24, Y
- 6fc:	88 23       	and	r24, r24
- 6fe:	21 f0       	breq	.+8      	; 0x708 <RGB_Brightness_Inc+0x7a>
+ 9fa:	88 81       	ld	r24, Y
+ 9fc:	88 23       	and	r24, r24
+ 9fe:	21 f0       	breq	.+8      	; 0xa08 <RGB_Brightness_Inc+0x80>
 	    WS2812B_Send_Pixel(r,g,b);
- 700:	8d 2d       	mov	r24, r13
- 702:	6e 2d       	mov	r22, r14
- 704:	4f 2d       	mov	r20, r15
- 706:	03 c0       	rjmp	.+6      	; 0x70e <RGB_Brightness_Inc+0x80>
+ a00:	8d 2d       	mov	r24, r13
+ a02:	6e 2d       	mov	r22, r14
+ a04:	4f 2d       	mov	r20, r15
+ a06:	03 c0       	rjmp	.+6      	; 0xa0e <RGB_Brightness_Inc+0x86>
 	  }else{
 	    WS2812B_Send_Pixel(0,0,0);
- 708:	80 e0       	ldi	r24, 0x00	; 0
- 70a:	60 e0       	ldi	r22, 0x00	; 0
- 70c:	40 e0       	ldi	r20, 0x00	; 0
- 70e:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 712:	21 96       	adiw	r28, 0x01	; 1
+ a08:	80 e0       	ldi	r24, 0x00	; 0
+ a0a:	60 e0       	ldi	r22, 0x00	; 0
+ a0c:	40 e0       	ldi	r20, 0x00	; 0
+ a0e:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ a12:	21 96       	adiw	r28, 0x01	; 1
   temp[1]=0;
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
     uint16_t idle_pix=pixel-1;
     for(uint16_t j=0;j<idle_pix;j++){
- 714:	c4 15       	cp	r28, r4
- 716:	d5 05       	cpc	r29, r5
- 718:	81 f7       	brne	.-32     	; 0x6fa <RGB_Brightness_Inc+0x6c>
+ a14:	c4 15       	cp	r28, r4
+ a16:	d5 05       	cpc	r29, r5
+ a18:	81 f7       	brne	.-32     	; 0x9fa <RGB_Brightness_Inc+0x72>
 	}else{
 	  temp[2]=i;
 	}
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
- 71a:	20 2f       	mov	r18, r16
- 71c:	60 16       	cp	r6, r16
- 71e:	71 06       	cpc	r7, r17
- 720:	08 f4       	brcc	.+2      	; 0x724 <RGB_Brightness_Inc+0x96>
- 722:	26 2d       	mov	r18, r6
- 724:	60 2f       	mov	r22, r16
- 726:	80 16       	cp	r8, r16
- 728:	91 06       	cpc	r9, r17
- 72a:	08 f4       	brcc	.+2      	; 0x72e <RGB_Brightness_Inc+0xa0>
- 72c:	68 2d       	mov	r22, r8
- 72e:	40 2f       	mov	r20, r16
- 730:	a0 16       	cp	r10, r16
- 732:	b1 06       	cpc	r11, r17
- 734:	08 f4       	brcc	.+2      	; 0x738 <RGB_Brightness_Inc+0xaa>
- 736:	4a 2d       	mov	r20, r10
- 738:	82 2f       	mov	r24, r18
- 73a:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
- 73e:	c1 01       	movw	r24, r2
- 740:	01 97       	sbiw	r24, 0x01	; 1
- 742:	f1 f7       	brne	.-4      	; 0x740 <RGB_Brightness_Inc+0xb2>
+ a1a:	20 2f       	mov	r18, r16
+ a1c:	60 16       	cp	r6, r16
+ a1e:	71 06       	cpc	r7, r17
+ a20:	08 f4       	brcc	.+2      	; 0xa24 <RGB_Brightness_Inc+0x9c>
+ a22:	26 2d       	mov	r18, r6
+ a24:	60 2f       	mov	r22, r16
+ a26:	80 16       	cp	r8, r16
+ a28:	91 06       	cpc	r9, r17
+ a2a:	08 f4       	brcc	.+2      	; 0xa2e <RGB_Brightness_Inc+0xa6>
+ a2c:	68 2d       	mov	r22, r8
+ a2e:	40 2f       	mov	r20, r16
+ a30:	a0 16       	cp	r10, r16
+ a32:	b1 06       	cpc	r11, r17
+ a34:	08 f4       	brcc	.+2      	; 0xa38 <RGB_Brightness_Inc+0xb0>
+ a36:	4a 2d       	mov	r20, r10
+ a38:	82 2f       	mov	r24, r18
+ a3a:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
+ a3e:	c1 01       	movw	r24, r2
+ a40:	04 c0       	rjmp	.+8      	; 0xa4a <RGB_Brightness_Inc+0xc2>
+ a42:	2c 2d       	mov	r18, r12
+ a44:	2a 95       	dec	r18
+ a46:	f1 f7       	brne	.-4      	; 0xa44 <RGB_Brightness_Inc+0xbc>
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+ a48:	01 96       	adiw	r24, 0x01	; 1
+ a4a:	8a 33       	cpi	r24, 0x3A	; 58
+ a4c:	91 05       	cpc	r25, r1
+ a4e:	c8 f3       	brcs	.-14     	; 0xa42 <RGB_Brightness_Inc+0xba>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ a50:	8c e2       	ldi	r24, 0x2C	; 44
+ a52:	91 e0       	ldi	r25, 0x01	; 1
+ a54:	01 97       	sbiw	r24, 0x01	; 1
+ a56:	f1 f7       	brne	.-4      	; 0xa54 <RGB_Brightness_Inc+0xcc>
   uint16_t temp[3];
   temp[0]=0;
   temp[1]=0;
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
- 744:	0f 5f       	subi	r16, 0xFF	; 255
- 746:	1f 4f       	sbci	r17, 0xFF	; 255
- 748:	80 91 0e 01 	lds	r24, 0x010E
- 74c:	90 e0       	ldi	r25, 0x00	; 0
- 74e:	08 17       	cp	r16, r24
- 750:	19 07       	cpc	r17, r25
- 752:	80 f2       	brcs	.-96     	; 0x6f4 <RGB_Brightness_Inc+0x66>
-	
-	
-	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+ a58:	0f 5f       	subi	r16, 0xFF	; 255
+ a5a:	1f 4f       	sbci	r17, 0xFF	; 255
+ a5c:	80 91 0e 01 	lds	r24, 0x010E
+ a60:	90 e0       	ldi	r25, 0x00	; 0
+ a62:	08 17       	cp	r16, r24
+ a64:	19 07       	cpc	r17, r25
+ a66:	30 f2       	brcs	.-116    	; 0x9f4 <RGB_Brightness_Inc+0x6c>
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
 	_delay_us(100);
   }
 }
- 754:	df 91       	pop	r29
- 756:	cf 91       	pop	r28
- 758:	1f 91       	pop	r17
- 75a:	0f 91       	pop	r16
- 75c:	ff 90       	pop	r15
- 75e:	ef 90       	pop	r14
- 760:	df 90       	pop	r13
- 762:	bf 90       	pop	r11
- 764:	af 90       	pop	r10
- 766:	9f 90       	pop	r9
- 768:	8f 90       	pop	r8
- 76a:	7f 90       	pop	r7
- 76c:	6f 90       	pop	r6
- 76e:	5f 90       	pop	r5
- 770:	4f 90       	pop	r4
- 772:	3f 90       	pop	r3
- 774:	2f 90       	pop	r2
- 776:	08 95       	ret
+ a68:	df 91       	pop	r29
+ a6a:	cf 91       	pop	r28
+ a6c:	1f 91       	pop	r17
+ a6e:	0f 91       	pop	r16
+ a70:	ff 90       	pop	r15
+ a72:	ef 90       	pop	r14
+ a74:	df 90       	pop	r13
+ a76:	cf 90       	pop	r12
+ a78:	bf 90       	pop	r11
+ a7a:	af 90       	pop	r10
+ a7c:	9f 90       	pop	r9
+ a7e:	8f 90       	pop	r8
+ a80:	7f 90       	pop	r7
+ a82:	6f 90       	pop	r6
+ a84:	5f 90       	pop	r5
+ a86:	4f 90       	pop	r4
+ a88:	3f 90       	pop	r3
+ a8a:	2f 90       	pop	r2
+ a8c:	08 95       	ret
 
-00000778 <RGB_Animation_Slide_Fill>:
+00000a8e <RGB_Animation_Slide_Fill>:
 }
 
 
 
 
 void RGB_Animation_Slide_Fill(uint8_t r, uint8_t g, uint8_t b){
- 778:	ef 92       	push	r14
- 77a:	ff 92       	push	r15
- 77c:	0f 93       	push	r16
- 77e:	1f 93       	push	r17
- 780:	cf 93       	push	r28
- 782:	df 93       	push	r29
- 784:	f8 2e       	mov	r15, r24
- 786:	06 2f       	mov	r16, r22
- 788:	14 2f       	mov	r17, r20
- 78a:	c0 e0       	ldi	r28, 0x00	; 0
- 78c:	d0 e0       	ldi	r29, 0x00	; 0
+ a8e:	ef 92       	push	r14
+ a90:	ff 92       	push	r15
+ a92:	0f 93       	push	r16
+ a94:	1f 93       	push	r17
+ a96:	cf 93       	push	r28
+ a98:	df 93       	push	r29
+ a9a:	f8 2e       	mov	r15, r24
+ a9c:	06 2f       	mov	r16, r22
+ a9e:	14 2f       	mov	r17, r20
+ aa0:	c0 e0       	ldi	r28, 0x00	; 0
+ aa2:	d0 e0       	ldi	r29, 0x00	; 0
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
     RGB_Brightness_Inc(r,g,b,i+1);
 	RGBAnim.PixelBuf[i]=1;
- 78e:	ee 24       	eor	r14, r14
- 790:	e3 94       	inc	r14
+ aa4:	ee 24       	eor	r14, r14
+ aa6:	e3 94       	inc	r14
 
 
 
 void RGB_Animation_Slide_Fill(uint8_t r, uint8_t g, uint8_t b){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
     RGB_Brightness_Inc(r,g,b,i+1);
- 792:	21 96       	adiw	r28, 0x01	; 1
- 794:	8f 2d       	mov	r24, r15
- 796:	60 2f       	mov	r22, r16
- 798:	41 2f       	mov	r20, r17
- 79a:	9e 01       	movw	r18, r28
- 79c:	0e 94 47 03 	call	0x68e	; 0x68e <RGB_Brightness_Inc>
+ aa8:	21 96       	adiw	r28, 0x01	; 1
+ aaa:	8f 2d       	mov	r24, r15
+ aac:	60 2f       	mov	r22, r16
+ aae:	41 2f       	mov	r20, r17
+ ab0:	9e 01       	movw	r18, r28
+ ab2:	0e 94 c4 04 	call	0x988	; 0x988 <RGB_Brightness_Inc>
 	RGBAnim.PixelBuf[i]=1;
- 7a0:	fe 01       	movw	r30, r28
- 7a2:	e2 5f       	subi	r30, 0xF2	; 242
- 7a4:	fe 4f       	sbci	r31, 0xFE	; 254
- 7a6:	e0 82       	st	Z, r14
+ ab6:	fe 01       	movw	r30, r28
+ ab8:	e2 5f       	subi	r30, 0xF2	; 242
+ aba:	fe 4f       	sbci	r31, 0xFE	; 254
+ abc:	e0 82       	st	Z, r14
 
 
 
 
 void RGB_Animation_Slide_Fill(uint8_t r, uint8_t g, uint8_t b){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
- 7a8:	c4 31       	cpi	r28, 0x14	; 20
- 7aa:	d1 05       	cpc	r29, r1
- 7ac:	91 f7       	brne	.-28     	; 0x792 <RGB_Animation_Slide_Fill+0x1a>
+ abe:	ca 33       	cpi	r28, 0x3A	; 58
+ ac0:	d1 05       	cpc	r29, r1
+ ac2:	91 f7       	brne	.-28     	; 0xaa8 <RGB_Animation_Slide_Fill+0x1a>
     RGB_Brightness_Inc(r,g,b,i+1);
 	RGBAnim.PixelBuf[i]=1;
   }
 }
- 7ae:	df 91       	pop	r29
- 7b0:	cf 91       	pop	r28
- 7b2:	1f 91       	pop	r17
- 7b4:	0f 91       	pop	r16
- 7b6:	ff 90       	pop	r15
- 7b8:	ef 90       	pop	r14
- 7ba:	08 95       	ret
+ ac4:	df 91       	pop	r29
+ ac6:	cf 91       	pop	r28
+ ac8:	1f 91       	pop	r17
+ aca:	0f 91       	pop	r16
+ acc:	ff 90       	pop	r15
+ ace:	ef 90       	pop	r14
+ ad0:	08 95       	ret
 
-000007bc <RGB_Animation_Clear_All_Pixels>:
+00000ad2 <RGB_Animation_Clear_All_Pixels>:
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
 	RGBAnim.PixelBuf[i]=0;
   }
 }
 
 void RGB_Animation_Clear_All_Pixels(void){
- 7bc:	cf 93       	push	r28
- 7be:	df 93       	push	r29
- 7c0:	c0 e0       	ldi	r28, 0x00	; 0
- 7c2:	d0 e0       	ldi	r29, 0x00	; 0
+ ad2:	cf 93       	push	r28
+ ad4:	df 93       	push	r29
+ ad6:	c0 e0       	ldi	r28, 0x00	; 0
+ ad8:	d0 e0       	ldi	r29, 0x00	; 0
   for(uint16_t j=0;j<WS2812B_TOTAL_PIXEL_CLEAR;j++){
 	WS2812B_Send_Pixel(0,0,0);
- 7c4:	80 e0       	ldi	r24, 0x00	; 0
- 7c6:	60 e0       	ldi	r22, 0x00	; 0
- 7c8:	40 e0       	ldi	r20, 0x00	; 0
- 7ca:	0e 94 1a 01 	call	0x234	; 0x234 <WS2812B_Send_Pixel>
+ ada:	80 e0       	ldi	r24, 0x00	; 0
+ adc:	60 e0       	ldi	r22, 0x00	; 0
+ ade:	40 e0       	ldi	r20, 0x00	; 0
+ ae0:	0e 94 2c 01 	call	0x258	; 0x258 <WS2812B_Send_Pixel>
 	RGBAnim.PixelBuf[i]=0;
   }
 }
 
 void RGB_Animation_Clear_All_Pixels(void){
   for(uint16_t j=0;j<WS2812B_TOTAL_PIXEL_CLEAR;j++){
- 7ce:	21 96       	adiw	r28, 0x01	; 1
- 7d0:	81 e0       	ldi	r24, 0x01	; 1
- 7d2:	cc 32       	cpi	r28, 0x2C	; 44
- 7d4:	d8 07       	cpc	r29, r24
- 7d6:	b1 f7       	brne	.-20     	; 0x7c4 <RGB_Animation_Clear_All_Pixels+0x8>
+ ae4:	21 96       	adiw	r28, 0x01	; 1
+ ae6:	81 e0       	ldi	r24, 0x01	; 1
+ ae8:	cc 32       	cpi	r28, 0x2C	; 44
+ aea:	d8 07       	cpc	r29, r24
+ aec:	b1 f7       	brne	.-20     	; 0xada <RGB_Animation_Clear_All_Pixels+0x8>
 	WS2812B_Send_Pixel(0,0,0);
   }
 }
- 7d8:	df 91       	pop	r29
- 7da:	cf 91       	pop	r28
- 7dc:	08 95       	ret
+ aee:	df 91       	pop	r29
+ af0:	cf 91       	pop	r28
+ af2:	08 95       	ret
 
-000007de <RGB_Animation_Init>:
-
-
+00000af4 <RGB_Animation_Init>:
+  }
+}
 
 
 void RGB_Animation_Init(void){
   red=RED_MAX;
- 7de:	8f ef       	ldi	r24, 0xFF	; 255
- 7e0:	80 93 00 01 	sts	0x0100, r24
+ af4:	8f ef       	ldi	r24, 0xFF	; 255
+ af6:	80 93 00 01 	sts	0x0100, r24
   red_dir=HALT;
- 7e4:	82 e0       	ldi	r24, 0x02	; 2
- 7e6:	80 93 03 01 	sts	0x0103, r24
+ afa:	82 e0       	ldi	r24, 0x02	; 2
+ afc:	80 93 03 01 	sts	0x0103, r24
   green_dir=HALT;
- 7ea:	80 93 04 01 	sts	0x0104, r24
+ b00:	80 93 04 01 	sts	0x0104, r24
   blue_dir=HALT;
- 7ee:	80 93 05 01 	sts	0x0105, r24
- 7f2:	88 ee       	ldi	r24, 0xE8	; 232
- 7f4:	93 e0       	ldi	r25, 0x03	; 3
- 7f6:	2c e2       	ldi	r18, 0x2C	; 44
- 7f8:	31 e0       	ldi	r19, 0x01	; 1
- 7fa:	f9 01       	movw	r30, r18
- 7fc:	31 97       	sbiw	r30, 0x01	; 1
- 7fe:	f1 f7       	brne	.-4      	; 0x7fc <RGB_Animation_Init+0x1e>
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
+ b04:	80 93 05 01 	sts	0x0105, r24
+ b08:	88 ee       	ldi	r24, 0xE8	; 232
+ b0a:	93 e0       	ldi	r25, 0x03	; 3
+ b0c:	2c e2       	ldi	r18, 0x2C	; 44
+ b0e:	31 e0       	ldi	r19, 0x01	; 1
+ b10:	f9 01       	movw	r30, r18
+ b12:	31 97       	sbiw	r30, 0x01	; 1
+ b14:	f1 f7       	brne	.-4      	; 0xb12 <RGB_Animation_Init+0x1e>
 		{
 			// wait 1/10 ms
 			_delay_loop_2(((F_CPU) / 4e3) / 10);
 			__ticks --;
- 800:	01 97       	sbiw	r24, 0x01	; 1
+ b16:	01 97       	sbiw	r24, 0x01	; 1
 		__ticks = 1;
 	else if (__tmp > 65535)
 	{
 		//	__ticks = requested delay in 1/10 ms
 		__ticks = (uint16_t) (__ms * 10.0);
 		while(__ticks)
- 802:	d9 f7       	brne	.-10     	; 0x7fa <RGB_Animation_Init+0x1c>
+ b18:	d9 f7       	brne	.-10     	; 0xb10 <RGB_Animation_Init+0x1c>
   _delay_ms(100);
   RGB_Animation_Clear_All_Pixels();
- 804:	0e 94 de 03 	call	0x7bc	; 0x7bc <RGB_Animation_Clear_All_Pixels>
- 808:	88 ee       	ldi	r24, 0xE8	; 232
- 80a:	93 e0       	ldi	r25, 0x03	; 3
- 80c:	2c e2       	ldi	r18, 0x2C	; 44
- 80e:	31 e0       	ldi	r19, 0x01	; 1
- 810:	f9 01       	movw	r30, r18
- 812:	31 97       	sbiw	r30, 0x01	; 1
- 814:	f1 f7       	brne	.-4      	; 0x812 <RGB_Animation_Init+0x34>
+ b1a:	0e 94 69 05 	call	0xad2	; 0xad2 <RGB_Animation_Clear_All_Pixels>
+ b1e:	88 ee       	ldi	r24, 0xE8	; 232
+ b20:	93 e0       	ldi	r25, 0x03	; 3
+ b22:	2c e2       	ldi	r18, 0x2C	; 44
+ b24:	31 e0       	ldi	r19, 0x01	; 1
+ b26:	f9 01       	movw	r30, r18
+ b28:	31 97       	sbiw	r30, 0x01	; 1
+ b2a:	f1 f7       	brne	.-4      	; 0xb28 <RGB_Animation_Init+0x34>
 		{
 			// wait 1/10 ms
 			_delay_loop_2(((F_CPU) / 4e3) / 10);
 			__ticks --;
- 816:	01 97       	sbiw	r24, 0x01	; 1
+ b2c:	01 97       	sbiw	r24, 0x01	; 1
 		__ticks = 1;
 	else if (__tmp > 65535)
 	{
 		//	__ticks = requested delay in 1/10 ms
 		__ticks = (uint16_t) (__ms * 10.0);
 		while(__ticks)
- 818:	d9 f7       	brne	.-10     	; 0x810 <RGB_Animation_Init+0x32>
- 81a:	ef e0       	ldi	r30, 0x0F	; 15
- 81c:	f1 e0       	ldi	r31, 0x01	; 1
+ b2e:	d9 f7       	brne	.-10     	; 0xb26 <RGB_Animation_Init+0x32>
+ b30:	ef e0       	ldi	r30, 0x0F	; 15
+ b32:	f1 e0       	ldi	r31, 0x01	; 1
 
 rgb_anim_t RGBAnim;
 
 void RGB_Animation_Clear_Pixel_Buf(void){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
 	RGBAnim.PixelBuf[i]=0;
- 81e:	11 92       	st	Z+, r1
+ b34:	11 92       	st	Z+, r1
 }rgb_anim_t;
 
 rgb_anim_t RGBAnim;
 
 void RGB_Animation_Clear_Pixel_Buf(void){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
- 820:	81 e0       	ldi	r24, 0x01	; 1
- 822:	e3 32       	cpi	r30, 0x23	; 35
- 824:	f8 07       	cpc	r31, r24
- 826:	d9 f7       	brne	.-10     	; 0x81e <RGB_Animation_Init+0x40>
+ b36:	81 e0       	ldi	r24, 0x01	; 1
+ b38:	e9 34       	cpi	r30, 0x49	; 73
+ b3a:	f8 07       	cpc	r31, r24
+ b3c:	d9 f7       	brne	.-10     	; 0xb34 <RGB_Animation_Init+0x40>
   _delay_ms(100);
   RGB_Animation_Clear_All_Pixels();
   _delay_ms(100);
   RGB_Animation_Clear_Pixel_Buf();
   
- 828:	08 95       	ret
+ b3e:	08 95       	ret
 
-0000082a <_exit>:
- 82a:	f8 94       	cli
+00000b40 <_exit>:
+ b40:	f8 94       	cli
 
-0000082c <__stop_program>:
- 82c:	ff cf       	rjmp	.-2      	; 0x82c <__stop_program>
+00000b42 <__stop_program>:
+ b42:	ff cf       	rjmp	.-2      	; 0xb42 <__stop_program>

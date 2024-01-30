@@ -63,7 +63,6 @@ void RGB_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	  }
     }
 	
-	
 	if(i>r){
 	  temp[0]=r;
 	}else{
@@ -84,6 +83,10 @@ void RGB_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
 	_delay_us(100);
   }
 }
@@ -114,6 +117,62 @@ void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	  }
     }
 	
+	if(i>r){
+	  temp[0]=r;
+	}else{
+	  temp[0]=i;
+	}
+	
+	if(i>g){
+	  temp[1]=g;
+	}else{
+	  temp[1]=i;
+	}
+	
+	if(i>b){
+	  temp[2]=b;
+	}else{
+	  temp[2]=i;
+	}
+	
+	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+	
+    for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
+	
+	_delay_us(100);
+  }
+}
+
+
+
+void RGB_Brightness_Inc_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
+  RGBAnim.MaxVal=r;
+  
+  if(g>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=g;
+  }
+  
+  if(b>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=b;
+  }
+  
+  uint16_t temp[3];
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+    for(uint16_t j=0;j<idle_pix;j++){
+      if(RGBAnim.PixelBuf[j]){
+	    WS2812B_Send_Pixel(r,g,b);
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+	  }
+    }
 	
 	if(i>r){
 	  temp[0]=r;
@@ -135,9 +194,69 @@ void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
 	_delay_us(100);
   }
 }
+
+void RGB_Brightness_Dec_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
+  RGBAnim.MaxVal=r;
+  
+  if(g>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=g;
+  }
+  
+  if(b>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=b;
+  }
+  
+  uint16_t temp[3];
+  temp[0]=0;
+  temp[1]=0;
+  temp[2]=0;
+
+  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
+    uint16_t idle_pix=pixel-1;
+    for(uint16_t j=0;j<idle_pix;j++){
+      if(RGBAnim.PixelBuf[j]){
+	    WS2812B_Send_Pixel(r,g,b);
+	  }else{
+	    WS2812B_Send_Pixel(0,0,0);
+	  }
+    }
+	
+	if(i>r){
+	  temp[0]=r;
+	}else{
+	  temp[0]=i;
+	}
+	
+	if(i>g){
+	  temp[1]=g;
+	}else{
+	  temp[1]=i;
+	}
+	
+	if(i>b){
+	  temp[2]=b;
+	}else{
+	  temp[2]=i;
+	}
+	
+	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
+	
+	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
+      _delay_us(24);
+    }
+	_delay_us(100);
+  }
+}
+
+
 
 
 void RGB_Animation_Rotate_All_Color(void){
@@ -299,7 +418,30 @@ void RGB_Animation_Slide_Unfill(uint8_t r, uint8_t g, uint8_t b){
   }
 }
 
+void RGB_Animation_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b){
+  RGBAnim.MaxVal=r;
+  
+  if(g>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=g;
+  }
+  
+  if(b>RGBAnim.MaxVal){
+    RGBAnim.MaxVal=b;
+  }
+  
+  
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+    WS2812B_Send_Pixel(r,g,b);
+	_delay_ms(10);
+  }
+}
 
+void RGB_Animation_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b){
+  for(int i=0;i<WS2812B_ANIMATION_PIXELS;i++){
+    WS2812B_Send_Pixel(r,g,b);
+	_delay_ms(10);
+  }
+}
 
 
 void RGB_Animation_Init(void){
