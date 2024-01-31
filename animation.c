@@ -4,6 +4,7 @@
 #include <util/delay.h>
 #include "ws2812b.h"
 #include "animation.h"
+#include "debug.h"
 
 uint8_t  red=0, green=0, blue=0;
 uint8_t  red_dir=0, green_dir=0, blue_dir=0;
@@ -16,6 +17,8 @@ uint8_t  red_dir=0, green_dir=0, blue_dir=0;
 #define  DOWNCOUNT 1
 #define  HALT      2
 
+#define  RGB_INC_STEP 1
+#define  RGB_DEC_STEP 4
 
 typedef struct rgb_anim_t{
   uint8_t MaxVal;
@@ -52,9 +55,18 @@ void RGB_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
   temp[0]=0;
   temp[1]=0;
   temp[2]=0;
-
-  for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
-    uint16_t idle_pix=pixel-1;
+  
+  if((RGBAnim.MaxVal % RGB_INC_STEP)!=0){
+    uint16_t temp=RGBAnim.MaxVal % RGB_INC_STEP;
+	RGBAnim.MaxVal-=temp;
+  }
+  
+  uint16_t loop_cnt=RGBAnim.MaxVal/3;
+  
+  for(uint16_t i=0;i<loop_cnt;i+=RGB_INC_STEP){
+    
+	
+    uint16_t idle_pix=pixel;
     for(uint16_t j=0;j<idle_pix;j++){
       if(RGBAnim.PixelBuf[j]){
 	    WS2812B_Send_Pixel(r,g,b);
@@ -84,8 +96,8 @@ void RGB_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
 	
-	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
-      _delay_us(24);
+	for(uint16_t j=idle_pix;j<=WS2812B_ANIMATION_PIXELS;j++){
+      WS2812B_Send_Pixel(0,0,0);
     }
 	_delay_us(100);
   }
@@ -106,9 +118,14 @@ void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
   temp[0]=0;
   temp[1]=0;
   temp[2]=0;
-
-  for(int i=RGBAnim.MaxVal;i>=0;i--){
-    uint16_t idle_pix=pixel-1;
+  
+  if((RGBAnim.MaxVal % RGB_DEC_STEP)!=0){
+    uint16_t temp=RGBAnim.MaxVal % RGB_DEC_STEP;
+	RGBAnim.MaxVal-=temp;
+  }
+  
+  for(int i=RGBAnim.MaxVal;i>=0;i-=RGB_DEC_STEP){
+    uint16_t idle_pix=pixel;
     for(uint16_t j=0;j<idle_pix;j++){
       if(RGBAnim.PixelBuf[j]){
 	    WS2812B_Send_Pixel(r,g,b);
@@ -138,8 +155,8 @@ void RGB_Brightness_Dec(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
 	
-    for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
-      _delay_us(24);
+    for(uint16_t j=idle_pix;j<=WS2812B_ANIMATION_PIXELS;j++){
+      WS2812B_Send_Pixel(0,0,0);
     }
 	
 	_delay_us(100);
@@ -165,13 +182,10 @@ void RGB_Brightness_Inc_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
-    uint16_t idle_pix=pixel-1;
-    for(uint16_t j=0;j<idle_pix;j++){
-      if(RGBAnim.PixelBuf[j]){
-	    WS2812B_Send_Pixel(r,g,b);
-	  }else{
-	    WS2812B_Send_Pixel(0,0,0);
-	  }
+    
+	
+	for(uint16_t j=0;j<pixel;j++){
+	  WS2812B_Send_Pixel(r,g,b);
     }
 	
 	if(i>r){
@@ -192,12 +206,18 @@ void RGB_Brightness_Inc_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
 	  temp[2]=i;
 	}
 	
+	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]); //lit-up-gradually
+	
+	for(uint16_t j=pixel+1;j<WS2812B_ANIMATION_PIXELS-pixel-1;j++){
+	    WS2812B_Send_Pixel(0,0,0);
+    }
 	
 	WS2812B_Send_Pixel(temp[0],temp[1],temp[2]);
 	
-	for(uint16_t j=idle_pix;j<WS2812B_ANIMATION_PIXELS;j++){
-      _delay_us(24);
+	for(uint16_t j=0;j<pixel;j++){
+	  WS2812B_Send_Pixel(r,g,b);
     }
+	
 	_delay_us(100);
   }
 }
@@ -219,7 +239,7 @@ void RGB_Brightness_Dec_Mid(uint8_t r, uint8_t g, uint8_t b, uint16_t pixel){
   temp[2]=0;
 
   for(uint16_t i=0;i<RGBAnim.MaxVal;i++){
-    uint16_t idle_pix=pixel-1;
+    uint16_t idle_pix=pixel;
     for(uint16_t j=0;j<idle_pix;j++){
       if(RGBAnim.PixelBuf[j]){
 	    WS2812B_Send_Pixel(r,g,b);
@@ -406,17 +426,34 @@ void RGB_Animation_Slide(void){
 
 void RGB_Animation_Slide_Fill(uint8_t r, uint8_t g, uint8_t b){
   for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS;i++){
-    RGB_Brightness_Inc(r,g,b,i+1);
+    RGB_Brightness_Inc(r,g,b,i);
 	RGBAnim.PixelBuf[i]=1;
   }
 }
 
 void RGB_Animation_Slide_Unfill(uint8_t r, uint8_t g, uint8_t b){
   for(int i=WS2812B_ANIMATION_PIXELS-1;i>=0;i--){
-    RGB_Brightness_Dec(r,g,b,i+1);
+    RGB_Brightness_Dec(r,g,b,i);
 	RGBAnim.PixelBuf[i]=0;
   }
 }
+
+
+void RGB_Animation_Slide_Fill_Mid(uint8_t r, uint8_t g, uint8_t b){
+  for(uint16_t i=0;i<WS2812B_ANIMATION_PIXELS/2;i++){
+    RGB_Brightness_Inc_Mid(r,g,b,i);
+	RGBAnim.PixelBuf[i]=1;
+	RGBAnim.PixelBuf[WS2812B_ANIMATION_PIXELS-i-1]=1;
+  }
+}
+
+void RGB_Animation_Slide_Unfill_Mid(uint8_t r, uint8_t g, uint8_t b){
+  for(int i=WS2812B_ANIMATION_PIXELS-1;i>=0;i--){
+    RGB_Brightness_Dec(r,g,b,i);
+	RGBAnim.PixelBuf[i]=0;
+  }
+}
+
 
 void RGB_Animation_Brightness_Inc(uint8_t r, uint8_t g, uint8_t b){
   RGBAnim.MaxVal=r;

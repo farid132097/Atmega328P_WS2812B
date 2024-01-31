@@ -10,135 +10,190 @@
   18               	main:
   19               	.LFB6:
   20               	.LM1:
-  21 0000 0F93      		push r16
-  22 0002 1F93      		push r17
-  23 0004 CF93      		push r28
-  24 0006 DF93      		push r29
-  25               	/* prologue: function */
-  26               	/* frame size = 0 */
-  27               	.LM2:
-  28 0008 0E94 0000 		call WS2812B_Init
-  29               	.LM3:
-  30 000c 0E94 0000 		call RGB_Animation_Init
-  31               	.LBB24:
-  32               	.LBB25:
-  33               	.LBB26:
-  34               	.LBB27:
-  35               	.LM4:
-  36 0010 CCE2      		ldi r28,lo8(300)
-  37 0012 D1E0      		ldi r29,hi8(300)
-  38               	.LBE27:
-  39               	.LBE26:
-  40               	.LBE25:
-  41               	.LBE24:
-  42               	.LBB31:
-  43               	.LBB32:
-  44               	.LBB33:
-  45               	.LBB34:
-  46 0014 08EB      		ldi r16,lo8(3000)
-  47 0016 1BE0      		ldi r17,hi8(3000)
-  48               	.LVL0:
-  49               	.L4:
-  50               	.LBE34:
-  51               	.LBE33:
-  52               	.LBE32:
-  53               	.LBE31:
-  54               	.LM5:
-  55 0018 80E0      		ldi r24,lo8(0)
-  56               	.LVL1:
-  57 001a 62E3      		ldi r22,lo8(50)
-  58 001c 40E0      		ldi r20,lo8(0)
-  59 001e 0E94 0000 		call RGB_Animation_Slide_Fill
-  60               	.LVL2:
-  61 0022 80E1      		ldi r24,lo8(10000)
-  62 0024 97E2      		ldi r25,hi8(10000)
-  63               	.LVL3:
-  64               	.L2:
-  65               	.LBB38:
-  66               	.LBB30:
-  67               	.LBB29:
-  68               	.LBB28:
-  69               	.LM6:
-  70 0026 FE01      		movw r30,r28
-  71               	.LVL4:
-  72               	/* #APP */
-  73               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
-  74 0028 3197      		1: sbiw r30,1
-  75 002a 01F4      		brne 1b
-  76               	 ;  0 "" 2
-  77               	/* #NOAPP */
-  78               	.LBE28:
-  79               	.LBE29:
-  80               	.LM7:
-  81 002c 0197      		sbiw r24,1
-  82               	.LM8:
-  83 002e 01F4      		brne .L2
-  84               	.LBE30:
-  85               	.LBE38:
-  86               	.LM9:
-  87 0030 80E0      		ldi r24,lo8(0)
-  88               	.LVL5:
-  89 0032 62E3      		ldi r22,lo8(50)
-  90 0034 40E0      		ldi r20,lo8(0)
-  91 0036 0E94 0000 		call RGB_Animation_Slide_Unfill
-  92               	.LVL6:
-  93 003a 80E1      		ldi r24,lo8(10000)
-  94 003c 97E2      		ldi r25,hi8(10000)
-  95               	.LVL7:
-  96               	.L3:
-  97               	.LBB39:
-  98               	.LBB40:
-  99               	.LBB41:
- 100               	.LBB42:
- 101               	.LM10:
- 102 003e FE01      		movw r30,r28
- 103               	.LVL8:
- 104               	/* #APP */
- 105               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 106 0040 3197      		1: sbiw r30,1
- 107 0042 01F4      		brne 1b
- 108               	 ;  0 "" 2
- 109               	/* #NOAPP */
- 110               	.LBE42:
- 111               	.LBE41:
- 112               	.LM11:
- 113 0044 0197      		sbiw r24,1
- 114               	.LM12:
- 115 0046 01F4      		brne .L3
- 116               	.LBE40:
- 117               	.LBE39:
- 118               	.LBB43:
- 119               	.LBB37:
- 120               	.LBB36:
- 121               	.LBB35:
- 122               	.LM13:
- 123 0048 C801      		movw r24,r16
- 124               	.LVL9:
- 125               	/* #APP */
- 126               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 127 004a 0197      		1: sbiw r24,1
- 128 004c 01F4      		brne 1b
- 129               	 ;  0 "" 2
- 130               	/* #NOAPP */
- 131 004e 00C0      		rjmp .L4
- 132               	.LBE35:
- 133               	.LBE36:
- 134               	.LBE37:
- 135               	.LBE43:
- 136               	.LFE6:
- 162               	.Letext0:
+  21 0000 1F93      		push r17
+  22 0002 CF93      		push r28
+  23 0004 DF93      		push r29
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26               	.LM2:
+  27 0006 0E94 0000 		call WS2812B_Init
+  28               	.LM3:
+  29 000a 0E94 0000 		call RGB_Animation_Init
+  30               	.LM4:
+  31 000e 0E94 0000 		call debug_init
+  32               	.LM5:
+  33 0012 13E0      		ldi r17,lo8(3)
+  34               	.LBB18:
+  35               	.LBB19:
+  36               	.LBB20:
+  37               	.LBB21:
+  38               	.LM6:
+  39 0014 CCE2      		ldi r28,lo8(300)
+  40 0016 D1E0      		ldi r29,hi8(300)
+  41               	.LVL0:
+  42               	.L10:
+  43               	.LBE21:
+  44               	.LBE20:
+  45               	.LBE19:
+  46               	.LBE18:
+  47               	.LM7:
+  48 0018 E091 0000 		lds r30,color_index
+  49               	.LVL1:
+  50 001c E19F      		mul r30,r17
+  51 001e F001      		movw r30,r0
+  52 0020 1124      		clr r1
+  53 0022 E050      		subi r30,lo8(-(colors))
+  54 0024 F040      		sbci r31,hi8(-(colors))
+  55 0026 8081      		ld r24,Z
+  56 0028 8093 0000 		sts red_val,r24
+  57               	.LM8:
+  58 002c 6181      		ldd r22,Z+1
+  59 002e 6093 0000 		sts green_val,r22
+  60               	.LM9:
+  61 0032 4281      		ldd r20,Z+2
+  62 0034 4093 0000 		sts blue_val,r20
+  63               	.LM10:
+  64 0038 0E94 0000 		call RGB_Animation_Slide_Fill
+  65 003c 80E1      		ldi r24,lo8(10000)
+  66 003e 97E2      		ldi r25,hi8(10000)
+  67               	.LVL2:
+  68               	.L2:
+  69               	.LBB25:
+  70               	.LBB24:
+  71               	.LBB23:
+  72               	.LBB22:
+  73               	.LM11:
+  74 0040 FE01      		movw r30,r28
+  75               	.LVL3:
+  76               	/* #APP */
+  77               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+  78 0042 3197      		1: sbiw r30,1
+  79 0044 01F4      		brne 1b
+  80               	 ;  0 "" 2
+  81               	/* #NOAPP */
+  82               	.LBE22:
+  83               	.LBE23:
+  84               	.LM12:
+  85 0046 0197      		sbiw r24,1
+  86               	.LM13:
+  87 0048 01F4      		brne .L2
+  88               	.LBE24:
+  89               	.LBE25:
+  90               	.LM14:
+  91 004a 8091 0000 		lds r24,red_val
+  92               	.LVL4:
+  93 004e 6091 0000 		lds r22,green_val
+  94 0052 4091 0000 		lds r20,blue_val
+  95 0056 0E94 0000 		call RGB_Animation_Slide_Unfill
+  96               	.LVL5:
+  97 005a 80E1      		ldi r24,lo8(10000)
+  98 005c 97E2      		ldi r25,hi8(10000)
+  99               	.LVL6:
+ 100               	.L3:
+ 101               	.LBB26:
+ 102               	.LBB27:
+ 103               	.LBB28:
+ 104               	.LBB29:
+ 105               	.LM15:
+ 106 005e FE01      		movw r30,r28
+ 107               	.LVL7:
+ 108               	/* #APP */
+ 109               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
+ 110 0060 3197      		1: sbiw r30,1
+ 111 0062 01F4      		brne 1b
+ 112               	 ;  0 "" 2
+ 113               	/* #NOAPP */
+ 114               	.LBE29:
+ 115               	.LBE28:
+ 116               	.LM16:
+ 117 0064 0197      		sbiw r24,1
+ 118               	.LM17:
+ 119 0066 01F4      		brne .L3
+ 120               	.LBE27:
+ 121               	.LBE26:
+ 122               	.LM18:
+ 123 0068 8091 0000 		lds r24,color_index
+ 124               	.LVL8:
+ 125 006c 8F5F      		subi r24,lo8(-(1))
+ 126 006e 8093 0000 		sts color_index,r24
+ 127               	.LM19:
+ 128 0072 8530      		cpi r24,lo8(5)
+ 129 0074 00F0      		brlo .L10
+ 130               	.LM20:
+ 131 0076 1092 0000 		sts color_index,__zero_reg__
+ 132 007a 00C0      		rjmp .L10
+ 133               	.LFE6:
+ 135               	.global	colors
+ 136               		.data
+ 139               	colors:
+ 140 0000 FE        		.byte	-2
+ 141 0001 D7        		.byte	-41
+ 142 0002 00        		.byte	0
+ 143 0003 66        		.byte	102
+ 144 0004 CC        		.byte	-52
+ 145 0005 00        		.byte	0
+ 146 0006 73        		.byte	115
+ 147 0007 9B        		.byte	-101
+ 148 0008 D0        		.byte	-48
+ 149 0009 33        		.byte	51
+ 150 000a 33        		.byte	51
+ 151 000b FE        		.byte	-2
+ 152 000c B2        		.byte	-78
+ 153 000d 66        		.byte	102
+ 154 000e FE        		.byte	-2
+ 155 000f 00        		.byte	0
+ 156 0010 10        		.byte	16
+ 157 0011 20        		.byte	32
+ 158 0012 00        		.byte	0
+ 159 0013 10        		.byte	16
+ 160 0014 20        		.byte	32
+ 161 0015 00        		.byte	0
+ 162 0016 10        		.byte	16
+ 163 0017 20        		.byte	32
+ 164 0018 00        		.byte	0
+ 165 0019 10        		.byte	16
+ 166 001a 20        		.byte	32
+ 167 001b 00        		.byte	0
+ 168 001c 10        		.byte	16
+ 169 001d 20        		.byte	32
+ 170               	.global	color_index
+ 171               	.global	color_index
+ 172               		.section .bss
+ 175               	color_index:
+ 176 0000 00        		.skip 1,0
+ 177               	.global	red_val
+ 178               	.global	red_val
+ 181               	red_val:
+ 182 0001 00        		.skip 1,0
+ 183               	.global	green_val
+ 184               	.global	green_val
+ 187               	green_val:
+ 188 0002 00        		.skip 1,0
+ 189               	.global	blue_val
+ 190               	.global	blue_val
+ 193               	blue_val:
+ 194 0003 00        		.skip 1,0
+ 219               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:2      *ABS*:0000003f __SREG__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:3      *ABS*:0000003e __SP_H__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:4      *ABS*:0000003d __SP_L__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:5      *ABS*:00000034 __CCP__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\FARIDU~1\AppData\Local\Temp/ccejnW0z.s:18     .text:00000000 main
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:2      *ABS*:0000003f __SREG__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:3      *ABS*:0000003e __SP_H__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:4      *ABS*:0000003d __SP_L__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:5      *ABS*:00000034 __CCP__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:18     .text:00000000 main
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:175    .bss:00000000 color_index
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:139    .data:00000000 colors
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:181    .bss:00000001 red_val
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:187    .bss:00000002 green_val
+C:\Users\FARIDU~1\AppData\Local\Temp/cc3bXIHg.s:193    .bss:00000003 blue_val
 
 UNDEFINED SYMBOLS
 WS2812B_Init
 RGB_Animation_Init
+debug_init
 RGB_Animation_Slide_Fill
 RGB_Animation_Slide_Unfill
+__do_copy_data
+__do_clear_bss
