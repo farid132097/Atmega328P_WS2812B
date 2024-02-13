@@ -28,9 +28,14 @@ int main(void){
   RGB_Animation_Init();
   debug_init();
   
+  RGB_Clear_Buf_2D();
+  
+  RGB_Set_Pixel(15,100,0,0);
+  
+  RGB_Push_Buffer();
   while(1){
     
-	red_val   = colors[(color_index*3)+0];
+	/*red_val   = colors[(color_index*3)+0];
 	green_val = colors[(color_index*3)+1];
 	blue_val  = colors[(color_index*3)+2];
 	
@@ -42,7 +47,14 @@ int main(void){
 	color_index++;
 	if(color_index>=TOTAL_COLOR_LOOP){
 	  color_index=0;
-	}
+	}*/
 	
+	//RGB_Animation_Slide_Fill_Mid(100,0,0);
+	//RGB_Animation_Slide_Unfill_Mid(100,0,0);
+	
+	//RGB_Set_Pixel(15);
+	
+	RGB_Inc_Brightness(15,120,0,0);
+	_delay_ms(100);
   }
 }
