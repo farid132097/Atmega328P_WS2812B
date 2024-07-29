@@ -132,7 +132,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x16d2
+.text           0x00000000     0x171e
  *(.vectors)
  .vectors       0x00000000       0x68 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
                 0x00000000                __vectors
@@ -212,113 +212,113 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x000000a2                __vector_10
                 0x000000a2                __vector_18
                 0x000000a2                __vector_20
- .text          0x000000a6       0x44 main.o
+ .text          0x000000a6       0x90 main.o
                 0x000000a6                main
- .text          0x000000ea      0x1b0 ws2812b.o
-                0x00000262                WS2812B_Send_Pixel
-                0x00000294                WS2812B_Init
-                0x000000f0                WS2812B_Send_Byte
-                0x000000ea                WS2812B_Gpio_Init
-                0x00000282                WS2812B_Pixel_Delay
- .text          0x0000029a      0xc66 animation.o
-                0x00000324                RGB_Inc_Brightness
-                0x000006fa                RGB_Brightness_Inc_Mid_Act
-                0x00000e44                RGB_Animation_Slide_Fill
-                0x0000093e                RGB_Brightness_Inc_Mid
-                0x0000083e                RGB_Brightness_Dec_Mid
-                0x0000039e                RGB_Animation_Brightness_Dec
-                0x00000442                RGB_Animation_Slide
-                0x00000aea                RGB_Brightness_Dec
-                0x000002c0                RGB_Set_Pixel
-                0x000002f8                RGB_Get_Mid_Point
-                0x00000cba                RGB_Animation_Slide_Unfill
-                0x00000a82                RGB_Animation_Slide_Fill_Mid
-                0x0000029a                RGB_Animation_Clear_Pixel_Buf
-                0x000005ca                RGB_Animation_Rotate_All_Color
-                0x00000e92                RGB_Animation_Clear_All_Pixels
-                0x00000302                RGB_Push_Buffer
-                0x000002aa                RGB_Clear_Buf_2D
-                0x00000c70                RGB_Animation_Slide_Unfill_Mid
-                0x000003e2                RGB_Animation_Brightness_Inc
-                0x00000d04                RGB_Brightness_Inc
-                0x00000eb4                RGB_Animation_Init
- .text          0x00000f00      0x772 debug.o
-                0x00000fde                debug_delay_index_1
-                0x000014fc                debug_tx_parameter_bin_nl
-                0x000013f6                debug_tx_number_bin_nl
-                0x000013c6                debug_tx_number_cm
-                0x00001548                Debug_tx_parameter_bin_cm
-                0x000012cc                debug_tx_text_cm
-                0x000012d6                debug_determine_digit_numbers
-                0x00000f00                debug_struct_init
-                0x00000f78                debug_timer_stop
-                0x000015c0                debug_available_bytes_rx_buf
-                0x000013d4                debug_tx_number_hex_nl
-                0x0000156e                debug_buf_get
-                0x000010aa                debug_rx_byte
-                0x00001580                debug_flush_buf
-                0x0000157a                debug_buf_index_get
-                0x000013e8                debug_tx_number_hex_cm
-                0x00001418                debug_tx_parameter_nl
-                0x000013bc                debug_tx_number_sp
-                0x000012b8                debug_tx_text_nl
-                0x00000f94                debug_tx_set
-                0x000014d6                Debug_tx_parameter_hex_cm
-                0x00001292                debug_tx_text
-                0x00001400                debug_tx_number_bin_sp
-                0x00000f90                debug_tx_low
-                0x00000f5e                debug_timer_start
-                0x00001464                debug_tx_parameter_cm
-                0x00001108                debug_rx_byte_clear
-                0x00000fd0                debug_delay_index_0
-                0x00001376                debug_tx_number
-                0x0000110e                debug_rx_byte_set
-                0x000011c8                debug_tx_bin
-                0x00000fb2                debug_delay
-                0x000015d4                __vector_4
-                0x00000fec                debug_delay_index_2
-                0x00001282                debug_tx_sp
-                0x000015c6                debug_init
-                0x00000f82                debug_gpio_init
-                0x000012c2                debug_tx_text_sp
-                0x00001274                debug_tx_nl
-                0x00000f8c                debug_tx_high
-                0x000013b2                debug_tx_number_nl
-                0x0000143e                debug_tx_parameter_sp
-                0x000014b0                debug_tx_parameter_hex_sp
-                0x00000ffa                debug_tx_byte
-                0x0000140a                debug_tx_number_bin_cm
-                0x000013de                debug_tx_number_hex_sp
-                0x00001522                debug_tx_parameter_bin_sp
-                0x0000128a                debug_tx_cm
-                0x0000159a                debug_databsy_get
-                0x0000148a                debug_tx_parameter_hex_nl
-                0x00001114                debug_tx_hex
-                0x000015a0                debug_data_available_rx_buf
-                0x00001102                debug_rx_byte_get
-                0x00000f38                debug_timings_init
-                0x00001652                __vector_16
-                0x00001354                debug_tx_number_digits
-                0x00000fa0                debug_rx_get
- .text          0x00001672        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
- .text          0x00001672        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
- .text          0x00001672        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text          0x00001672        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text          0x00001672        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x00001672                . = ALIGN (0x2)
+ .text          0x00000136      0x1b0 ws2812b.o
+                0x000002ae                WS2812B_Send_Pixel
+                0x000002e0                WS2812B_Init
+                0x0000013c                WS2812B_Send_Byte
+                0x00000136                WS2812B_Gpio_Init
+                0x000002ce                WS2812B_Pixel_Delay
+ .text          0x000002e6      0xc66 animation.o
+                0x00000370                RGB_Inc_Brightness
+                0x00000746                RGB_Brightness_Inc_Mid_Act
+                0x00000e90                RGB_Animation_Slide_Fill
+                0x0000098a                RGB_Brightness_Inc_Mid
+                0x0000088a                RGB_Brightness_Dec_Mid
+                0x000003ea                RGB_Animation_Brightness_Dec
+                0x0000048e                RGB_Animation_Slide
+                0x00000b36                RGB_Brightness_Dec
+                0x0000030c                RGB_Set_Pixel
+                0x00000344                RGB_Get_Mid_Point
+                0x00000d06                RGB_Animation_Slide_Unfill
+                0x00000ace                RGB_Animation_Slide_Fill_Mid
+                0x000002e6                RGB_Animation_Clear_Pixel_Buf
+                0x00000616                RGB_Animation_Rotate_All_Color
+                0x00000ede                RGB_Animation_Clear_All_Pixels
+                0x0000034e                RGB_Push_Buffer
+                0x000002f6                RGB_Clear_Buf_2D
+                0x00000cbc                RGB_Animation_Slide_Unfill_Mid
+                0x0000042e                RGB_Animation_Brightness_Inc
+                0x00000d50                RGB_Brightness_Inc
+                0x00000f00                RGB_Animation_Init
+ .text          0x00000f4c      0x772 debug.o
+                0x0000102a                debug_delay_index_1
+                0x00001548                debug_tx_parameter_bin_nl
+                0x00001442                debug_tx_number_bin_nl
+                0x00001412                debug_tx_number_cm
+                0x00001594                Debug_tx_parameter_bin_cm
+                0x00001318                debug_tx_text_cm
+                0x00001322                debug_determine_digit_numbers
+                0x00000f4c                debug_struct_init
+                0x00000fc4                debug_timer_stop
+                0x0000160c                debug_available_bytes_rx_buf
+                0x00001420                debug_tx_number_hex_nl
+                0x000015ba                debug_buf_get
+                0x000010f6                debug_rx_byte
+                0x000015cc                debug_flush_buf
+                0x000015c6                debug_buf_index_get
+                0x00001434                debug_tx_number_hex_cm
+                0x00001464                debug_tx_parameter_nl
+                0x00001408                debug_tx_number_sp
+                0x00001304                debug_tx_text_nl
+                0x00000fe0                debug_tx_set
+                0x00001522                Debug_tx_parameter_hex_cm
+                0x000012de                debug_tx_text
+                0x0000144c                debug_tx_number_bin_sp
+                0x00000fdc                debug_tx_low
+                0x00000faa                debug_timer_start
+                0x000014b0                debug_tx_parameter_cm
+                0x00001154                debug_rx_byte_clear
+                0x0000101c                debug_delay_index_0
+                0x000013c2                debug_tx_number
+                0x0000115a                debug_rx_byte_set
+                0x00001214                debug_tx_bin
+                0x00000ffe                debug_delay
+                0x00001620                __vector_4
+                0x00001038                debug_delay_index_2
+                0x000012ce                debug_tx_sp
+                0x00001612                debug_init
+                0x00000fce                debug_gpio_init
+                0x0000130e                debug_tx_text_sp
+                0x000012c0                debug_tx_nl
+                0x00000fd8                debug_tx_high
+                0x000013fe                debug_tx_number_nl
+                0x0000148a                debug_tx_parameter_sp
+                0x000014fc                debug_tx_parameter_hex_sp
+                0x00001046                debug_tx_byte
+                0x00001456                debug_tx_number_bin_cm
+                0x0000142a                debug_tx_number_hex_sp
+                0x0000156e                debug_tx_parameter_bin_sp
+                0x000012d6                debug_tx_cm
+                0x000015e6                debug_databsy_get
+                0x000014d6                debug_tx_parameter_hex_nl
+                0x00001160                debug_tx_hex
+                0x000015ec                debug_data_available_rx_buf
+                0x0000114e                debug_rx_byte_get
+                0x00000f84                debug_timings_init
+                0x0000169e                __vector_16
+                0x000013a0                debug_tx_number_digits
+                0x00000fec                debug_rx_get
+ .text          0x000016be        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
+ .text          0x000016be        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+ .text          0x000016be        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text          0x000016be        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text          0x000016be        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x000016be                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x00001672       0x18 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
-                0x00001672                __udivmodqi4
- .text.libgcc   0x0000168a       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x0000168a                __udivmodsi4
- .text.libgcc   0x000016ce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x000016ce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x000016ce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x000016ce                . = ALIGN (0x2)
+ .text.libgcc   0x000016be       0x18 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
+                0x000016be                __udivmodqi4
+ .text.libgcc   0x000016d6       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x000016d6                __udivmodsi4
+ .text.libgcc   0x0000171a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x0000171a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000171a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x0000171a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000016ce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000016ce                exit
-                0x000016ce                _exit
+ .fini9         0x0000171a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x0000171a                exit
+                0x0000171a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -337,11 +337,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000016ce        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000171a        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000016d2                _etext = .
+                0x0000171e                _etext = .
 
-.data           0x00800100       0x32 load address 0x000016d2
+.data           0x00800100       0x32 load address 0x0000171e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm328p.o
@@ -401,8 +401,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  COMMON         0x008001dc       0x2d debug.o
                 0x008001dc                debug
                 0x00800209                PROVIDE (__bss_end, .)
-                0x000016d2                __data_load_start = LOADADDR (.data)
-                0x00001704                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000171e                __data_load_start = LOADADDR (.data)
+                0x00001750                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800209        0x0
                 0x00800209                PROVIDE (__noinit_start, .)
@@ -483,27 +483,27 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_pubnames
                 0x000003b2      0x568 debug.o
 
-.debug_info     0x00000000     0x1e40
+.debug_info     0x00000000     0x1e8a
  *(.debug_info)
- .debug_info    0x00000000      0x189 main.o
- .debug_info    0x00000189      0x146 ws2812b.o
- .debug_info    0x000002cf      0xf1d animation.o
- .debug_info    0x000011ec      0xc54 debug.o
+ .debug_info    0x00000000      0x1d3 main.o
+ .debug_info    0x000001d3      0x146 ws2812b.o
+ .debug_info    0x00000319      0xf1d animation.o
+ .debug_info    0x00001236      0xc54 debug.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x74a
+.debug_abbrev   0x00000000      0x771
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xe0 main.o
- .debug_abbrev  0x000000e0       0xb5 ws2812b.o
- .debug_abbrev  0x00000195      0x32d animation.o
- .debug_abbrev  0x000004c2      0x288 debug.o
+ .debug_abbrev  0x00000000      0x107 main.o
+ .debug_abbrev  0x00000107       0xb5 ws2812b.o
+ .debug_abbrev  0x000001bc      0x32d animation.o
+ .debug_abbrev  0x000004e9      0x288 debug.o
 
-.debug_line     0x00000000     0x1cea
+.debug_line     0x00000000     0x1d51
  *(.debug_line)
- .debug_line    0x00000000      0x143 main.o
- .debug_line    0x00000143      0x65f ws2812b.o
- .debug_line    0x000007a2      0xaac animation.o
- .debug_line    0x0000124e      0xa9c debug.o
+ .debug_line    0x00000000      0x1aa main.o
+ .debug_line    0x000001aa      0x65f ws2812b.o
+ .debug_line    0x00000809      0xaac animation.o
+ .debug_line    0x000012b5      0xa9c debug.o
 
 .debug_frame    0x00000000      0x580
  *(.debug_frame)
@@ -512,23 +512,23 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_frame   0x00000080      0x160 animation.o
  .debug_frame   0x000001e0      0x3a0 debug.o
 
-.debug_str      0x00000000      0x914
+.debug_str      0x00000000      0x939
  *(.debug_str)
- .debug_str     0x00000000      0x101 main.o
-                                0x135 (size before relaxing)
- .debug_str     0x00000101       0x6b ws2812b.o
+ .debug_str     0x00000000       0xe9 main.o
+                                0x11d (size before relaxing)
+ .debug_str     0x000000e9       0xa8 ws2812b.o
                                 0x123 (size before relaxing)
- .debug_str     0x0000016c      0x2d6 animation.o
+ .debug_str     0x00000191      0x2d6 animation.o
                                 0x3d1 (size before relaxing)
- .debug_str     0x00000442      0x4d2 debug.o
+ .debug_str     0x00000467      0x4d2 debug.o
                                 0x5bb (size before relaxing)
 
-.debug_loc      0x00000000     0x158f
+.debug_loc      0x00000000     0x15af
  *(.debug_loc)
- .debug_loc     0x00000000       0x50 main.o
- .debug_loc     0x00000050       0x62 ws2812b.o
- .debug_loc     0x000000b2      0xd76 animation.o
- .debug_loc     0x00000e28      0x767 debug.o
+ .debug_loc     0x00000000       0x70 main.o
+ .debug_loc     0x00000070       0x62 ws2812b.o
+ .debug_loc     0x000000d2      0xd76 animation.o
+ .debug_loc     0x00000e48      0x767 debug.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -556,8 +556,10 @@ RGB_Animation_Init                                animation.o
 RGB_Animation_Rotate_All_Color                    animation.o
 RGB_Animation_Slide                               animation.o
 RGB_Animation_Slide_Fill                          animation.o
+                                                  main.o
 RGB_Animation_Slide_Fill_Mid                      animation.o
 RGB_Animation_Slide_Unfill                        animation.o
+                                                  main.o
 RGB_Animation_Slide_Unfill_Mid                    animation.o
 RGB_Brightness_Dec                                animation.o
 RGB_Brightness_Dec_Mid                            animation.o
@@ -568,7 +570,6 @@ RGB_Clear_Buf_2D                                  animation.o
                                                   main.o
 RGB_Get_Mid_Point                                 animation.o
 RGB_Inc_Brightness                                animation.o
-                                                  main.o
 RGB_Push_Buffer                                   animation.o
                                                   main.o
 RGB_Set_Pixel                                     animation.o
